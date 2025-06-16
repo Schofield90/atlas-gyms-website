@@ -1,0 +1,6 @@
+This is a placeholder file to ensure the assets directory exists.
+Add your transformation images here:
+- transformation-1.jpg
+- transformation-2.jpg 
+- transformation-3.jpg
+- transformation-4.jpg
