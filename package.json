@@ -1,0 +1,16 @@
+{
+  "name": "atlas-gyms-website",
+  "version": "1.0.0",
+  "description": "Atlas Gyms - 6-Week Transformation Program Website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "serve .",
+    "build": "echo 'Static site - no build process needed'"
+  },
+  "keywords": ["fitness", "gym", "transformation", "york", "harrogate"],
+  "author": "Atlas Gyms",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}
