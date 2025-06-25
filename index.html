@@ -4,29 +4,652 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlas Gyms - 6-Week Transformation in Harrogate & York</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #1e5cb8;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #1e5cb8;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #1e5cb8, #2563eb);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            color: white !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 92, 184, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 92, 184, 0.4);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%231e5cb8" fill-opacity="0.1" points="0,1000 1000,0 1000,1000"/></svg>');
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #1e5cb8, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .main-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .main-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .disclaimer {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #1e5cb8, #2563eb);
+            border-radius: 2px;
+        }
+
+        /* Who Can Join */
+        .who-can-join {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .join-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .join-item {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(30, 92, 184, 0.1);
+        }
+
+        .join-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .join-item h3 {
+            color: #1e5cb8;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .join-item p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Core Principles */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .principle {
+            text-align: center;
+            padding: 2.5rem;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #f8fafc, white);
+            transition: all 0.3s ease;
+        }
+
+        .principle:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .principle-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1e5cb8, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .principle h3 {
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .principle p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Transformations */
+        .transformations {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+        }
+
+        .transformations .section-title {
+            color: white;
+        }
+
+        .transformation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .transformation-item {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .transformation-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .transformation-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .transformation-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .transformation-result {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1e5cb8;
+            margin-bottom: 0.8rem;
+        }
+
+        .transformation-name {
+            font-size: 0.95rem;
+            color: #64748b;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* Contact */
+        .contact {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .contact p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .contact-cta {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .contact-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e5cb8, #2563eb);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #e2e8f0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e5cb8;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem 0;
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .hero, .section {
+                padding: 80px 0 60px;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="assets/atlas-logo.png" alt="Atlas Gyms" />
+                <svg width="120" height="45" viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Atlas figure holding globe -->
+                    <g transform="translate(200, 75)">
+                        <!-- Globe/sphere -->
+                        <circle cx="0" cy="-20" r="25" fill="none" stroke="#1E5CB8" stroke-width="2"/>
+                        <ellipse cx="0" cy="-20" rx="25" ry="12" fill="none" stroke="#1E5CB8" stroke-width="1"/>
+                        <ellipse cx="0" cy="-20" rx="12" ry="25" fill="none" stroke="#1E5CB8" stroke-width="1"/>
+                        <line x1="-25" y1="-20" x2="25" y2="-20" stroke="#1E5CB8" stroke-width="1"/>
+                        
+                        <!-- Atlas figure -->
+                        <path d="M-8 5 L-8 20 L-3 20 L-3 40 L3 40 L3 20 L8 20 L8 5 L5 0 L3 -5 L-3 -5 L-5 0 Z" fill="#1E5CB8"/>
+                        <!-- Arms holding globe -->
+                        <path d="M-8 5 Q-15 -10 -20 -20 Q-15 -25 -8 -15" fill="none" stroke="#1E5CB8" stroke-width="3"/>
+                        <path d="M8 5 Q15 -10 20 -20 Q15 -25 8 -15" fill="none" stroke="#1E5CB8" stroke-width="3"/>
+                    </g>
+                    
+                    <!-- ATLAS text -->
+                    <text x="50" y="120" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1E5CB8">ATLAS</text>
+                    
+                    <!-- FITNESS text -->
+                    <text x="50" y="140" font-family="Arial, sans-serif" font-size="14" fill="#1E5CB8" letter-spacing="2px">FITNESS</text>
+                </svg>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="nav-menu">
                 <li><a href="#about">About</a></li>
                 <li><a href="#program">Program</a></li>
                 <li><a href="#results">Results</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#" class="cta-button">Start Today</a></li>
+                <li><a href="#" class="cta-button" onclick="openModal()">Start Today</a></li>
             </ul>
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </nav>
 
     <main>
         <section class="hero">
             <div class="hero-content">
-                <h1>Your <span class="highlight">6-Week Transformation</span> in<br>Harrogate & York</h1>
-                <p class="test-connection">🔴 TEST - Connection Working!</p>
+                <h1>Your <span class="highlight">6-Week Transformation</span><br>in Harrogate & York</h1>
                 <p class="hero-subtitle">Real fitness results for people over 30 who don't like the gym.</p>
                 
                 <div class="stats">
@@ -44,89 +667,299 @@
                     </div>
                 </div>
 
-                <a href="#" class="main-cta">Start Your Transformation</a>
+                <a href="#" class="main-cta" onclick="openModal()">Start Your Transformation</a>
                 <p class="disclaimer">Free consultation • No equipment required</p>
             </div>
         </section>
 
-        <section id="about" class="who-can-join">
+        <section id="about" class="who-can-join section">
             <div class="container">
-                <h2>Who Can Join Us</h2>
+                <h2 class="section-title">Who Is This For?</h2>
                 <div class="join-grid">
                     <div class="join-item">
-                        <h3>Don't Like The Gym?</h3>
-                        <p>Our outdoor and studio sessions provide a refreshing alternative to traditional gym environments.</p>
+                        <h3><span style="font-size: 1.5rem; margin-right: 10px;">❤️</span> Don't Like The Gym?</h3>
+                        <p>Our outdoor and studio sessions provide a refreshing alternative to traditional gym environments with personalized attention.</p>
                     </div>
                     <div class="join-item">
-                        <h3>Need Guidance?</h3>
-                        <p>Our expert coaches provide personalized support throughout your entire transformation journey.</p>
+                        <h3><span style="font-size: 1.5rem; margin-right: 10px;">🧭</span> Need Guidance?</h3>
+                        <p>Our expert coaches provide personalized support throughout your entire transformation journey with proven methods.</p>
                     </div>
                     <div class="join-item">
-                        <h3>Want Team Support?</h3>
-                        <p>Join a community of like-minded individuals all working towards similar health and fitness goals.</p>
+                        <h3><span style="font-size: 1.5rem; margin-right: 10px;">👥</span> Want Team Support?</h3>
+                        <p>Join a community of like-minded individuals all working towards similar health and fitness goals in a supportive environment.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="program" class="core-principles">
+        <section id="program" class="core-principles section">
             <div class="container">
-                <h2>Our Core Principles</h2>
+                <h2 class="section-title">Our Core Principles</h2>
                 <div class="principles-grid">
                     <div class="principle">
                         <div class="principle-icon">🥗</div>
                         <h3>Nutrition</h3>
-                        <p>Simple, sustainable meal plans that fit your lifestyle without complicated calorie counting.</p>
+                        <p>Simple, sustainable meal plans that fit your lifestyle without complicated calorie counting or restrictive dieting.</p>
                     </div>
                     <div class="principle">
                         <div class="principle-icon">💪</div>
                         <h3>Training</h3>
-                        <p>Fun, varied workouts designed for all fitness levels. No intimidating gym equipment required.</p>
+                        <p>Fun, varied workouts designed for all fitness levels. No intimidating gym equipment required - just effective results.</p>
                     </div>
                     <div class="principle">
                         <div class="principle-icon">🎯</div>
                         <h3>Accountability</h3>
-                        <p>Regular check-ins and community support to keep you motivated and on track.</p>
+                        <p>Regular check-ins and community support to keep you motivated and on track throughout your transformation.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="results" class="transformations">
+        <section id="results" class="transformations section">
             <div class="container">
-                <h2>Client Transformations</h2>
+                <h2 class="section-title">Client Transformations</h2>
                 <div class="transformation-grid">
                     <div class="transformation-item">
-                        <div class="placeholder-image">Transformation Photo 1</div>
+                        <img src="data:image/jpeg;base64,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" alt="13 lbs lost in 6 weeks" class="transformation-image" />
+                        <div class="transformation-content">
+                            <div class="transformation-result">Lost 13 lbs in 6 weeks</div>
+                            <div class="transformation-name">Amazing transformation achieved!</div>
+                        </div>
                     </div>
+                    
                     <div class="transformation-item">
-                        <div class="placeholder-image">Transformation Photo 2</div>
+                        <img src="data:image/jpeg;base64,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" alt="103 lbs lost" class="transformation-image" />
+                        <div class="transformation-content">
+                            <div class="transformation-result">Lost 103 lbs in 13 months</div>
+                            <div class="transformation-name">Life-changing transformation!</div>
+                        </div>
                     </div>
+                    
                     <div class="transformation-item">
-                        <div class="placeholder-image">Transformation Photo 3</div>
+                        <img src="data:image/jpeg;base64,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" alt="17 lbs lost in 6 weeks" class="transformation-image" />
+                        <div class="transformation-content">
+                            <div class="transformation-result">Lost 17 lbs in 6 weeks</div>
+                            <div class="transformation-name">Outstanding progress achieved!</div>
+                        </div>
                     </div>
+                    
                     <div class="transformation-item">
-                        <div class="placeholder-image">Transformation Photo 4</div>
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAABQYCAwQHAQj/xAA0EAABAwMCBAQEBQQDAAAAAAABAgMEAAUREiEGMUFRBxNhcRQiMoEjQpGhsRXB0fAXJDH/xAAYAQADAQEAAAAAAAAAAAAAAAAEBQYDAv/EACQRAAICAgICAQQDAAAAAAAAAAECAAMEESESMRNBUSJhcQWBkf/aAAwDAQACEQMRAD8A0pYjuRzJaOF5JUgpKioLTgOScAn0rdaI0eM3KW+tWnVIKUrAAGOYz/LNeVY5vVGdTHRxeEpQkjQO4TuftJWdlutN2qAULYbJGpGkgdKpYQ23HcCnCglKgSSdh1rnG/1o6P4e6xJcRkJSEpx4mf0ykUO1W5/8iYzJ+Wd/Gd4/dShWoZGjvS3eFLbU4kKTsQQcH3qu38EXGhx/hJqc3Qgj4tRwoIPOvQBm0J2ZEKQrVp3zzPWkqX4k3g8UWm42q0cQRLfGjNFTy4jhUt3WQpKkjI9qayeGiT4kkkAj4l7g73FyNYrOLjHi29r4h5S1R9ai0QnTlHp0pEk+J3EjTzqWmLOQrUoJkZVt7UGk3bFaGYdvlyWGGnHGkpwQnV/aleFPanPHdJaNJtSnJFshvIKFuBCnNBIGa7UyNoxYVcxBJEJUu+XqMJ8m2Rp9uckvpWUhLrR2WUqIyE9Qf2qNa9L7O8b+FnDd3/qD9pSt5xQdQ2hClEY54HTFSCBrYUJlkdx8pBe8RmIUCJO4Z4Q4hsLzgGtT7Ej4VJJyQXCrSfvTUvX8OlGCFONOHKFK+QpJydOCTj9K6IzN3N5C1YmR8jqf9YD/AE6PDYecjyZCCQUxA7ockbhKAcAeuwpPhJangjr+2nY1i4hHcAT6Lz6k7/pSxcL1wXZWyxO4S4jsj3rZoabfvfCRZC46B3Oo/qc+9M/P4a1H+6+F+KvQr2v1mfyLxEk+K3EjEaM3wxZFqUd0ptN1Gc/VyqO5LYE1cVzq22vtI3pP3zS7drRdOJfEfhzh65cOyEJcw2wtpwJOQ22CUjoeu1VJjeBG6oiUnxJgP8SLr6XGw/FeUHWkJ2OAdgce1DsK9IqQ8I9S3qGpyPJRhJ/N1H6/Ws6dj1z+vWrUJsSeJ4FsflNYCsGHIPqOftQy8XdqK1HjtLTcOKJBYiPBSgl5xOCpJUcKOwAx04+tMKFYOBm9SvLe8pJaQwfOWJNw+YfLnmQv3PL60ow8xvlQ0rVdLRGfccUzNSlT2EgglQPJR7YOD710Zh4W4vgtXXhPiWW/d0uF9m5IdcWAM46kDffNZxcwWGm8KhgOCeCgShb7Lv8ASHZrqnC4hJCDJCdSdO+DjHvyrcEg3FWZPlOrDWtH5T1J1pYlyL1w6Jy+Gkt3CHPiPNF9lJKEL5YcJPPHzJGfXY1OLdJl2gMOKlyo6znWzpAcTnmNP8Agitc4xMT6rJMCwBPWLbcL7aOLpfFdhYS/JbCJZIJwHPLStJI7bqA9t6WOa6hKo8xBd2NzI0+w/WllMaytvLKJMjSMkheSVcjyz9q2rJG2LX6sKhJArKQZpjhxaFNhBHf9acJPhZwpeLOi/8ADEa9uN5CJkZcyKHiAoqQ2tKSGzsRqONxjmOdMd9V4i8MtPfEP8QNKaUsW9Fv4ZUjJGSdqgfEu3WqfcrCvxAk3OJ5EQWi4R4xTITIazhCdZ6bYpW5i3a/p/xJJTNJJrF9kZJEj4BudKjEp6cqUtLe3LNCr/c4FlgsN+K7d0pHkOSZHwKE9TIHZGMJrLb78/wVxsq9BoQ7Ft85LElQKQhZOyVAHT90Zrwn7hEm6yLVbJ1xivtFJQW3XG1AJI2O/fPWkbnO6CfRGxJWoNJQAjQE9M+1GIy7DwZHjXCJLkXFDj6I0mPEQFhwY5ZKhyk8o6m4vxdqMa5MjULNa30vOKJwW3GgN+o6j7U55V6d9rF89YfvgYwHtO1+hWu7I4fnSLxBhNymtOOOJWklSSCNcfHOkjjzi/w+t1kt9st948QLjJlTxcZBstqEhJdGAhpZKUbEJOdXLmK58TxP0wYQqZ3zDK1PuvPKXpQKEpKQBgACpzEKKelb1E6dDKM98+vP/I5r2nclJJUdz3gFvqJlp+jvTD4l/wDcv5/QGkN5TSgQggj2NMfjvNceUiWRohqiMxFAHK5CgTjryznH61uL8x+M41bCB4SY//Z" alt="13 lbs lost in 6 weeks" class="transformation-image" />
+                        <div class="transformation-content">
+                            <div class="transformation-result">Lost 13 lbs in 6 weeks</div>
+                            <div class="transformation-name">Incredible achievement!</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="contact">
+        <section id="contact" class="contact section">
             <div class="container">
                 <h2>Ready to Start Your Transformation?</h2>
                 <p>Join thousands of people who have already transformed their lives with Atlas Gyms.</p>
-                <a href="#" class="contact-cta">Get Started Today</a>
+                <a href="#" class="contact-cta" onclick="openModal()">Get Started Today</a>
             </div>
         </section>
     </main>
 
+    <!-- Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Start Your Transformation</h2>
+                <p>Get your free consultation and begin your journey today!</p>
+            </div>
+            <div class="modal-body">
+                <form id="leadForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Preferred Location *</label>
+                        <select id="location" name="location" required>
+                            <option value="">Select Location</option>
+                            <option value="harrogate">Harrogate</option>
+                            <option value="york">York</option>
+                            <option value="both">Both Locations</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="goals">What are your main fitness goals?</label>
+                        <textarea id="goals" name="goals" rows="3" placeholder="Tell us about your fitness goals..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span style="font-size: 1rem; margin-right: 8px;">🚀</span> Start My Transformation
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
-            <p>&copy; 2024 Atlas Gyms. All rights reserved.</p>
+            <p>&copy; 2024 Atlas Gyms. All rights reserved. | Harrogate & York Locations</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = mobileToggle.querySelector('i');
+            if (navMenu.classList.contains('active')) {
+                icon.className = 'fas fa-times';
+            } else {
+                icon.className = 'fas fa-bars';
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                const icon = mobileToggle.querySelector('i');
+                icon.className = 'fas fa-bars';
+            });
+        });
+
+        // Modal functions
+        function openModal() {
+            document.getElementById('leadModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('leadModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('leadModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Form submission with GoHighLevel integration
+        document.getElementById('leadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show loading state
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span style="font-size: 1rem; margin-right: 8px;">⏳</span> Submitting...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Replace with your actual GoHighLevel webhook URL
+                const webhookUrl = 'YOUR_GHL_WEBHOOK_URL_HERE';
+                
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        email: data.email,
+                        phone: data.phone,
+                        location: data.location,
+                        goals: data.goals,
+                        source: 'Atlas Gyms Website',
+                        tags: ['website-lead', 'transformation-program']
+                    })
+                });
+                
+                if (response.ok) {
+                    // Success
+                    submitBtn.innerHTML = '<span style="font-size: 1rem; margin-right: 8px;">✅</span> Success! We\'ll be in touch soon';
+                    submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    
+                    // Reset form and close modal after delay
+                    setTimeout(() => {
+                        this.reset();
+                        closeModal();
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                    }, 2000);
+                } else {
+                    throw new Error('Submission failed');
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                submitBtn.innerHTML = '<span style="font-size: 1rem; margin-right: 8px;">❌</span> Error - Please try again';
+                submitBtn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                
+                // Reset button after delay
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                }, 3000);
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
