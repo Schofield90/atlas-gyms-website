@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Atlas figure holding sphere -->
+  <g transform="translate(200, 50)">
+    <!-- Sphere/Globe -->
+    <circle cx="0" cy="20" r="35" fill="none" stroke="#1E40AF" stroke-width="3"/>
+    <path d="M -25 5 Q 0 -10 25 5" fill="none" stroke="#1E40AF" stroke-width="2"/>
+    <path d="M -25 35 Q 0 50 25 35" fill="none" stroke="#1E40AF" stroke-width="2"/>
+    <path d="M -30 20 L 30 20" stroke="#1E40AF" stroke-width="2"/>
+    <path d="M 0 -15 L 0 55" stroke="#1E40AF" stroke-width="2"/>
+    
+    <!-- Atlas figure -->
+    <g transform="translate(0, 55)">
+      <!-- Body -->
+      <path d="M -8 0 L -8 25 L 8 25 L 8 0 Z" fill="#1E40AF"/>
+      <!-- Arms -->
+      <path d="M -8 5 L -15 -10 L -12 -12 L -5 3" fill="#1E40AF"/>
+      <path d="M 8 5 L 15 -10 L 12 -12 L 5 3" fill="#1E40AF"/>
+      <!-- Legs -->
+      <path d="M -6 25 L -10 40 L -7 42 L -4 27" fill="#1E40AF"/>
+      <path d="M 6 25 L 10 40 L 7 42 L 4 27" fill="#1E40AF"/>
+      <!-- Head -->
+      <circle cx="0" cy="-5" r="5" fill="#1E40AF"/>
+    </g>
+  </g>
+  
+  <!-- ATLAS text -->
+  <text x="200" y="130" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" fill="#1E40AF">ATLAS</text>
+  
+  <!-- FITNESS text -->
+  <text x="200" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="600" fill="#1E40AF" letter-spacing="4px">FITNESS</text>
+</svg>
