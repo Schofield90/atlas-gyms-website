@@ -420,7 +420,8 @@
                                 data-height="450"
                                 data-layout-iframe-id="inline-pOstBoRnEy5EkPjKVbqG"
                                 data-form-id="pOstBoRnEy5EkPjKVbqG"
-                                title="York Mens lead form">
+                                title="York Mens lead form"
+                                sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
                             </iframe>
                         </div>
                         
@@ -560,6 +561,32 @@
 
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <script>
+        // Prevent form from redirecting on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure we start at the top of the page
+            window.scrollTo(0, 0);
+            
+            // If there's a hash in the URL, handle it after a delay
+            if (window.location.hash === '#consultation') {
+                setTimeout(function() {
+                    const consultationSection = document.getElementById('consultation');
+                    if (consultationSection) {
+                        consultationSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 1000);
+            }
+            
+            // Prevent form iframe from redirecting the parent page
+            const formIframe = document.querySelector('#inline-pOstBoRnEy5EkPjKVbqG');
+            if (formIframe) {
+                formIframe.addEventListener('load', function() {
+                    // Keep focus on main page
+                    window.focus();
+                });
+            }
+        });
+    </script>
     <script src="https://link.leaddec.com/js/form_embed.js"></script>
 </body>
 </html>
