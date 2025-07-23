@@ -1,32 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+<svg width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
   <!-- Atlas figure holding sphere -->
-  <g transform="translate(200, 50)">
-    <!-- Sphere/Globe -->
-    <circle cx="0" cy="20" r="35" fill="none" stroke="#1E40AF" stroke-width="3"/>
-    <path d="M -25 5 Q 0 -10 25 5" fill="none" stroke="#1E40AF" stroke-width="2"/>
-    <path d="M -25 35 Q 0 50 25 35" fill="none" stroke="#1E40AF" stroke-width="2"/>
-    <path d="M -30 20 L 30 20" stroke="#1E40AF" stroke-width="2"/>
-    <path d="M 0 -15 L 0 55" stroke="#1E40AF" stroke-width="2"/>
+  <g transform="translate(200, 40)">
+    <!-- Sphere/Globe with grid lines -->
+    <g transform="translate(0, 20)">
+      <!-- Outer circle -->
+      <circle cx="0" cy="0" r="40" fill="none" stroke="#0052CC" stroke-width="4"/>
+      
+      <!-- Horizontal lines -->
+      <ellipse cx="0" cy="-20" rx="35" ry="10" fill="none" stroke="#0052CC" stroke-width="2"/>
+      <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#0052CC" stroke-width="2"/>
+      <ellipse cx="0" cy="20" rx="35" ry="10" fill="none" stroke="#0052CC" stroke-width="2"/>
+      
+      <!-- Vertical center line -->
+      <path d="M 0 -40 L 0 40" stroke="#0052CC" stroke-width="2"/>
+      
+      <!-- Side meridians -->
+      <path d="M -40 0 Q -20 -35 0 -40 Q 20 -35 40 0" fill="none" stroke="#0052CC" stroke-width="2"/>
+      <path d="M -40 0 Q -20 35 0 40 Q 20 35 40 0" fill="none" stroke="#0052CC" stroke-width="2"/>
+    </g>
     
     <!-- Atlas figure -->
-    <g transform="translate(0, 55)">
+    <g transform="translate(0, 35)">
       <!-- Body -->
-      <path d="M -8 0 L -8 25 L 8 25 L 8 0 Z" fill="#1E40AF"/>
-      <!-- Arms -->
-      <path d="M -8 5 L -15 -10 L -12 -12 L -5 3" fill="#1E40AF"/>
-      <path d="M 8 5 L 15 -10 L 12 -12 L 5 3" fill="#1E40AF"/>
-      <!-- Legs -->
-      <path d="M -6 25 L -10 40 L -7 42 L -4 27" fill="#1E40AF"/>
-      <path d="M 6 25 L 10 40 L 7 42 L 4 27" fill="#1E40AF"/>
+      <path d="M -15 20 L -12 45 L -8 45 L -8 55 L 8 55 L 8 45 L 12 45 L 15 20 Z" fill="#003D82"/>
+      
+      <!-- Left leg -->
+      <path d="M -8 55 L -12 75 L -14 90 L -12 92 L -8 92 L -6 90 L -4 75 L -2 55" fill="#003D82"/>
+      
+      <!-- Right leg -->
+      <path d="M 8 55 L 10 75 L 12 90 L 10 92 L 6 92 L 4 90 L 2 75 L 2 55" fill="#003D82"/>
+      
+      <!-- Left arm holding sphere -->
+      <path d="M -15 20 Q -25 5 -28 -5 Q -30 -15 -25 -20 L -20 -18 Q -15 -12 -10 0" fill="#003D82"/>
+      
+      <!-- Right arm holding sphere -->
+      <path d="M 15 20 Q 25 5 28 -5 Q 30 -15 25 -20 L 20 -18 Q 15 -12 10 0" fill="#003D82"/>
+      
       <!-- Head -->
-      <circle cx="0" cy="-5" r="5" fill="#1E40AF"/>
+      <circle cx="0" cy="10" r="8" fill="#003D82"/>
+      
+      <!-- Ground line -->
+      <line x1="-50" y1="92" x2="50" y2="92" stroke="#003D82" stroke-width="2"/>
     </g>
   </g>
   
   <!-- ATLAS text -->
-  <text x="200" y="130" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="48" font-weight="900" fill="#1E40AF">ATLAS</text>
+  <text x="200" y="180" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="72" font-weight="900" fill="#0052CC">ATLAS</text>
   
   <!-- FITNESS text -->
-  <text x="200" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="600" fill="#1E40AF" letter-spacing="4px">FITNESS</text>
+  <text x="200" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#003D82" letter-spacing="8px">FITNESS</text>
 </svg>
