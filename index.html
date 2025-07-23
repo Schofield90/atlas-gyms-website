@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlas Gyms - Transform Your Life With Professional Fitness Coaching</title>
-    <meta name="description" content="Join Atlas Gyms in Harrogate or York. Professional fitness coaching, small group training, and a supportive community for lasting results.">
+    <title>Atlas Gyms - Join North Yorkshire's Most Trusted Transformation Programme</title>
+    <meta name="description" content="Join Atlas Gyms in Harrogate or York. 2000+ locals transformed, 100+ five-star reviews. Professional fitness coaching without the gym intimidation.">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000000;
+            background-color: #000000;
+            background-image: url('PXL_20250713_095132976.MP.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             position: relative;
             overflow: hidden;
         }
@@ -35,7 +39,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
         }
         
         .location-content {
@@ -62,10 +67,11 @@
         }
         
         .location-subtitle {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
             font-weight: 300;
+            line-height: 1.5;
         }
         
         .location-grid {
@@ -150,18 +156,56 @@
             transform: translateX(5px);
         }
         
+        /* Social Proof Styles */
+        .social-proof {
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .testimonial-avatars img {
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-avatars img:hover {
+            transform: scale(1.1);
+        }
+        
         @media (max-width: 768px) {
+            .location-hero {
+                background-position: 65% center; /* Adjust for mobile to show people better */
+            }
+            
             .location-hero h1 {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
             
             .location-subtitle {
-                font-size: 1rem;
+                font-size: 0.875rem;
+                line-height: 1.4;
+            }
+            
+            .location-subtitle br {
+                display: none; /* Remove line breaks on mobile */
+            }
+            
+            .trust-badges {
+                font-size: 0.75rem !important;
             }
             
             .location-logo {
-                width: 150px;
-                margin-bottom: 1.5rem;
+                width: 120px;
+                margin-bottom: 1rem;
             }
             
             .location-grid {
@@ -176,6 +220,19 @@
             
             .location-card h2 {
                 font-size: 1.5rem;
+            }
+            
+            .social-proof {
+                margin: 1rem 0 !important;
+            }
+            
+            .testimonial-avatars {
+                flex-wrap: wrap;
+            }
+            
+            .testimonial-avatars img {
+                width: 35px !important;
+                height: 35px !important;
             }
         }
         
@@ -207,8 +264,12 @@
             <img src="logo-01.png" alt="Atlas Fitness" class="location-logo">
             
             <h1>Join North Yorkshire's Most Trusted<br>Transformation Programme</h1>
-            <p style="font-size: 1.125rem; color: #10B981; margin-top: -0.5rem; margin-bottom: 1.5rem; font-weight: 600;">
+            <p style="font-size: 1.125rem; color: #10B981; margin-top: -0.5rem; margin-bottom: 0.5rem; font-weight: 600;">
                 2000+ Locals Transformed, 100+ Five-Star Reviews
+            </p>
+            
+            <p class="trust-badges" style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">
+                100% Money-Back Guarantee • 9 Years Experience • No Gym Intimidation
             </p>
             
             <p class="location-subtitle">
@@ -216,6 +277,23 @@
                 programs have helped over 2000 North Yorkshire residents achieve their fitness goals<br>
                 without stepping foot in a traditional gym
             </p>
+            
+            <!-- Social Proof Elements -->
+            <div class="social-proof" style="margin: 2rem 0;">
+                <div class="testimonial-avatars" style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <img src="staff-1.jpg" alt="Success story" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #10B981;">
+                    <img src="staff-2.jpg" alt="Success story" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #10B981;">
+                    <img src="staff-3.jpg" alt="Success story" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #10B981;">
+                    <img src="staff-4.jpg" alt="Success story" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #10B981;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: 0.5rem;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#FFC107">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span style="color: #FFC107; font-weight: 600;">4.9</span>
+                        <span style="color: rgba(255, 255, 255, 0.8); font-size: 0.875rem;">Google Reviews</span>
+                    </div>
+                </div>
+            </div>
             
             <div class="location-grid">
                 <a href="harrogate.html" class="location-card">
