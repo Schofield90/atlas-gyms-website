@@ -3,613 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlas Gyms | Transform Your Life in 6 Weeks | Professional Fitness Coaching</title>
-    <meta name="description" content="Join Atlas Gyms' 6-week transformation program. Professional small group training, nutrition coaching, and accountability for people who don't like traditional gyms.">
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
-    <link rel="preload" href="#hero-video" as="video">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
+    <title>Atlas Gyms - Transform Your Life With Professional Fitness Coaching</title>
+    <meta name="description" content="Join Atlas Gyms in Harrogate or York. Professional fitness coaching, small group training, and a supportive community for lasting results.">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Schema Markup for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "HealthClub",
-      "name": "Atlas Gyms",
-      "description": "Professional fitness coaching with 6-week transformation programs",
-      "url": "https://www.atlas-gyms.co.uk",
-      "telephone": "+44-7490-253471",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "GB"
-      },
-      "priceRange": "£££",
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Fitness Programs",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "6-Week Kickstart Program"
+    <style>
+        /* Location Selection Specific Styles */
+        .location-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .location-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        }
+        
+        .location-content {
+            text-align: center;
+            z-index: 10;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .location-logo {
+            width: 300px;
+            height: auto;
+            margin-bottom: 3rem;
+        }
+        
+        .location-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        
+        .location-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 4rem;
+            font-weight: 300;
+        }
+        
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .location-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        
+        .location-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .location-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .location-card .demographic {
+            font-size: 1.125rem;
+            color: #10B981;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .location-card .address {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .location-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #10B981;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .location-card:hover .location-cta {
+            background: #059669;
+            transform: translateX(5px);
+        }
+        
+        @media (max-width: 768px) {
+            .location-hero h1 {
+                font-size: 2.5rem;
             }
-          }
-        ]
-      }
-    }
-    </script>
+            
+            .location-subtitle {
+                font-size: 1.125rem;
+            }
+            
+            .location-logo {
+                width: 200px;
+            }
+            
+            .location-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <img src="logo-01.png" alt="Atlas Fitness Logo" class="logo">
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#program" class="nav-link">Program</a></li>
-                <li><a href="#results" class="nav-link">Results</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="#cta" class="nav-link cta-button">Start Today</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-background">
-            <div class="hero-logo-container">
-                <img src="logo-01.png" alt="Atlas Fitness" class="hero-logo">
-            </div>
-        </div>
-        
-        <div class="hero-content">
-            <div class="container">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        Your <span class="highlight">6-Week Transformation</span> in Harrogate & York
-                    </h1>
-                    <p class="hero-subtitle">
-                        Real fitness results for people over 30 who don't like the gym.
+    <section class="location-hero">
+        <div class="location-content">
+            <img src="logo-01.png" alt="Atlas Fitness" class="location-logo">
+            
+            <h1>Transform Your Life With<br>Professional Fitness Coaching</h1>
+            
+            <p class="location-subtitle">
+                Choose your preferred location to begin your fitness journey
+            </p>
+            
+            <div class="location-grid">
+                <a href="harrogate.html" class="location-card">
+                    <h2>Harrogate Location</h2>
+                    <p class="demographic">Men & Women over 30</p>
+                    <p class="address">
+                        Unit 7 Claro Court Business Center<br>
+                        HG1 4BA
                     </p>
-                    
-                    <div class="hero-stats">
-                        <div class="stat">
-                            <span class="stat-number">2000+</span>
-                            <span class="stat-label">Lives Transformed</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">6</span>
-                            <span class="stat-label">Week Program</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">100+</span>
-                            <span class="stat-label">5★ Reviews</span>
-                        </div>
-                    </div>
-                    
-                    <div class="hero-cta">
-                        <a href="#consultation" class="btn btn-primary btn-large">
-                            Start Your Transformation
-                            <span class="btn-arrow">→</span>
-                        </a>
-                        <p class="cta-subtext">Free consultation • No commitment required</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="scroll-indicator">
-            <span>Scroll to discover more</span>
-            <div class="scroll-arrow"></div>
-        </div>
-    </section>
-
-    <!-- Trust Signals -->
-    <section class="trust-signals">
-        <div class="container">
-            <div class="trust-grid">
-                <div class="trust-item">
-                    <div class="trust-icon certified">
-                        🏆
-                    </div>
-                    <span>Certified Professional Trainers</span>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon proven">
-                        ✓
-                    </div>
-                    <span>Proven Results Since 2018</span>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon safe">
-                        👤
-                    </div>
-                    <span>Safe, Supportive Environment</span>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon results">
-                        ⚡
-                    </div>
-                    <span>See Results in 6 Weeks</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Why Atlas Gyms is Different</h2>
-                <p class="section-subtitle">We understand that traditional gyms can be intimidating. That's why we created a better way.</p>
-            </div>
-            
-            <div class="about-grid">
-                <div class="about-content">
-                    <div class="about-text">
-                        <h3>For People Who Don't Like the Gym</h3>
-                        <p>If you've ever felt lost, intimidated, or overwhelmed in a traditional gym, you're not alone. At Atlas Gyms, we've created a welcoming environment where beginners thrive and everyone feels supported.</p>
-                        
-                        <div class="feature-list">
-                            <div class="feature-item">
-                                <span class="feature-icon">👥</span>
-                                <div>
-                                    <h4>Small Group Training</h4>
-                                    <p>Small group sessions ensure personal attention and proper form</p>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">🎯</span>
-                                <div>
-                                    <h4>Beginner-Friendly Approach</h4>
-                                    <p>Every workout is scalable to your current fitness level</p>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">🤝</span>
-                                <div>
-                                    <h4>Supportive Community</h4>
-                                    <p>Train alongside like-minded people on the same journey</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <span class="location-cta">
+                        Book Free Consultation 
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </span>
+                </a>
                 
-                <div class="about-image">
-                    <img src="PXL_20250713_095132976.MP.jpg" alt="Atlas Fitness team training session" loading="lazy">
-                    <div class="image-badge">
-                        <span>5-Star Rated Experience</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Meet the Coaches Section -->
-    <section class="coaches-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Meet Your Atlas Fitness Coaches</h2>
-                <p class="section-subtitle">Our experienced team is here to guide you every step of the way</p>
-            </div>
-            
-            <div class="coaches-grid">
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="staff-1.jpg" alt="Atlas Fitness Coach" loading="lazy">
-                    </div>
-                </div>
-                
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="staff-2.jpg" alt="Atlas Fitness Coach" loading="lazy">
-                    </div>
-                </div>
-                
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="staff-3.jpg" alt="Atlas Fitness Coach" loading="lazy">
-                    </div>
-                </div>
-                
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="staff-4.jpg" alt="Atlas Fitness Coach" loading="lazy">
-                    </div>
-                </div>
-                
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="staff-5.jpg" alt="Atlas Fitness Coach" loading="lazy">
-                    </div>
-                </div>
-                
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="staff-6.jpg" alt="Atlas Fitness Coach" loading="lazy">
-                    </div>
-                </div>
-                
-                <div class="coach-card">
-                    <div class="coach-image">
-                        <img src="staff-7.jpg" alt="Atlas Fitness Coach" loading="lazy">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Program Section -->
-    <section id="program" class="program-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">The 6-Week Kickstart Program</h2>
-                <p class="section-subtitle">Everything you need to transform your health and build lasting habits</p>
-            </div>
-            
-            <div class="program-grid">
-                <div class="program-pillar">
-                    <div class="pillar-icon">
-                        <div class="icon-circle nutrition">
-                            🥗
-                        </div>
-                    </div>
-                    <h3>Smart Nutrition</h3>
-                    <p>No restrictive diets or complicated meal plans. Learn sustainable eating habits that fit your lifestyle and preferences.</p>
-                    <ul class="pillar-features">
-                        <li>Personalized macro guidance</li>
-                        <li>Flexible meal planning</li>
-                        <li>Weekly nutrition check-ins</li>
-                        <li>Recipe suggestions & tips</li>
-                    </ul>
-                </div>
-                
-                <div class="program-pillar">
-                    <div class="pillar-icon">
-                        <div class="icon-circle training">
-                            💪
-                        </div>
-                    </div>
-                    <h3>Effective Training</h3>
-                    <p>Small group personal training sessions designed to build strength, confidence, and proper movement patterns.</p>
-                    <ul class="pillar-features">
-                        <li>3 sessions per week (18 total sessions)</li>
-                        <li>Small group classes</li>
-                        <li>Progressive program design</li>
-                        <li>Form correction & guidance</li>
-                    </ul>
-                </div>
-                
-                <div class="program-pillar">
-                    <div class="pillar-icon">
-                        <div class="icon-circle accountability">
-                            📊
-                        </div>
-                    </div>
-                    <h3>Daily Accountability</h3>
-                    <p>Your dedicated coach will keep you on track with regular check-ins, progress monitoring, and motivation when you need it most.</p>
-                    <ul class="pillar-features">
-                        <li>Weekly progress reviews</li>
-                        <li>WhatsApp support group</li>
-                        <li>Habit tracking system</li>
-                        <li>Motivation & mindset coaching</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="program-cta">
-                <a href="#consultation" class="btn btn-secondary btn-large">
-                    Learn More About Our Program
+                <a href="york.html" class="location-card">
+                    <h2>York Location</h2>
+                    <p class="demographic">Men over 40 only</p>
+                    <p class="address">
+                        4 Auster Road<br>
+                        York, YO30 4XD
+                    </p>
+                    <span class="location-cta">
+                        Book Free Consultation 
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </span>
                 </a>
             </div>
         </div>
     </section>
-
-    <!-- Results Section -->
-    <section id="results" class="results-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Real People, Real Results</h2>
-                <p class="section-subtitle">See authentic transformations and testimonials from our Atlas Fitness family</p>
-            </div>
-            
-            <div class="testimonials-grid">
-                <div class="testimonial-image">
-                    <img src="result-1.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-                <div class="testimonial-image">
-                    <img src="result-2.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-                <div class="testimonial-image">
-                    <img src="result-3.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-                <div class="testimonial-image">
-                    <img src="result-4.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-                <div class="testimonial-image">
-                    <img src="result-5.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-                <div class="testimonial-image">
-                    <img src="result-6.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-                <div class="testimonial-image">
-                    <img src="result-7.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-                <div class="testimonial-image">
-                    <img src="result-8.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-                <div class="testimonial-image">
-                    <img src="result-9.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
-                </div>
-            </div>
-            
-            <div class="results-guarantee">
-                <div class="guarantee-badge">
-                    <span class="guarantee-icon">✓</span>
-                    <div>
-                        <h4>Results Guaranteed</h4>
-                        <p>Follow our program and see results in 6 weeks, or get your money back</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Consultation CTA Section -->
-    <section id="consultation" class="consultation-cta">
-        <div class="container">
-            <div class="cta-content">
-                <div class="cta-text">
-                    <h2>Ready to Start Your Transformation?</h2>
-                    <p>Book your free consultation today. No pressure, no commitment - just an honest conversation about your goals and how we can help you achieve them.</p>
-                    
-                    <div class="cta-benefits">
-                        <div class="benefit-item">
-                            <span class="benefit-icon">✓</span>
-                            <span>Free fitness & nutrition assessment</span>
-                        </div>
-                        <div class="benefit-item">
-                            <span class="benefit-icon">✓</span>
-                            <span>Personalized program recommendation</span>
-                        </div>
-                        <div class="benefit-item">
-                            <span class="benefit-icon">✓</span>
-                            <span>Tour our facility & meet the team</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="cta-form">
-                    <div id="location-selection" class="location-selection">
-                        <h3>Book Your Free Consultation</h3>
-                        <p class="selection-subtitle">Choose your preferred location to get started</p>
-                        
-                        <div class="location-buttons">
-                            <button class="location-button harrogate" data-location="harrogate">
-                                <div class="location-button-content">
-                                    <h4>Harrogate Location</h4>
-                                    <p>Men & Women over 30</p>
-                                    <p class="location-address">Unit 7 Claro Court Business Center, HG1 4BA</p>
-                                    <span class="book-text">Book Consultation →</span>
-                                </div>
-                            </button>
-                            
-                            <button class="location-button york" data-location="york">
-                                <div class="location-button-content">
-                                    <h4>York Location</h4>
-                                    <p>Men over 40 only</p>
-                                    <p class="location-address">4 Auster Road, York, YO30 4XD</p>
-                                    <span class="book-text">Book Consultation →</span>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div id="form-container" class="form-container hidden">
-                        <div class="form-header">
-                            <h3 id="form-title">Book Your Free Consultation</h3>
-                            <button class="back-button" id="back-to-selection">← Choose Different Location</button>
-                        </div>
-                        
-                        <div id="harrogate-form" class="location-form">
-                            <iframe
-                                src="https://link.leaddec.com/widget/form/KkYE0opNxr591fvjB2TZ"
-                                style="width:100%;height:450px;border:none;border-radius:4px"
-                                id="inline-KkYE0opNxr591fvjB2TZ" 
-                                data-layout="{'id':'INLINE'}"
-                                data-trigger-type="alwaysShow"
-                                data-trigger-value=""
-                                data-activation-type="alwaysActivated"
-                                data-activation-value=""
-                                data-deactivation-type="neverDeactivate"
-                                data-deactivation-value=""
-                                data-form-name="Harrogate lead form"
-                                data-height="450"
-                                data-layout-iframe-id="inline-KkYE0opNxr591fvjB2TZ"
-                                data-form-id="KkYE0opNxr591fvjB2TZ"
-                                title="Harrogate lead form">
-                            </iframe>
-                        </div>
-                        
-                        <div id="york-form" class="location-form">
-                            <iframe
-                                src="https://link.leaddec.com/widget/form/pOstBoRnEy5EkPjKVbqG"
-                                style="width:100%;height:450px;border:none;border-radius:4px"
-                                id="inline-pOstBoRnEy5EkPjKVbqG" 
-                                data-layout="{'id':'INLINE'}"
-                                data-trigger-type="alwaysShow"
-                                data-trigger-value=""
-                                data-activation-type="alwaysActivated"
-                                data-activation-value=""
-                                data-deactivation-type="neverDeactivate"
-                                data-deactivation-value=""
-                                data-form-name="York Mens lead form"
-                                data-height="450"
-                                data-layout-iframe-id="inline-pOstBoRnEy5EkPjKVbqG"
-                                data-form-id="pOstBoRnEy5EkPjKVbqG"
-                                title="York Mens lead form">
-                            </iframe>
-                        </div>
-                        
-                        <p class="form-disclaimer">
-                            By submitting this form, you agree to our <a href="https://www.atlas-gyms.co.uk/privacy-policy" target="_blank" style="color: #4F46E5; text-decoration: underline;">Privacy Policy</a>. We respect your privacy and will only contact you about your consultation. No spam, ever.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-            </div>
-            
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>What if I'm a complete beginner?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Perfect! Our program is specifically designed for beginners. Every exercise can be modified to your current fitness level, and our coaches will ensure you learn proper form from day one.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>How many people are in each session?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We keep our sessions small to ensure you get plenty of personal attention while still enjoying the motivation of training with others.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>What's included in the 6-week program?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Your program includes 18 small group training sessions, personalized nutrition guidance, weekly progress check-ins, WhatsApp support group access, and ongoing accountability coaching.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Do I need to follow a strict diet?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>No restrictive diets required! We focus on sustainable nutrition habits that fit your lifestyle. You'll learn how to make better choices without giving up the foods you love.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h2>Get In Touch</h2>
-                    <p>Ready to start your transformation? Have questions about our program? We'd love to hear from you.</p>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <span class="contact-icon">📍</span>
-                            <div>
-                                <h4>Harrogate Location</h4>
-                                <p>Unit 7 Claro Court Business Center<br>Harrogate, HG1 4BA<br><strong>Men & Women over 30</strong><br>Easy parking available</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <span class="contact-icon">📍</span>
-                            <div>
-                                <h4>York Location</h4>
-                                <p>4 Auster Road<br>York, YO30 4XD<br><strong>Men over 40 only</strong><br>Easy parking available</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <span class="contact-icon">📞</span>
-                            <div>
-                                <h4>Phone</h4>
-                                <p>+44 7490 253471</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <span class="contact-icon">✉️</span>
-                            <div>
-                                <h4>Email</h4>
-                                <p>sam@atlas-gyms.co.uk</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook">📘</a>
-                        <a href="#" aria-label="Instagram">📷</a>
-                        <a href="#" aria-label="LinkedIn">💼</a>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <img src="logo-01.png" alt="Atlas Fitness Logo" class="footer-logo">
-                    <p>Transforming lives through professional fitness coaching and supportive community.</p>
-                </div>
-                
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <ul>
-                            <li><a href="https://www.atlas-gyms.co.uk/privacy-policy" target="_blank">Privacy Policy</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 Schofield Fitness Ltd trading as Atlas Fitness. All rights reserved. | Professional fitness coaching in the UK</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        ↑
-    </button>
-
-    <!-- JavaScript -->
-    <script src="script.js"></script>
-    <script src="https://link.leaddec.com/js/form_embed.js"></script>
 </body>
 </html>
