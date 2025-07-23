@@ -12,8 +12,14 @@
     
     <style>
         /* Location Selection Specific Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
         .location-hero {
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -35,113 +41,162 @@
         .location-content {
             text-align: center;
             z-index: 10;
-            padding: 2rem;
-            max-width: 800px;
+            padding: 1rem;
+            max-width: 900px;
             margin: 0 auto;
+            width: 100%;
         }
         
         .location-logo {
-            width: 300px;
+            width: 200px;
             height: auto;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         
         .location-hero h1 {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: white;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             line-height: 1.1;
         }
         
         .location-subtitle {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             font-weight: 300;
         }
         
         .location-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 700px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 800px;
             margin: 0 auto;
         }
         
         .location-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 3rem 2rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
             text-decoration: none;
             color: white;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .location-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .location-card:hover::before {
+            opacity: 1;
         }
         
         .location-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.3);
         }
         
         .location-card h2 {
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             color: white;
         }
         
         .location-card .demographic {
             font-size: 1.125rem;
             color: #10B981;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             font-weight: 600;
         }
         
         .location-card .address {
             font-size: 0.875rem;
             color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 2rem;
-            line-height: 1.6;
+            line-height: 1.4;
         }
         
-        .location-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #10B981;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+        .select-arrow {
+            position: absolute;
+            bottom: 1rem;
+            right: 1.5rem;
+            color: #10B981;
+            transition: transform 0.3s ease;
         }
         
-        .location-card:hover .location-cta {
-            background: #059669;
+        .location-card:hover .select-arrow {
             transform: translateX(5px);
         }
         
         @media (max-width: 768px) {
             .location-hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             
             .location-subtitle {
-                font-size: 1.125rem;
+                font-size: 1rem;
             }
             
             .location-logo {
-                width: 200px;
+                width: 150px;
+                margin-bottom: 1.5rem;
             }
             
             .location-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .location-card {
+                padding: 1.5rem;
+            }
+            
+            .location-card h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .location-logo {
+                width: 150px;
+                margin-bottom: 1rem;
+            }
+            
+            .location-hero h1 {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .location-subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .location-card {
+                padding: 1.5rem 1rem;
             }
         }
     </style>
@@ -154,40 +209,34 @@
             <h1>Transform Your Life With<br>Professional Fitness Coaching</h1>
             
             <p class="location-subtitle">
-                Choose your preferred location to begin your fitness journey
+                Choose your preferred location
             </p>
             
             <div class="location-grid">
                 <a href="harrogate.html" class="location-card">
-                    <h2>Harrogate Location</h2>
+                    <h2>Harrogate</h2>
                     <p class="demographic">Men & Women over 30</p>
                     <p class="address">
                         Unit 7 Claro Court Business Center<br>
                         HG1 4BA
                     </p>
-                    <span class="location-cta">
-                        Book Free Consultation 
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </span>
+                    <svg class="select-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </a>
                 
                 <a href="york.html" class="location-card">
-                    <h2>York Location</h2>
+                    <h2>York</h2>
                     <p class="demographic">Men over 40 only</p>
                     <p class="address">
                         4 Auster Road<br>
                         York, YO30 4XD
                     </p>
-                    <span class="location-cta">
-                        Book Free Consultation 
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </span>
+                    <svg class="select-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </a>
             </div>
         </div>
