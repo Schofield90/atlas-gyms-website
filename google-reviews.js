@@ -32,31 +32,25 @@ class GoogleReviewsWidget {
     }
 
     async fetchReviews() {
-        if (!this.apiKey || !this.placeId) {
-            console.error('Missing API key or Place ID');
+        if (!this.placeId) {
+            console.error('Missing Place ID');
             return;
         }
 
         try {
-            // Fetch place details including reviews
-            const response = await fetch(
-                `https://maps.googleapis.com/maps/api/place/details/json?place_id=${this.placeId}&fields=name,rating,user_ratings_total,reviews&key=${this.apiKey}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            );
-
-            // Note: Due to CORS, this needs to be called from a backend proxy
-            // For now, we'll use a mock response structure
+            // Use the Vercel API endpoint to avoid CORS issues
+            const response = await fetch(`/api/google-reviews?placeId=${this.placeId}`);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const data = await response.json();
             
-            if (data.result) {
-                this.rating = data.result.rating;
-                this.totalReviews = data.result.user_ratings_total;
-                this.reviews = data.result.reviews || [];
+            if (data.rating && data.reviews) {
+                this.rating = data.rating;
+                this.totalReviews = data.totalReviews;
+                this.reviews = data.reviews || [];
                 
                 // Save to cache
                 this.saveToCache({
@@ -70,6 +64,14 @@ class GoogleReviewsWidget {
             }
         } catch (error) {
             console.error('Error fetching reviews:', error);
+            // Fall back to cached data if available
+            const cachedData = this.loadFromCache();
+            if (cachedData) {
+                this.reviews = cachedData.reviews;
+                this.rating = cachedData.rating;
+                this.totalReviews = cachedData.totalReviews;
+                this.render();
+            }
         }
     }
 
@@ -212,91 +214,30 @@ class GoogleReviewsWidget {
     }
 }
 
-// Initialize with mock data for demonstration
-// In production, you'll need to set up a backend proxy to handle Google Places API calls
+// Initialize Google Reviews with live data
 function initGoogleReviews(containerId, location = 'harrogate') {
-    // Mock data structure matching Google Places API response
-    const mockData = {
-        harrogate: {
-            rating: 4.9,
-            totalReviews: 127,
-            reviews: [
-                {
-                    author_name: "Sarah Mitchell",
-                    rating: 5,
-                    text: "Amazing transformation in just 6 weeks! The coaches are incredibly supportive and the small group sessions mean you get personal attention. Lost 2 stone and feel stronger than ever!",
-                    time: Math.floor(Date.now() / 1000) - (7 * 24 * 60 * 60) // 1 week ago
-                },
-                {
-                    author_name: "James Thompson",
-                    rating: 5,
-                    text: "Best decision I've made for my health. The nutrition guidance is practical and sustainable. No crazy diets, just real results. Highly recommend!",
-                    time: Math.floor(Date.now() / 1000) - (14 * 24 * 60 * 60) // 2 weeks ago
-                },
-                {
-                    author_name: "Emma Wilson",
-                    rating: 5,
-                    text: "I was nervous about starting as a complete beginner, but the team made me feel so welcome. The programme is perfectly structured and I'm seeing amazing progress!",
-                    time: Math.floor(Date.now() / 1000) - (21 * 24 * 60 * 60) // 3 weeks ago
-                },
-                {
-                    author_name: "David Brown",
-                    rating: 5,
-                    text: "Professional, friendly, and results-driven. The accountability and support from the coaches is what makes the difference. Worth every penny!",
-                    time: Math.floor(Date.now() / 1000) - (30 * 24 * 60 * 60) // 1 month ago
-                },
-                {
-                    author_name: "Lisa Anderson",
-                    rating: 5,
-                    text: "Life-changing experience! Not just about losing weight but building confidence and healthy habits. The community here is fantastic.",
-                    time: Math.floor(Date.now() / 1000) - (45 * 24 * 60 * 60) // 1.5 months ago
-                }
-            ]
-        },
-        york: {
-            rating: 4.9,
-            totalReviews: 89,
-            reviews: [
-                {
-                    author_name: "Michael Roberts",
-                    rating: 5,
-                    text: "Joined for the fitness, stayed for the brotherhood. My mental health has improved as much as my physical health. The team support is incredible - we genuinely care about each other's success.",
-                    time: Math.floor(Date.now() / 1000) - (5 * 24 * 60 * 60) // 5 days ago
-                },
-                {
-                    author_name: "Paul Harrison",
-                    rating: 5,
-                    text: "As a man struggling with anxiety, this place saved me. Training alongside other guys who understand what you're going through makes all the difference. Lost weight, gained brothers.",
-                    time: Math.floor(Date.now() / 1000) - (10 * 24 * 60 * 60) // 10 days ago
-                },
-                {
-                    author_name: "Steve Clarke",
-                    rating: 5,
-                    text: "The WhatsApp group alone is worth joining for. Having 150+ men supporting each other 24/7 is powerful. We celebrate wins together and pick each other up on tough days.",
-                    time: Math.floor(Date.now() / 1000) - (20 * 24 * 60 * 60) // 20 days ago
-                },
-                {
-                    author_name: "Robert Taylor",
-                    rating: 5,
-                    text: "Never thought I'd find a gym where men talk openly about mental health. The team training pushes you physically while the brotherhood supports you emotionally. Life-changing.",
-                    time: Math.floor(Date.now() / 1000) - (35 * 24 * 60 * 60) // 35 days ago
-                }
-            ]
+    // Load configuration
+    const config = typeof ATLAS_CONFIG !== 'undefined' ? ATLAS_CONFIG : {
+        places: {
+            harrogate: { placeId: 'ChIJ_PLACEHOLDER_HARROGATE' },
+            york: { placeId: 'ChIJ_PLACEHOLDER_YORK' }
         }
     };
 
+    const placeId = config.places[location]?.placeId;
+    
+    if (!placeId || placeId.includes('PLACEHOLDER')) {
+        console.warn(`Place ID not configured for ${location}. Using cached/demo data.`);
+    }
+
     // Create widget instance
     const widget = new GoogleReviewsWidget({
-        apiKey: 'YOUR_API_KEY_HERE', // Replace with actual API key
-        placeId: location === 'york' ? 'YOUR_YORK_PLACE_ID' : 'YOUR_HARROGATE_PLACE_ID',
+        placeId: placeId,
         containerId: containerId
     });
 
-    // Override with mock data for demonstration
-    widget.rating = mockData[location].rating;
-    widget.totalReviews = mockData[location].totalReviews;
-    widget.reviews = mockData[location].reviews;
-    widget.render();
+    // Initialize and fetch reviews
+    widget.init();
 
     return widget;
 }

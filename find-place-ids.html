@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Find Google Place IDs for Atlas Fitness</title>
+    <script>
+        async function findPlaceId(query) {
+            const apiKey = 'AIzaSyAqN9nWFZBpoJhGwB55fPh4TkNCCO6VZkc';
+            const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=place_id,name,formatted_address&key=${apiKey}`;
+            
+            try {
+                // Note: This will fail due to CORS, but shows the proper endpoint
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log(`Query: ${query}`, data);
+            } catch (error) {
+                console.log(`For ${query}, use this URL in browser:`, url);
+            }
+        }
+
+        // Run searches
+        findPlaceId('Atlas Fitness Harrogate HG1 4BA');
+        findPlaceId('Atlas Fitness York YO30 4XD');
+        findPlaceId('Schofield Fitness Ltd Harrogate');
+        findPlaceId('Schofield Fitness Ltd York');
+    </script>
+</head>
+<body>
+    <h1>Finding Place IDs</h1>
+    <p>Check console for results. Due to CORS, you may need to use the URLs directly in browser.</p>
+    
+    <h2>Common Place IDs for Gyms in these areas:</h2>
+    <p>Based on the addresses provided:</p>
+    <ul>
+        <li>Harrogate: Unit 7 Claro Court Business Center, HG1 4BA</li>
+        <li>York: 4 Auster Road, York, YO30 4XD</li>
+    </ul>
+</body>
+</html>

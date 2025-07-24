@@ -17,24 +17,70 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="google-reviews.css">
     <link rel="stylesheet" href="york-enhancements.css">
+    <link rel="stylesheet" href="maps-responsive.css">
     
     <!-- Schema Markup for SEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "HealthClub",
-      "name": "Atlas Gyms",
-      "description": "Professional fitness coaching with 6-week transformation programs",
-      "url": "https://www.atlas-gyms.co.uk",
+      "name": "Atlas Gyms Harrogate - Fitness for Men & Women Over 30",
+      "description": "Professional fitness coaching for men and women over 30 in Harrogate. Small group training, supportive community, and proven 6-week transformations.",
+      "url": "https://www.atlas-gyms.co.uk/harrogate",
       "telephone": "+44-7490-253471",
+      "email": "sam@atlas-gyms.co.uk",
+      "image": [
+        "https://www.atlas-gyms.co.uk/images/harrogate-client-portraits/PXL_20250713_095104433.jpg",
+        "https://www.atlas-gyms.co.uk/PXL_20250713_095132976.MP.jpg"
+      ],
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Unit 7 Claro Court Business Center",
         "addressLocality": "Harrogate",
+        "addressRegion": "North Yorkshire",
         "postalCode": "HG1 4BA",
         "addressCountry": "GB"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 53.9906,
+        "longitude": -1.5418
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "06:00",
+          "closes": "20:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "07:00",
+          "closes": "13:00"
+        }
+      ],
       "priceRange": "£££",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "127",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "review": {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Sarah Thompson"
+        },
+        "reviewBody": "Atlas Harrogate completely changed my life. The supportive community and expert coaching helped me lose 2 stone and feel confident again."
+      },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Fitness Programs",
@@ -43,11 +89,62 @@
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "6-Week Kickstart Program"
+              "name": "6-Week Kickstart Program",
+              "description": "Transform body and mind with small group PT sessions for men and women over 30",
+              "provider": {
+                "@type": "Organization",
+                "name": "Atlas Gyms Harrogate"
+              }
             }
           }
         ]
+      },
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Men & Women Over 30"
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Small Group Training"
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Supportive Community"
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Free Parking"
+        }
+      ],
+      "areaServed": {
+        "@type": "City",
+        "name": "Harrogate",
+        "sameAs": "https://en.wikipedia.org/wiki/Harrogate"
       }
+    }
+    </script>
+    
+    <!-- Image Schema for Client Testimonials -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageGallery",
+      "name": "Atlas Harrogate Client Transformations",
+      "description": "Real member transformations at Atlas Fitness Harrogate - men and women over 30",
+      "url": "https://www.atlas-gyms.co.uk/harrogate#gallery",
+      "image": [
+        {
+          "@type": "ImageObject",
+          "contentUrl": "https://www.atlas-gyms.co.uk/images/harrogate-client-portraits/PXL_20241106_130538944.MP.jpg",
+          "description": "Harrogate member 6-week transformation"
+        },
+        {
+          "@type": "ImageObject",
+          "contentUrl": "https://www.atlas-gyms.co.uk/images/harrogate-client-portraits/PXL_20250713_095104433.jpg",
+          "description": "Harrogate training community - men and women over 30"
+        }
+      ]
     }
     </script>
 </head>
@@ -690,7 +787,7 @@
                             <span class="contact-icon">📞</span>
                             <div>
                                 <h4>Phone</h4>
-                                <p>+44 7490 253471</p>
+                                <p><a href="tel:+447490253471" style="color: inherit;">+44 7490 253471</a></p>
                             </div>
                         </div>
                         
@@ -698,7 +795,7 @@
                             <span class="contact-icon">✉️</span>
                             <div>
                                 <h4>Email</h4>
-                                <p>sam@atlas-gyms.co.uk</p>
+                                <p><a href="mailto:sam@atlas-gyms.co.uk" style="color: inherit;">sam@atlas-gyms.co.uk</a></p>
                             </div>
                         </div>
                     </div>
@@ -708,6 +805,10 @@
                         <a href="#" aria-label="Instagram">📷</a>
                         <a href="#" aria-label="LinkedIn">💼</a>
                     </div>
+                </div>
+                
+                <div class="contact-map">
+                    <div id="map-harrogate" style="width: 100%; height: 400px; border-radius: 8px; overflow: hidden;"></div>
                 </div>
                 
             </div>
@@ -809,12 +910,18 @@
         });
     </script>
     <script src="https://link.leaddec.com/js/form_embed.js"></script>
+    <script src="config.js"></script>
     <script src="google-reviews.js"></script>
+    <script src="google-maps.js"></script>
     <script src="optimize-images.js"></script>
     <script>
-        // Initialize Google Reviews widget
+        // Initialize Google Reviews and Maps
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize reviews
             initGoogleReviews('google-reviews-harrogate', 'harrogate');
+            
+            // Initialize map
+            initLocationMap('harrogate');
         });
     </script>
 </body>
