@@ -27,7 +27,8 @@ class GoogleReviewsWidget {
             const cachedData = this.loadFromCache();
             if (cachedData) {
                 console.log('Using cached data:', cachedData);
-                this.reviews = cachedData.reviews;
+                // Apply filtering to cached reviews as well
+                this.reviews = (cachedData.reviews || []).filter(review => review.rating >= 4);
                 this.rating = cachedData.rating;
                 this.totalReviews = cachedData.totalReviews;
                 this.render();
@@ -62,7 +63,8 @@ class GoogleReviewsWidget {
             if (data.rating && data.reviews) {
                 this.rating = data.rating;
                 this.totalReviews = data.totalReviews;
-                this.reviews = data.reviews || [];
+                // Filter out reviews with rating below 4 stars
+                this.reviews = (data.reviews || []).filter(review => review.rating >= 4);
                 
                 // Save to cache
                 this.saveToCache({
@@ -82,7 +84,8 @@ class GoogleReviewsWidget {
             const cachedData = this.loadFromCache();
             if (cachedData) {
                 console.log('Using fallback cached data');
-                this.reviews = cachedData.reviews;
+                // Apply filtering to fallback cached reviews as well
+                this.reviews = (cachedData.reviews || []).filter(review => review.rating >= 4);
                 this.rating = cachedData.rating;
                 this.totalReviews = cachedData.totalReviews;
                 this.render();
@@ -124,7 +127,7 @@ class GoogleReviewsWidget {
                     <div class="rating-summary">
                         <span class="rating-number">${this.rating}</span>
                         <div class="stars">${this.renderStars(this.rating)}</div>
-                        <span class="total-reviews">Based on ${this.totalReviews} Google Reviews</span>
+                        <span class="total-reviews">Google Reviews</span>
                     </div>
                     <a href="https://www.google.com/maps/place/?q=place_id:${this.placeId}" 
                        target="_blank" 
