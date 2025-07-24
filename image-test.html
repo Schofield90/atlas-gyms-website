@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Test - Atlas Gyms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f3f4f6;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .image-item img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 10px;
+        }
+        .status {
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .status.success {
+            background: #10b981;
+            color: white;
+        }
+        .status.error {
+            background: #ef4444;
+            color: white;
+        }
+        .info {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        pre {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Atlas Gyms - Image Testing Page</h1>
+        
+        <div class="info">
+            <p><strong>Current URL:</strong> <span id="current-url"></span></p>
+            <p><strong>Protocol:</strong> <span id="protocol"></span></p>
+            <p><strong>Recommendation:</strong> <span id="recommendation"></span></p>
+        </div>
+
+        <div class="test-section">
+            <h2>SVG Images</h2>
+            <div class="image-grid">
+                <div class="image-item">
+                    <img src="atlas-logo.svg" alt="Atlas Logo" onload="markSuccess(this)" onerror="markError(this)">
+                    <p>atlas-logo.svg</p>
+                    <span class="status">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>Staff Images (JPG)</h2>
+            <div class="image-grid" id="staff-images"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Result Images (PNG)</h2>
+            <div class="image-grid" id="result-images"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>Browser Console Errors</h2>
+            <pre id="console-errors">No errors detected yet. Check your browser's developer console (F12) for more details.</pre>
+        </div>
+    </div>
+
+    <script>
+        // Display current URL and protocol
+        document.getElementById('current-url').textContent = window.location.href;
+        document.getElementById('protocol').textContent = window.location.protocol;
+        
+        // Show recommendation based on protocol
+        const recommendation = document.getElementById('recommendation');
+        if (window.location.protocol === 'file:') {
+            recommendation.innerHTML = '<strong style="color: #ef4444;">⚠️ You are viewing this file directly. Images may not load due to browser security restrictions. Please use the local server: <code>python3 serve.py</code></strong>';
+        } else {
+            recommendation.innerHTML = '<strong style="color: #10b981;">✓ You are viewing this through a web server. Images should load correctly.</strong>';
+        }
+
+        // Generate staff images
+        const staffContainer = document.getElementById('staff-images');
+        for (let i = 1; i <= 7; i++) {
+            const item = document.createElement('div');
+            item.className = 'image-item';
+            item.innerHTML = `
+                <img src="staff-${i}.jpg" alt="Staff ${i}" onload="markSuccess(this)" onerror="markError(this)">
+                <p>staff-${i}.jpg</p>
+                <span class="status">Loading...</span>
+            `;
+            staffContainer.appendChild(item);
+        }
+
+        // Generate result images
+        const resultContainer = document.getElementById('result-images');
+        for (let i = 1; i <= 9; i++) {
+            const item = document.createElement('div');
+            item.className = 'image-item';
+            item.innerHTML = `
+                <img src="result-${i}.png" alt="Result ${i}" onload="markSuccess(this)" onerror="markError(this)">
+                <p>result-${i}.png</p>
+                <span class="status">Loading...</span>
+            `;
+            resultContainer.appendChild(item);
+        }
+
+        // Mark image load status
+        function markSuccess(img) {
+            const status = img.parentElement.querySelector('.status');
+            status.textContent = 'Loaded';
+            status.className = 'status success';
+        }
+
+        function markError(img) {
+            const status = img.parentElement.querySelector('.status');
+            status.textContent = 'Failed';
+            status.className = 'status error';
+            
+            // Log error
+            const errors = document.getElementById('console-errors');
+            errors.textContent += `\nFailed to load: ${img.src}`;
+        }
+
+        // Capture console errors
+        window.addEventListener('error', function(e) {
+            const errors = document.getElementById('console-errors');
+            errors.textContent += `\nError: ${e.message} at ${e.filename}:${e.lineno}`;
+        });
+
+        // Test fetch API for additional diagnostics
+        async function testImageFetch() {
+            try {
+                const response = await fetch('atlas-logo.svg');
+                if (!response.ok) {
+                    console.error('Fetch failed:', response.status, response.statusText);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        // Run fetch test
+        testImageFetch();
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .test-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .test-image {
+            border: 2px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Atlas Gyms - Image Display Test</h1>
+    
+    <h2>Staff Images (JPG)</h2>
+    <div class="test-container">
+        <div class="test-image">
+            <p>staff-1.jpg</p>
+            <img src="staff-1.jpg" alt="Staff 1" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+        <div class="test-image">
+            <p>staff-2.jpg</p>
+            <img src="staff-2.jpg" alt="Staff 2" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+        <div class="test-image">
+            <p>staff-3.jpg</p>
+            <img src="staff-3.jpg" alt="Staff 3" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+    </div>
+
+    <h2>Result Images (PNG)</h2>
+    <div class="test-container">
+        <div class="test-image">
+            <p>result-1.png</p>
+            <img src="result-1.png" alt="Result 1" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+        <div class="test-image">
+            <p>result-2.png</p>
+            <img src="result-2.png" alt="Result 2" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+        <div class="test-image">
+            <p>result-3.png</p>
+            <img src="result-3.png" alt="Result 3" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+    </div>
+
+    <h2>Logo (SVG)</h2>
+    <div class="test-container">
+        <div class="test-image">
+            <p>atlas-logo.svg</p>
+            <img src="atlas-logo.svg" alt="Atlas Logo" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+    </div>
+
+    <h2>Test with Different Path Formats</h2>
+    <div class="test-container">
+        <div class="test-image">
+            <p>./staff-1.jpg (relative)</p>
+            <img src="./staff-1.jpg" alt="Staff 1 Relative" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+        <div class="test-image">
+            <p>file:// protocol test</p>
+            <img src="file:///Users/samschofield/atlas-gyms-website/staff-1.jpg" alt="Staff 1 File Protocol" onload="this.nextElementSibling.classList.add('success'); this.nextElementSibling.textContent='✓ Loaded'" onerror="this.nextElementSibling.classList.add('error'); this.nextElementSibling.textContent='✗ Failed to load'">
+            <p class="status">Loading...</p>
+        </div>
+    </div>
+
+    <script>
+        console.log('Test page loaded');
+        console.log('Current URL:', window.location.href);
+        console.log('Protocol:', window.location.protocol);
+        
+        // Check if running on file:// protocol
+        if (window.location.protocol === 'file:') {
+            document.body.insertAdjacentHTML('afterbegin', 
+                '<div style="background: #fff3cd; color: #856404; padding: 15px; margin-bottom: 20px; border: 1px solid #ffeaa7; border-radius: 4px;">' +
+                '<strong>Warning:</strong> This page is being viewed using the file:// protocol. ' +
+                'Some browsers restrict loading local images for security reasons. ' +
+                'For best results, serve this page through a web server (http:// or https://).' +
+                '</div>'
+            );
+        }
+    </script>
+</body>
+</html>

@@ -570,7 +570,7 @@
     <!-- JavaScript -->
     <script src="script.js"></script>
     <script>
-        // Prevent form from redirecting on page load
+        // Enhanced form handling to control redirects
         document.addEventListener('DOMContentLoaded', function() {
             // Ensure we start at the top of the page
             window.scrollTo(0, 0);
@@ -585,13 +585,50 @@
                 }, 1000);
             }
             
-            // Prevent form iframe from redirecting the parent page
+            // Monitor form iframe for submission
             const formIframe = document.querySelector('#inline-KkYE0opNxr591fvjB2TZ');
+            let formSubmitted = false;
+            
             if (formIframe) {
+                // Listen for messages from the iframe
+                window.addEventListener('message', function(event) {
+                    // Check if this is a form submission event
+                    if (event.data && (event.data.type === 'hsFormCallback' || event.data.type === 'form-submitted')) {
+                        formSubmitted = true;
+                        // Redirect to booking page after a short delay
+                        setTimeout(function() {
+                            window.location.href = '/harrogate-booking.html';
+                        }, 500);
+                    }
+                });
+                
+                // Monitor iframe navigation attempts
                 formIframe.addEventListener('load', function() {
+                    // If the form was submitted, redirect to booking page
+                    if (formSubmitted) {
+                        window.location.href = '/harrogate-booking.html';
+                    }
                     // Keep focus on main page
                     window.focus();
                 });
+                
+                // Prevent iframe from changing parent location
+                const originalLocation = window.location.href;
+                setInterval(function() {
+                    if (window.location.href !== originalLocation && !window.location.href.includes('harrogate-booking.html')) {
+                        window.location.href = '/harrogate-booking.html';
+                    }
+                }, 100);
+            }
+        });
+        
+        // Override window.top navigation attempts
+        Object.defineProperty(window, 'top', {
+            get: function() {
+                return window;
+            },
+            set: function() {
+                return window;
             }
         });
     </script>
