@@ -14,6 +14,14 @@ class GoogleReviewsWidget {
 
     async init() {
         console.log('Initializing Google Reviews for:', this.placeId);
+        
+        // Check if we have a valid Place ID
+        if (!this.placeId || this.placeId.includes('PLACEHOLDER')) {
+            console.error('Invalid Place ID provided:', this.placeId);
+            this.renderError();
+            return;
+        }
+        
         try {
             // Try to load from cache first
             const cachedData = this.loadFromCache();

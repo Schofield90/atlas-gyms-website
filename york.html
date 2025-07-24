@@ -904,15 +904,21 @@
             }
         });
         
-        // Override window.top navigation attempts
-        Object.defineProperty(window, 'top', {
-            get: function() {
-                return window;
-            },
-            set: function() {
-                return window;
+        // Override window.top navigation attempts (only if not already defined)
+        if (!window.hasOwnProperty('top') || window.top !== window) {
+            try {
+                Object.defineProperty(window, 'top', {
+                    get: function() {
+                        return window;
+                    },
+                    set: function() {
+                        return window;
+                    }
+                });
+            } catch (error) {
+                console.log('Could not override window.top:', error);
             }
-        });
+        }
     </script>
     <script src="https://link.leaddec.com/js/form_embed.js"></script>
     <script src="config.js"></script>

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const config = {
         places: {
             harrogate: {
-                placeId: process.env.HARROGATE_PLACE_ID || 'ChIJ_PLACEHOLDER_HARROGATE',
+                placeId: process.env.HARROGATE_PLACE_ID || 'ChIJNX501rGGqUcRy3-H-3fVW7Y',
                 businessName: 'Atlas Fitness Harrogate',
                 coordinates: {
                     lat: 53.9906,
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
                 }
             },
             york: {
-                placeId: process.env.YORK_PLACE_ID || 'ChIJ_PLACEHOLDER_YORK',
+                placeId: process.env.YORK_PLACE_ID || 'ChIJ1cksHLvGeEgRDZmvSgIgAOi4',
                 businessName: 'Atlas Fitness York',
                 coordinates: {
                     lat: 53.9897,
