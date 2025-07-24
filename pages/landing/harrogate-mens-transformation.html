@@ -103,10 +103,17 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(rgba(26, 26, 26, 0.8), rgba(45, 45, 45, 0.8)), 
+                        url('/images/gym-photos/harrogate-mens-hero.jpg') center center;
+            background-size: cover;
+            background-position: center 35%;
             color: white;
-            padding: 60px 0 40px;
+            padding: 100px 0 80px;
             text-align: center;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
         }
         
         .hero-headline {
@@ -114,12 +121,14 @@
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
         
         .hero-subheadline {
             font-size: 18px;
             margin-bottom: 30px;
-            opacity: 0.9;
+            opacity: 0.95;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
         
         .hero-image {
@@ -479,11 +488,6 @@
                 <span class="trust-badge">✓ 100% Guarantee</span>
             </div>
             
-            <img src="/images/harrogate-client-portraits/PXL_20250713_095104433.jpg" 
-                 alt="Harrogate men training together at Atlas Fitness" 
-                 class="hero-image animate" 
-                 style="animation-delay: 0.8s;"
-                 loading="eager">
         </div>
     </section>
 
