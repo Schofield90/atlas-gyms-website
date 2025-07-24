@@ -437,6 +437,14 @@
             }
         }
         
+        @media (max-width: 767px) {
+            .transformation-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                grid-template-rows: repeat(3, 1fr) !important;
+                gap: 15px !important;
+            }
+        }
+        
         @media (min-width: 1024px) {
             .hero-headline {
                 font-size: 56px;
@@ -593,7 +601,7 @@
                 See The Transformations For Yourself
             </h3>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 1200px; margin: 0 auto;">
+            <div class="transformation-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto;">
                 <img src="/result-1.png" alt="13 lbs lost in 6 weeks transformation" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
                 <img src="/result-2.png" alt="13 lbs lost in 6 weeks transformation" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
                 <img src="/result-4.png" alt="14 lbs lost in 6 weeks transformation" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
