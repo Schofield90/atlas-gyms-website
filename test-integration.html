@@ -102,16 +102,32 @@
 
         // Search for Place IDs
         async function searchPlace(query) {
-            const apiKey = 'AIzaSyAqN9nWFZBpoJhGwB55fPh4TkNCCO6VZkc';
-            const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=place_id,name,formatted_address&key=${apiKey}`;
-            
-            document.getElementById('place-results').textContent = `Search query: "${query}"\n\nNote: Due to CORS, you need to use this URL in a new browser tab:\n${url}\n\nLook for the "place_id" in the response.`;
+            // Use the API endpoint instead of direct Google API call
+            try {
+                const response = await fetch(`/api/find-place?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates.length > 0) {
+                    let result = `Search results for "${query}":\n\n`;
+                    data.candidates.forEach(place => {
+                        result += `Name: ${place.name}\n`;
+                        result += `Address: ${place.formatted_address}\n`;
+                        result += `Place ID: ${place.place_id}\n\n`;
+                    });
+                    document.getElementById('place-results').textContent = result;
+                } else {
+                    document.getElementById('place-results').textContent = `No results found for "${query}"`;
+                }
+            } catch (error) {
+                document.getElementById('place-results').textContent = `Error: ${error.message}`;
+            }
         }
 
         // Load Google Maps
         function loadGoogleMaps() {
             const script = document.createElement('script');
-            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAqN9nWFZBpoJhGwB55fPh4TkNCCO6VZkc&callback=initMap';
+            // API key should come from server-side configuration
+            script.src = 'https://maps.googleapis.com/maps/api/js?callback=initMap';
             script.async = true;
             script.defer = true;
             document.head.appendChild(script);

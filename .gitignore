@@ -9,6 +9,7 @@
 # Environment variables
 .env
 .env.local
+.env.*
 
 # Editor directories
 .vscode/
@@ -19,3 +20,12 @@
 *.temp
 *.swp
 *~
+
+# API keys and secrets - NEVER commit these
+**/api-keys.js
+**/secrets.js
+config.local.js
+
+# Files containing API keys
+*-with-keys.js
+*-api-key*

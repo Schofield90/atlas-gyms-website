@@ -36,7 +36,8 @@ const ATLAS_CONFIG = {
     
     // API Keys (loaded from environment variables in production)
     api: {
-        googleMapsKey: 'AIzaSyAqN9nWFZBpoJhGwB55fPh4TkNCCO6VZkc'
+        // DO NOT hardcode API keys - load from environment
+        googleMapsKey: null // Set via environment variables
     }
 };
 

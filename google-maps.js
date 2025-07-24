@@ -30,7 +30,8 @@ class GoogleMapsIntegration {
 
             const script = document.createElement('script');
             script.id = 'google-maps-script';
-            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAqN9nWFZBpoJhGwB55fPh4TkNCCO6VZkc&libraries=places`;
+            // API key should be loaded from environment variables, not hardcoded
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${window.GOOGLE_MAPS_API_KEY || ''}&libraries=places`;
             script.async = true;
             script.defer = true;
             script.onload = resolve;
