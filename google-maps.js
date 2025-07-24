@@ -13,31 +13,47 @@ class GoogleMapsIntegration {
     }
 
     async init() {
-        // Load Google Maps script if not already loaded
-        if (!window.google || !window.google.maps) {
-            await this.loadGoogleMapsScript();
+        try {
+            // Load Google Maps script if not already loaded
+            if (!window.google || !window.google.maps) {
+                await this.loadGoogleMapsScript();
+            }
+            
+            this.initMap();
+        } catch (error) {
+            console.error('Failed to initialize Google Maps:', error);
+            this.showMapError();
         }
-        
-        this.initMap();
     }
 
-    loadGoogleMapsScript() {
-        return new Promise((resolve, reject) => {
-            if (document.getElementById('google-maps-script')) {
-                resolve();
-                return;
+    async loadGoogleMapsScript() {
+        if (document.getElementById('google-maps-script')) {
+            return;
+        }
+
+        try {
+            // Fetch API key from server
+            const response = await fetch('/api/maps-key');
+            const data = await response.json();
+            
+            if (!data.apiKey) {
+                throw new Error('No API key available');
             }
 
-            const script = document.createElement('script');
-            script.id = 'google-maps-script';
-            // API key should be loaded from environment variables, not hardcoded
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${window.GOOGLE_MAPS_API_KEY || ''}&libraries=places`;
-            script.async = true;
-            script.defer = true;
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
-        });
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.id = 'google-maps-script';
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&libraries=places`;
+                script.async = true;
+                script.defer = true;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        } catch (error) {
+            console.error('Failed to load Maps API:', error);
+            throw error;
+        }
     }
 
     initMap() {
@@ -137,6 +153,24 @@ class GoogleMapsIntegration {
 
         // Add mobile-friendly controls
         this.addMobileControls(mapElement);
+    }
+
+    showMapError() {
+        const mapElement = document.getElementById(this.mapId);
+        if (!mapElement) return;
+        
+        mapElement.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f5f5f5; color: #666;">
+                <div style="text-align: center; padding: 20px;">
+                    <p style="margin: 0 0 10px 0;">Unable to load map</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${this.lat},${this.lng}" 
+                       target="_blank" 
+                       style="color: #4F46E5; text-decoration: underline;">
+                        View on Google Maps →
+                    </a>
+                </div>
+            </div>
+        `;
     }
 
     addMobileControls(mapElement) {
