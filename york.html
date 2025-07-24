@@ -16,16 +16,21 @@
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="google-reviews.css">
+    <link rel="stylesheet" href="york-enhancements.css">
     
     <!-- Schema Markup for SEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "HealthClub",
-      "name": "Atlas Gyms",
-      "description": "Professional fitness coaching with 6-week transformation programs",
-      "url": "https://www.atlas-gyms.co.uk",
+      "name": "Atlas Gyms York - Men's Only Fitness",
+      "description": "Exclusive fitness coaching for men over 40 in York. Mental health support, brotherhood training, and proven 6-week transformations.",
+      "url": "https://www.atlas-gyms.co.uk/york",
       "telephone": "+44-7490-253471",
+      "image": [
+        "https://www.atlas-gyms.co.uk/images/gym-photos/PXL_20250713_095132976.MP.jpg",
+        "https://www.atlas-gyms.co.uk/images/client-portraits/PXL_20250322_100157025.jpg"
+      ],
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "4 Auster Road",
@@ -34,19 +39,62 @@
         "addressCountry": "GB"
       },
       "priceRange": "£££",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "89"
+      },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "Fitness Programs",
+        "name": "Men's Fitness Programs",
         "itemListElement": [
           {
             "@type": "Offer",
             "itemOffered": {
               "@type": "Service",
-              "name": "6-Week Kickstart Program"
+              "name": "6-Week Brotherhood Challenge",
+              "description": "Transform body and mind with unlimited group PT sessions for men over 40"
             }
           }
         ]
-      }
+      },
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Men Only Facility"
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Mental Health Support"
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Small Group Training (12 men)"
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Image Schema for Client Testimonials -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageGallery",
+      "name": "Atlas York Client Transformations",
+      "description": "Real member transformations at Atlas Fitness York - men over 40",
+      "url": "https://www.atlas-gyms.co.uk/york#gallery",
+      "image": [
+        {
+          "@type": "ImageObject",
+          "contentUrl": "https://www.atlas-gyms.co.uk/images/client-portraits/PXL_20250322_090556688.PORTRAIT.jpg",
+          "description": "York member 6-week transformation"
+        },
+        {
+          "@type": "ImageObject",
+          "contentUrl": "https://www.atlas-gyms.co.uk/images/client-portraits/PXL_20250322_100157025.jpg",
+          "description": "York training team - 12 men per session"
+        }
+      ]
     }
     </script>
 </head>
@@ -74,14 +122,14 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-background">
+    <section class="hero" style="position: relative; background-image: url('images/gym-photos/PXL_20250713_095132976.MP.jpg'); background-size: cover; background-position: center;">
+        <div class="hero-background" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
             <div class="hero-logo-container">
                 <img src="logo-01.png" alt="Atlas Fitness" class="hero-logo">
             </div>
         </div>
         
-        <div class="hero-content">
+        <div class="hero-content" style="position: relative; z-index: 2;">
             <div class="container">
                 <div class="hero-text">
                     <h1 class="hero-title">
@@ -264,6 +312,74 @@
         </div>
     </section>
 
+    <!-- Client Success Gallery -->
+    <section class="client-gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Real Atlas York Members</h2>
+                <p class="section-subtitle">Meet some of the 150+ men who've transformed their lives with us</p>
+            </div>
+            
+            <div class="client-gallery">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_090556688.PORTRAIT.jpg" 
+                             alt="Atlas York member - transformed after 6 weeks" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>6-Week Transformation</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_091840387.PORTRAIT.jpg" 
+                             alt="York man over 40 fitness transformation" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Lost 2 Stone</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_092423238.PORTRAIT.jpg" 
+                             alt="Atlas Fitness York member success story" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Mental Health Win</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_093138898.PORTRAIT.jpg" 
+                             alt="Brotherhood member at Atlas York" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Gained Confidence</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_094441421.PORTRAIT.jpg" 
+                             alt="York fitness transformation for men" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Stronger at 50</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_095317279.jpg" 
+                             alt="Atlas York member portrait" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Life Changed</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-cta">
+                    <p>Every face tells a story of transformation, brotherhood, and renewed confidence.</p>
+                    <a href="#consultation" class="btn btn-secondary">Start Your Story</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Program Section -->
     <section id="program" class="program-section">
         <div class="container">
@@ -386,6 +502,42 @@
         </div>
     </section>
 
+    <!-- Trust Building Banner -->
+    <section class="trust-banner">
+        <div class="container">
+            <div class="trust-banner-content">
+                <div class="client-faces-mosaic">
+                    <div class="face-grid">
+                        <img src="images/client-portraits/PXL_20250322_090601709.PORTRAIT.jpg" 
+                             alt="Atlas York member" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_091228618.PORTRAIT.jpg" 
+                             alt="York fitness member" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_092531060.PORTRAIT.jpg" 
+                             alt="Brotherhood member" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_093138898.PORTRAIT.jpg" 
+                             alt="Atlas transformation" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_094441421.PORTRAIT.jpg" 
+                             alt="York member success" 
+                             class="face-small"
+                             loading="lazy">
+                    </div>
+                    <div class="trust-text-overlay">
+                        <h3>Join 150+ York Men Who've Transformed Their Lives</h3>
+                        <p>Real faces. Real results. Real brotherhood.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Consultation CTA Section -->
     <section id="consultation" class="consultation-cta">
         <div class="container">
@@ -471,6 +623,13 @@
                     </button>
                     <div class="faq-answer">
                         <p>We train in groups of 12 men per session. This creates the perfect balance - small enough for personal attention and real connections, large enough for that powerful team atmosphere where everyone pushes each other to succeed.</p>
+                        <div class="faq-image">
+                            <img src="images/client-portraits/PXL_20250322_100157025.jpg" 
+                                 alt="Your York training team - 12 men per session at Atlas Fitness" 
+                                 loading="lazy"
+                                 style="width: 100%; max-width: 600px; border-radius: 8px; margin-top: 1rem;">
+                            <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem; font-style: italic;">Your York training team - brotherhood in action</p>
+                        </div>
                     </div>
                 </div>
                 
@@ -648,6 +807,7 @@
     </script>
     <script src="https://link.leaddec.com/js/form_embed.js"></script>
     <script src="google-reviews.js"></script>
+    <script src="optimize-images.js"></script>
     <script>
         // Initialize Google Reviews widget
         document.addEventListener('DOMContentLoaded', function() {

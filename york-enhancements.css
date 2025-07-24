@@ -1,0 +1,236 @@
+/* York Page Photo Enhancements */
+
+/* Client Success Gallery */
+.client-gallery-section {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 3rem 0;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 1.5rem;
+    color: white;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-overlay span {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.gallery-cta {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.gallery-cta p {
+    font-size: 1.25rem;
+    color: #374151;
+    margin-bottom: 1.5rem;
+}
+
+/* Trust Banner */
+.trust-banner {
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    padding: 3rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.trust-banner-content {
+    position: relative;
+}
+
+.client-faces-mosaic {
+    position: relative;
+    min-height: 200px;
+}
+
+.face-grid {
+    display: flex;
+    justify-content: center;
+    gap: -20px;
+    filter: blur(2px);
+    opacity: 0.3;
+}
+
+.face-small {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    margin: 0 -10px;
+}
+
+.trust-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+}
+
+.trust-text-overlay h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.trust-text-overlay p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* FAQ Image Enhancement */
+.faq-image {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.faq-image img {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero Background Enhancement */
+.hero {
+    min-height: 100vh;
+}
+
+.hero-content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .gallery-item img {
+        height: 250px;
+    }
+    
+    .gallery-overlay {
+        transform: translateY(0);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+        padding: 1rem;
+    }
+    
+    .face-grid {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .face-small {
+        width: 60px;
+        height: 60px;
+        margin: 0;
+    }
+    
+    .trust-text-overlay h3 {
+        font-size: 1.5rem;
+    }
+    
+    .trust-text-overlay p {
+        font-size: 1rem;
+    }
+}
+
+/* Image Optimization */
+img[loading="lazy"] {
+    background: #f3f4f6;
+}
+
+/* SEO-friendly image captions */
+.image-caption {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+/* Accessibility improvements */
+.gallery-item:focus-within {
+    outline: 3px solid #4F46E5;
+    outline-offset: 2px;
+}
+
+/* Performance optimization with will-change */
+.gallery-item {
+    will-change: transform;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.gallery-item.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-overlay {
+    will-change: transform;
+}
+
+/* Loading states */
+img.lazyload {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+/* Hero loading optimization */
+.hero {
+    background-color: #000;
+    transition: opacity 0.5s ease;
+}
+
+.hero.hero-loaded {
+    opacity: 1;
+}
