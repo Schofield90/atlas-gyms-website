@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Image Loading</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .image-test {
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        img {
+            max-width: 200px;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            margin: 10px 0;
+        }
+        .status {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Atlas Gyms - Image Debug Test</h1>
+    
+    <div class="image-test">
+        <h3>Test 1: Client Portrait (First Gallery Image)</h3>
+        <img id="test1" src="images/client-portraits/PXL_20250322_090556688.PORTRAIT.jpg" alt="Test 1">
+        <div class="status" id="status1">Loading...</div>
+    </div>
+    
+    <div class="image-test">
+        <h3>Test 2: Staff Image (Should Work)</h3>
+        <img id="test2" src="staff-1.jpg" alt="Test 2">
+        <div class="status" id="status2">Loading...</div>
+    </div>
+    
+    <div class="image-test">
+        <h3>Test 3: Logo (Should Work)</h3>
+        <img id="test3" src="logo-01.png" alt="Test 3">
+        <div class="status" id="status3">Loading...</div>
+    </div>
+    
+    <div class="image-test">
+        <h3>Test 4: Hero Background</h3>
+        <img id="test4" src="images/gym-photos/PXL_20250713_095132976.MP.jpg" alt="Test 4">
+        <div class="status" id="status4">Loading...</div>
+    </div>
+
+    <script>
+        // Test each image
+        const tests = [
+            { id: 'test1', status: 'status1' },
+            { id: 'test2', status: 'status2' },
+            { id: 'test3', status: 'status3' },
+            { id: 'test4', status: 'status4' }
+        ];
+        
+        tests.forEach(test => {
+            const img = document.getElementById(test.id);
+            const status = document.getElementById(test.status);
+            
+            img.onload = function() {
+                status.textContent = '✓ Image loaded successfully';
+                status.className = 'status success';
+            };
+            
+            img.onerror = function() {
+                status.textContent = '✗ Error loading image: ' + img.src;
+                status.className = 'status error';
+            };
+        });
+        
+        // Log current location
+        document.write('<h3>Current Location: ' + window.location.href + '</h3>');
+    </script>
+</body>
+</html>
