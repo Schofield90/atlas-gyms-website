@@ -260,25 +260,25 @@ function initGoogleReviews(containerId, location = 'harrogate') {
                 {
                     author_name: "Michael Roberts",
                     rating: 5,
-                    text: "Perfect for men over 40. The programme understands our specific needs and limitations. Lost 3 stone and reduced all my health markers!",
+                    text: "Joined for the fitness, stayed for the brotherhood. My mental health has improved as much as my physical health. The team support is incredible - we genuinely care about each other's success.",
                     time: Math.floor(Date.now() / 1000) - (5 * 24 * 60 * 60) // 5 days ago
                 },
                 {
                     author_name: "Paul Harrison",
                     rating: 5,
-                    text: "Finally found a gym where I feel comfortable. Great bunch of lads, excellent coaching, and real results. Wish I'd joined sooner!",
+                    text: "As a man struggling with anxiety, this place saved me. Training alongside other guys who understand what you're going through makes all the difference. Lost weight, gained brothers.",
                     time: Math.floor(Date.now() / 1000) - (10 * 24 * 60 * 60) // 10 days ago
                 },
                 {
                     author_name: "Steve Clarke",
                     rating: 5,
-                    text: "The brotherhood atmosphere is brilliant. Everyone supports each other and the coaches really know their stuff. Fitter at 55 than I was at 35!",
+                    text: "The WhatsApp group alone is worth joining for. Having 150+ men supporting each other 24/7 is powerful. We celebrate wins together and pick each other up on tough days.",
                     time: Math.floor(Date.now() / 1000) - (20 * 24 * 60 * 60) // 20 days ago
                 },
                 {
                     author_name: "Robert Taylor",
                     rating: 5,
-                    text: "No intimidation, no judgment, just results. The nutrition advice actually works in real life. Down 2 stone and feeling fantastic!",
+                    text: "Never thought I'd find a gym where men talk openly about mental health. The team training pushes you physically while the brotherhood supports you emotionally. Life-changing.",
                     time: Math.floor(Date.now() / 1000) - (35 * 24 * 60 * 60) // 35 days ago
                 }
             ]
