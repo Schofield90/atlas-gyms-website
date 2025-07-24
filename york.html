@@ -921,9 +921,9 @@
     <script src="optimize-images.js"></script>
     <script>
         // Initialize Google Reviews and Maps
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             // Initialize reviews
-            initGoogleReviews('google-reviews-york', 'york');
+            await initGoogleReviews('google-reviews-york', 'york');
             
             // Initialize map
             initLocationMap('york');

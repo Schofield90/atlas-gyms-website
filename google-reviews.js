@@ -222,31 +222,46 @@ class GoogleReviewsWidget {
 }
 
 // Initialize Google Reviews with live data
-function initGoogleReviews(containerId, location = 'harrogate') {
-    // Load configuration
-    const config = typeof ATLAS_CONFIG !== 'undefined' ? ATLAS_CONFIG : {
-        places: {
-            harrogate: { placeId: 'ChIJ_PLACEHOLDER_HARROGATE' },
-            york: { placeId: 'ChIJ_PLACEHOLDER_YORK' }
-        }
-    };
-
-    const placeId = config.places[location]?.placeId;
+async function initGoogleReviews(containerId, location = 'harrogate') {
+    console.log('Starting initGoogleReviews for:', location, containerId);
     
-    if (!placeId || placeId.includes('PLACEHOLDER')) {
-        console.warn(`Place ID not configured for ${location}. Using cached/demo data.`);
+    try {
+        // First try to load config from API
+        const response = await fetch('/api/config');
+        const config = await response.json();
+        console.log('Loaded config from API:', config);
+        
+        const placeId = config.places[location]?.placeId;
+        
+        if (!placeId || placeId.includes('PLACEHOLDER')) {
+            console.warn(`Place ID not configured for ${location}. Place ID: ${placeId}`);
+            return;
+        }
+
+        // Create widget instance
+        const widget = new GoogleReviewsWidget({
+            placeId: placeId,
+            containerId: containerId
+        });
+
+        // Initialize and fetch reviews
+        await widget.init();
+        
+        return widget;
+    } catch (error) {
+        console.error('Error initializing reviews:', error);
+        
+        // Show error message in the container
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: #666;">
+                    <p>Unable to load reviews at this time.</p>
+                    <p style="font-size: 0.875rem;">Please try refreshing the page.</p>
+                </div>
+            `;
+        }
     }
-
-    // Create widget instance
-    const widget = new GoogleReviewsWidget({
-        placeId: placeId,
-        containerId: containerId
-    });
-
-    // Initialize and fetch reviews
-    widget.init();
-
-    return widget;
 }
 
 // Export for use in other files

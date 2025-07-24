@@ -915,9 +915,9 @@
     <script src="optimize-images.js"></script>
     <script>
         // Initialize Google Reviews and Maps
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             // Initialize reviews
-            initGoogleReviews('google-reviews-harrogate', 'harrogate');
+            await initGoogleReviews('google-reviews-harrogate', 'harrogate');
             
             // Initialize map
             initLocationMap('harrogate');
