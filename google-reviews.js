@@ -13,10 +13,12 @@ class GoogleReviewsWidget {
     }
 
     async init() {
+        console.log('Initializing Google Reviews for:', this.placeId);
         try {
             // Try to load from cache first
             const cachedData = this.loadFromCache();
             if (cachedData) {
+                console.log('Using cached data:', cachedData);
                 this.reviews = cachedData.reviews;
                 this.rating = cachedData.rating;
                 this.totalReviews = cachedData.totalReviews;
@@ -37,6 +39,7 @@ class GoogleReviewsWidget {
             return;
         }
 
+        console.log('Fetching reviews for Place ID:', this.placeId);
         try {
             // Use the Vercel API endpoint to avoid CORS issues
             const response = await fetch(`/api/google-reviews?placeId=${this.placeId}`);
@@ -46,6 +49,7 @@ class GoogleReviewsWidget {
             }
             
             const data = await response.json();
+            console.log('Received review data:', data);
             
             if (data.rating && data.reviews) {
                 this.rating = data.rating;
@@ -61,12 +65,15 @@ class GoogleReviewsWidget {
                 });
                 
                 this.render();
+            } else {
+                console.error('Invalid review data structure:', data);
             }
         } catch (error) {
             console.error('Error fetching reviews:', error);
             // Fall back to cached data if available
             const cachedData = this.loadFromCache();
             if (cachedData) {
+                console.log('Using fallback cached data');
                 this.reviews = cachedData.reviews;
                 this.rating = cachedData.rating;
                 this.totalReviews = cachedData.totalReviews;
