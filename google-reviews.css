@@ -1,0 +1,246 @@
+/* Google Reviews Widget Styles */
+.google-reviews-widget {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+}
+
+.reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.rating-summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rating-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1F2937;
+    line-height: 1;
+}
+
+.stars {
+    font-size: 1.5rem;
+    color: #FFC107;
+}
+
+.total-reviews {
+    font-size: 0.95rem;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+.view-all-link {
+    color: #4F46E5;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.view-all-link:hover {
+    color: #4338CA;
+}
+
+/* Reviews Carousel */
+.reviews-carousel {
+    position: relative;
+    min-height: 180px;
+    overflow: hidden;
+}
+
+.review-slide {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s ease-in-out;
+}
+
+.review-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.review-content {
+    background: #F9FAFB;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border-left: 4px solid #10B981;
+}
+
+.review-stars {
+    font-size: 1.25rem;
+    color: #FFC107;
+    margin-bottom: 0.75rem;
+}
+
+.review-text {
+    color: #374151;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.review-author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+.author-name {
+    color: #1F2937;
+    font-weight: 600;
+}
+
+.review-date {
+    color: #9CA3AF;
+}
+
+/* Inline Reviews Section for Hero */
+.inline-google-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 1rem;
+}
+
+.inline-google-rating .stars {
+    font-size: 1rem;
+    color: #FFC107;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.inline-google-rating .rating-text {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Trust Section Reviews */
+.trust-reviews {
+    background: linear-gradient(135deg, #F3F4F6 0%, #F9FAFB 100%);
+    padding: 3rem 0;
+    margin: 3rem 0;
+}
+
+.trust-reviews .section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #1F2937;
+    margin-bottom: 0.5rem;
+}
+
+.trust-reviews .section-subtitle {
+    text-align: center;
+    color: #6B7280;
+    margin-bottom: 2rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .google-reviews-widget {
+        padding: 1.5rem;
+    }
+    
+    .reviews-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .rating-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .rating-number {
+        font-size: 2.5rem;
+    }
+    
+    .review-content {
+        padding: 1rem;
+    }
+    
+    .review-text {
+        font-size: 0.95rem;
+    }
+    
+    .review-author {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+/* Loading State */
+.google-reviews-widget.loading {
+    position: relative;
+    min-height: 200px;
+}
+
+.google-reviews-widget.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid #E5E7EB;
+    border-top-color: #10B981;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Error State */
+.google-reviews-widget.error {
+    text-align: center;
+    color: #6B7280;
+    padding: 3rem;
+}
+
+/* Integration with existing styles */
+.hero-stats {
+    margin-bottom: 1rem;
+}
+
+.google-powered {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    margin-top: 0.5rem;
+}
+
+.google-powered img {
+    height: 12px;
+    opacity: 0.7;
+}

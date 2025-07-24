@@ -15,6 +15,7 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="google-reviews.css">
     
     <!-- Schema Markup for SEO -->
     <script type="application/ld+json">
@@ -103,6 +104,11 @@
                             <span class="stat-number">30+</span>
                             <span class="stat-label">Average Member Age</span>
                         </div>
+                    </div>
+                    
+                    <div class="inline-google-rating">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span class="rating-text">4.9 based on 127 Google Reviews</span>
                     </div>
                     
                     <div class="hero-cta">
@@ -321,6 +327,15 @@
                     Learn More About Our Program
                 </a>
             </div>
+        </div>
+    </section>
+
+    <!-- Google Reviews Section -->
+    <section class="trust-reviews">
+        <div class="container">
+            <h2 class="section-title">What Our Members Say</h2>
+            <p class="section-subtitle">Real reviews from Google</p>
+            <div id="google-reviews-harrogate"></div>
         </div>
     </section>
 
@@ -633,5 +648,12 @@
         });
     </script>
     <script src="https://link.leaddec.com/js/form_embed.js"></script>
+    <script src="google-reviews.js"></script>
+    <script>
+        // Initialize Google Reviews widget
+        document.addEventListener('DOMContentLoaded', function() {
+            initGoogleReviews('google-reviews-harrogate', 'harrogate');
+        });
+    </script>
 </body>
 </html>
