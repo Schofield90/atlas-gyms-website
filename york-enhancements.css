@@ -234,3 +234,22 @@ img.loaded {
 .hero.hero-loaded {
     opacity: 1;
 }
+
+/* Placeholder image styles */
+.placeholder-image {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+}
+
+.gallery-item .placeholder-image {
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style for when images are loading */
+.gallery-item img:not(.loaded):not(.placeholder-image) {
+    background: #f3f4f6;
+    min-height: 350px;
+}

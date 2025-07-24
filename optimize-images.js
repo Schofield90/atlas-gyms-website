@@ -34,8 +34,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         img.addEventListener('error', function() {
-            this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="300"%3E%3Crect width="300" height="300" fill="%23ddd"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23999"%3EImage Loading...%3C/text%3E%3C/svg%3E';
+            // For result images, create a placeholder with text
+            if (this.src.includes('result-')) {
+                this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="400"%3E%3Crect width="300" height="400" fill="%23e5e7eb"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%236b7280" font-family="Inter, sans-serif" font-size="16"%3EMember Photo%3C/text%3E%3C/svg%3E';
+            } else {
+                this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="300"%3E%3Crect width="300" height="300" fill="%23e5e7eb"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%236b7280"%3EImage Placeholder%3C/text%3E%3C/svg%3E';
+            }
             this.alt = 'Atlas York Member';
+            this.classList.add('placeholder-image');
         });
     });
     
