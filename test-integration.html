@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Google Integration - Atlas Gyms</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        #test-map { height: 400px; margin: 20px 0; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Atlas Gyms - Google Integration Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Environment Check</h2>
+        <div id="env-status"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Google Maps Test</h2>
+        <div id="map-status"></div>
+        <div id="test-map"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Google Reviews API Test</h2>
+        <div id="api-status"></div>
+        <pre id="api-response"></pre>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Place ID Finder</h2>
+        <button onclick="searchPlace('Atlas Fitness Harrogate HG1 4BA')">Search Harrogate</button>
+        <button onclick="searchPlace('Atlas Fitness York YO30 4XD')">Search York</button>
+        <button onclick="searchPlace('Schofield Fitness Ltd Harrogate')">Search Schofield Harrogate</button>
+        <button onclick="searchPlace('Schofield Fitness Ltd York')">Search Schofield York</button>
+        <pre id="place-results"></pre>
+    </div>
+
+    <script>
+        // Test environment
+        document.getElementById('env-status').innerHTML = `
+            <div class="status info">API Key in code: ${typeof ATLAS_CONFIG !== 'undefined' ? 'Yes' : 'No'}</div>
+            <div class="status info">Current URL: ${window.location.href}</div>
+            <div class="status info">API Endpoint: ${window.location.origin}/api/google-reviews</div>
+        `;
+
+        // Test Maps
+        function initMap() {
+            try {
+                const map = new google.maps.Map(document.getElementById('test-map'), {
+                    center: { lat: 53.9906, lng: -1.5418 },
+                    zoom: 12
+                });
+                
+                // Add markers for both locations
+                new google.maps.Marker({
+                    position: { lat: 53.9906, lng: -1.5418 },
+                    map: map,
+                    title: 'Atlas Fitness Harrogate'
+                });
+                
+                new google.maps.Marker({
+                    position: { lat: 53.9897, lng: -1.0863 },
+                    map: map,
+                    title: 'Atlas Fitness York'
+                });
+                
+                document.getElementById('map-status').innerHTML = '<div class="status success">✓ Google Maps loaded successfully</div>';
+            } catch (error) {
+                document.getElementById('map-status').innerHTML = `<div class="status error">✗ Maps Error: ${error.message}</div>`;
+            }
+        }
+
+        // Test Reviews API
+        async function testReviewsAPI() {
+            const testPlaceId = 'ChIJN1t_tDeuEmsRUsoyG83frY4'; // Google Sydney office as test
+            
+            try {
+                const response = await fetch(`/api/google-reviews?placeId=${testPlaceId}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('api-status').innerHTML = '<div class="status success">✓ API endpoint is working</div>';
+                } else {
+                    document.getElementById('api-status').innerHTML = `<div class="status error">✗ API Error: ${data.error || 'Unknown error'}</div>`;
+                }
+                
+                document.getElementById('api-response').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('api-status').innerHTML = `<div class="status error">✗ Network Error: ${error.message}</div>`;
+                document.getElementById('api-response').textContent = error.toString();
+            }
+        }
+
+        // Search for Place IDs
+        async function searchPlace(query) {
+            const apiKey = 'AIzaSyAqN9nWFZBpoJhGwB55fPh4TkNCCO6VZkc';
+            const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=place_id,name,formatted_address&key=${apiKey}`;
+            
+            document.getElementById('place-results').textContent = `Search query: "${query}"\n\nNote: Due to CORS, you need to use this URL in a new browser tab:\n${url}\n\nLook for the "place_id" in the response.`;
+        }
+
+        // Load Google Maps
+        function loadGoogleMaps() {
+            const script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAqN9nWFZBpoJhGwB55fPh4TkNCCO6VZkc&callback=initMap';
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
+
+        // Run tests on load
+        window.addEventListener('load', () => {
+            loadGoogleMaps();
+            testReviewsAPI();
+        });
+    </script>
+    <script src="config.js"></script>
+</body>
+</html>
