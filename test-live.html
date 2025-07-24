@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Live Integration - Atlas Gyms</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .test { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .success { color: green; }
+        .error { color: red; }
+        .pending { color: orange; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Atlas Gyms - Live Integration Test</h1>
+    
+    <div class="test">
+        <h2>1. Configuration API Test</h2>
+        <div id="config-status">Testing...</div>
+        <pre id="config-result"></pre>
+    </div>
+    
+    <div class="test">
+        <h2>2. Maps API Key Test</h2>
+        <div id="maps-status">Testing...</div>
+    </div>
+    
+    <div class="test">
+        <h2>3. Reviews API Test (Harrogate)</h2>
+        <div id="reviews-harrogate-status">Testing...</div>
+        <pre id="reviews-harrogate-result"></pre>
+    </div>
+    
+    <div class="test">
+        <h2>4. Reviews API Test (York)</h2>
+        <div id="reviews-york-status">Testing...</div>
+        <pre id="reviews-york-result"></pre>
+    </div>
+
+    <script>
+        // Test Configuration API
+        async function testConfig() {
+            try {
+                const response = await fetch('/api/config');
+                const data = await response.json();
+                
+                document.getElementById('config-status').innerHTML = '<span class="success">✓ Config API working</span>';
+                document.getElementById('config-result').textContent = JSON.stringify(data, null, 2);
+                
+                return data;
+            } catch (error) {
+                document.getElementById('config-status').innerHTML = `<span class="error">✗ Config API Error: ${error.message}</span>`;
+            }
+        }
+
+        // Test Maps API Key
+        async function testMapsKey() {
+            try {
+                const response = await fetch('/api/maps-key');
+                const data = await response.json();
+                
+                if (data.apiKey) {
+                    document.getElementById('maps-status').innerHTML = '<span class="success">✓ Maps API key loaded</span>';
+                } else {
+                    document.getElementById('maps-status').innerHTML = '<span class="error">✗ No Maps API key found</span>';
+                }
+            } catch (error) {
+                document.getElementById('maps-status').innerHTML = `<span class="error">✗ Maps Key Error: ${error.message}</span>`;
+            }
+        }
+
+        // Test Reviews API
+        async function testReviews(location, placeId) {
+            const statusEl = document.getElementById(`reviews-${location}-status`);
+            const resultEl = document.getElementById(`reviews-${location}-result`);
+            
+            try {
+                statusEl.innerHTML = `<span class="pending">Testing ${location}...</span>`;
+                
+                const response = await fetch(`/api/google-reviews?placeId=${placeId}`);
+                const data = await response.json();
+                
+                if (response.ok && data.rating) {
+                    statusEl.innerHTML = `<span class="success">✓ Reviews API working - ${data.totalReviews} reviews, ${data.rating}★</span>`;
+                    resultEl.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    statusEl.innerHTML = `<span class="error">✗ Reviews API Error: ${data.error || 'Unknown error'}</span>`;
+                    resultEl.textContent = JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                statusEl.innerHTML = `<span class="error">✗ Network Error: ${error.message}</span>`;
+            }
+        }
+
+        // Run all tests
+        async function runTests() {
+            // Test config first to get Place IDs
+            const config = await testConfig();
+            await testMapsKey();
+            
+            if (config && config.places) {
+                await testReviews('harrogate', config.places.harrogate.placeId);
+                await testReviews('york', config.places.york.placeId);
+            }
+        }
+
+        // Run tests on load
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>
