@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Pixel Test - Atlas Fitness</title>
+    
+    <!-- Facebook Pixel Code (SAME AS PRODUCTION) -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    fbq('init', '1513024026124107');
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1513024026124107&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+    
+    <!-- Core Scripts -->
+    <script src="/js/fix-errors.js"></script>
+    <script src="/js/atlas-init.js"></script>
+    <script src="/js/fb-tracking-events.js"></script>
+    <script src="/js/pixel-verification.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .header {
+            background: #000;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #10B981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.2s;
+        }
+        .test-button:hover {
+            background: #059669;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .success { background: #D1FAE5; color: #065F46; }
+        .error { background: #FEE2E2; color: #991B1B; }
+        .warning { background: #FEF3C7; color: #92400E; }
+        .info { background: #DBEAFE; color: #1E40AF; }
+        .code {
+            background: #F3F4F6;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        .test-form {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #D1D5DB;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .results {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        h1, h2, h3 { margin-top: 0; }
+        .logo { width: 150px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="/logo-01.png" alt="Atlas Fitness" class="logo">
+        <h1>Meta Pixel Testing Dashboard</h1>
+        <p>Comprehensive testing for £6M+ annual ad spend optimization</p>
+    </div>
+
+    <div class="test-section">
+        <h2>🔍 Quick Status Check</h2>
+        <div id="quick-status"></div>
+        <button class="test-button" onclick="runQuickCheck()">Run Quick Check</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Event Testing</h2>
+        <p>Test individual Meta Pixel events:</p>
+        
+        <button class="test-button" onclick="testPageView()">Test PageView</button>
+        <button class="test-button" onclick="testViewContent()">Test ViewContent</button>
+        <button class="test-button" onclick="testInitiateCheckout()">Test InitiateCheckout</button>
+        <button class="test-button" onclick="testLead()">Test Lead (£50)</button>
+        <button class="test-button" onclick="testCustomEvent()">Test Custom Event</button>
+        
+        <div id="event-results" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 Form Submission Test</h2>
+        <p>Test the complete lead generation flow:</p>
+        
+        <form id="test-form" class="test-form">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label>Location</label>
+                <select name="location" required>
+                    <option value="">Select Location</option>
+                    <option value="york">York</option>
+                    <option value="harrogate">Harrogate</option>
+                </select>
+            </div>
+            <button type="submit" class="test-button">Submit Test Lead</button>
+        </form>
+        
+        <div id="form-results" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Advanced Diagnostics</h2>
+        <button class="test-button" onclick="runFullDiagnostics()">Run Full Diagnostics</button>
+        <div id="diagnostics-results" class="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Implementation Checklist</h2>
+        <div id="checklist"></div>
+    </div>
+
+    <script>
+        // Quick status check
+        function runQuickCheck() {
+            const status = document.getElementById('quick-status');
+            status.innerHTML = '';
+            
+            // Check fbq
+            if (typeof fbq !== 'undefined') {
+                status.innerHTML += '<div class="status success">✅ Facebook Pixel (fbq) is loaded</div>';
+                if (fbq.version) {
+                    status.innerHTML += `<div class="status info">ℹ️ Version: ${fbq.version}</div>`;
+                }
+            } else {
+                status.innerHTML += '<div class="status error">❌ Facebook Pixel (fbq) NOT found</div>';
+            }
+            
+            // Check scripts
+            const scripts = Array.from(document.getElementsByTagName('script'));
+            
+            // Check Facebook SDK
+            const fbScript = scripts.find(s => s.src && s.src.includes('connect.facebook.net'));
+            if (fbScript) {
+                status.innerHTML += '<div class="status success">✅ Facebook SDK loaded</div>';
+            } else {
+                status.innerHTML += '<div class="status error">❌ Facebook SDK NOT loaded</div>';
+            }
+            
+            // Check atlas-init.js
+            const atlasInit = scripts.find(s => s.src && s.src.includes('atlas-init.js'));
+            if (atlasInit) {
+                status.innerHTML += '<div class="status success">✅ atlas-init.js loaded</div>';
+            } else {
+                status.innerHTML += '<div class="status warning">⚠️ atlas-init.js NOT loaded</div>';
+            }
+            
+            // Check fb-tracking-events.js
+            const fbTracking = scripts.find(s => s.src && s.src.includes('fb-tracking-events.js'));
+            if (fbTracking) {
+                status.innerHTML += '<div class="status success">✅ fb-tracking-events.js loaded</div>';
+            } else {
+                status.innerHTML += '<div class="status warning">⚠️ fb-tracking-events.js NOT loaded</div>';
+            }
+        }
+        
+        // Event testing functions
+        function testPageView() {
+            if (typeof fbq === 'undefined') {
+                alert('Facebook Pixel not loaded!');
+                return;
+            }
+            
+            fbq('track', 'PageView', {
+                test: true,
+                page_location: window.location.href
+            });
+            
+            logEvent('PageView', 'Standard event fired');
+        }
+        
+        function testViewContent() {
+            if (typeof fbq === 'undefined') {
+                alert('Facebook Pixel not loaded!');
+                return;
+            }
+            
+            fbq('track', 'ViewContent', {
+                content_name: 'Test Content',
+                content_category: 'Test',
+                content_type: 'product',
+                value: 0,
+                currency: 'GBP'
+            });
+            
+            logEvent('ViewContent', 'Content view tracked with £0 value');
+        }
+        
+        function testInitiateCheckout() {
+            if (typeof fbq === 'undefined') {
+                alert('Facebook Pixel not loaded!');
+                return;
+            }
+            
+            fbq('track', 'InitiateCheckout', {
+                content_name: 'Consultation Form',
+                content_category: 'Lead Generation',
+                content_ids: ['consultation'],
+                value: 50.00,
+                currency: 'GBP'
+            });
+            
+            logEvent('InitiateCheckout', 'Form interaction tracked with £50 value');
+        }
+        
+        function testLead() {
+            if (typeof fbq === 'undefined') {
+                alert('Facebook Pixel not loaded!');
+                return;
+            }
+            
+            fbq('track', 'Lead', {
+                content_name: 'Test Lead',
+                content_category: 'Lead',
+                value: 50.00,
+                currency: 'GBP',
+                test: true
+            });
+            
+            logEvent('Lead', 'Lead conversion tracked with £50 value');
+        }
+        
+        function testCustomEvent() {
+            if (typeof fbq === 'undefined') {
+                alert('Facebook Pixel not loaded!');
+                return;
+            }
+            
+            fbq('trackCustom', 'TestEvent', {
+                test_id: Date.now(),
+                timestamp: new Date().toISOString()
+            });
+            
+            logEvent('TestEvent', 'Custom event fired');
+        }
+        
+        function logEvent(eventName, description) {
+            const results = document.getElementById('event-results');
+            const timestamp = new Date().toLocaleTimeString();
+            results.innerHTML = `<div class="status success">✅ ${timestamp} - ${eventName}: ${description}</div>` + results.innerHTML;
+        }
+        
+        // Form submission test
+        document.getElementById('test-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const results = document.getElementById('form-results');
+            
+            // Simulate form interaction tracking
+            if (typeof fbq !== 'undefined') {
+                // Track InitiateCheckout (usually on focus)
+                fbq('track', 'InitiateCheckout', {
+                    content_name: 'Test Form',
+                    value: 50.00,
+                    currency: 'GBP'
+                });
+                
+                // Track Lead (on submission)
+                fbq('track', 'Lead', {
+                    content_name: 'Test Consultation',
+                    value: 50.00,
+                    currency: 'GBP',
+                    email: formData.get('email'),
+                    location: formData.get('location')
+                });
+                
+                // Track custom event
+                fbq('trackCustom', 'ConsultationBooked', {
+                    location: formData.get('location'),
+                    test: true
+                });
+                
+                results.innerHTML = `
+                    <div class="status success">✅ Form submitted successfully!</div>
+                    <div class="status info">ℹ️ Events fired: InitiateCheckout, Lead, ConsultationBooked</div>
+                    <div class="status info">ℹ️ Check Facebook Events Manager in 20-30 minutes</div>
+                `;
+            } else {
+                results.innerHTML = '<div class="status error">❌ Facebook Pixel not loaded - cannot track events</div>';
+            }
+        });
+        
+        // Run full diagnostics
+        function runFullDiagnostics() {
+            if (window.AtlasPixelVerification) {
+                window.AtlasPixelVerification.verify();
+                document.getElementById('diagnostics-results').innerHTML = 
+                    '<div class="status info">ℹ️ Check browser console for detailed diagnostics report</div>';
+            } else {
+                document.getElementById('diagnostics-results').innerHTML = 
+                    '<div class="status error">❌ Verification script not loaded</div>';
+            }
+        }
+        
+        // Implementation checklist
+        function generateChecklist() {
+            const checklist = document.getElementById('checklist');
+            const items = [
+                { check: typeof fbq !== 'undefined', text: 'Facebook Pixel loaded' },
+                { check: document.querySelector('script[src*="fbevents.js"]'), text: 'Facebook SDK script present' },
+                { check: document.querySelector('noscript img[src*="facebook.com/tr"]'), text: 'Noscript fallback present' },
+                { check: window.AtlasPixelVerification, text: 'Verification script loaded' },
+                { check: document.querySelector('script[src*="atlas-init.js"]'), text: 'atlas-init.js linked' },
+                { check: document.querySelector('script[src*="fb-tracking-events.js"]'), text: 'fb-tracking-events.js linked' }
+            ];
+            
+            let html = '<ul style="list-style: none; padding: 0;">';
+            items.forEach(item => {
+                const icon = item.check ? '✅' : '❌';
+                html += `<li style="margin: 10px 0;">${icon} ${item.text}</li>`;
+            });
+            html += '</ul>';
+            
+            checklist.innerHTML = html;
+        }
+        
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', function() {
+            generateChecklist();
+            runQuickCheck();
+        });
+    </script>
+</body>
+</html>
