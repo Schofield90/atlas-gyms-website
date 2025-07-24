@@ -231,33 +231,43 @@ class GoogleReviewsWidget {
 
 // Initialize Google Reviews with live data
 async function initGoogleReviews(containerId, location = 'harrogate') {
-    console.log('Starting initGoogleReviews for:', location, containerId);
+    console.log('🔵 Starting initGoogleReviews for:', location, containerId);
     
     try {
         // First try to load config from API
+        console.log('🔵 Fetching config from /api/config...');
         const response = await fetch('/api/config');
+        
+        if (!response.ok) {
+            throw new Error(`Config API failed: ${response.status}`);
+        }
+        
         const config = await response.json();
-        console.log('Loaded config from API:', config);
+        console.log('🔵 Loaded config from API:', config);
         
         const placeId = config.places[location]?.placeId;
+        console.log('🔵 Place ID for', location, ':', placeId);
         
         if (!placeId || placeId.includes('PLACEHOLDER')) {
-            console.warn(`Place ID not configured for ${location}. Place ID: ${placeId}`);
-            return;
+            console.error('❌ Invalid Place ID for', location, ':', placeId);
+            throw new Error(`Invalid Place ID: ${placeId}`);
         }
 
         // Create widget instance
+        console.log('🔵 Creating widget for Place ID:', placeId);
         const widget = new GoogleReviewsWidget({
             placeId: placeId,
             containerId: containerId
         });
 
         // Initialize and fetch reviews
+        console.log('🔵 Initializing widget...');
         await widget.init();
         
+        console.log('✅ Reviews widget initialized successfully');
         return widget;
     } catch (error) {
-        console.error('Error initializing reviews:', error);
+        console.error('❌ Error initializing reviews:', error);
         
         // Show error message in the container
         const container = document.getElementById(containerId);
@@ -265,7 +275,7 @@ async function initGoogleReviews(containerId, location = 'harrogate') {
             container.innerHTML = `
                 <div style="text-align: center; padding: 2rem; color: #666;">
                     <p>Unable to load reviews at this time.</p>
-                    <p style="font-size: 0.875rem;">Please try refreshing the page.</p>
+                    <p style="font-size: 0.875rem;">Error: ${error.message}</p>
                 </div>
             `;
         }
