@@ -18,6 +18,30 @@
     <link rel="stylesheet" href="york-enhancements.css">
     <link rel="stylesheet" href="maps-responsive.css">
     
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    fbq('init', '1513024026124107');
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1513024026124107&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+    
+    <!-- Core Scripts -->
+    <script src="/js/fix-errors.js"></script>
+    <script src="/js/atlas-init.js"></script>
+    
     <!-- Schema Markup for SEO -->
     <script type="application/ld+json">
     {
@@ -364,116 +388,7 @@
     <!-- Client Success Gallery -->
     <section class="client-gallery-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Real Atlas York Members</h2>
-                <p class="section-subtitle">Meet some of the 150+ men who've transformed their lives with us</p>
-            </div>
-            
-            <div class="client-gallery">
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_090556688.PORTRAIT.jpg" 
-                             alt="Atlas York member - transformed after 6 weeks" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>6-Week Transformation</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_090601709.PORTRAIT.jpg" 
-                             alt="York man over 40 fitness transformation" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Lost 2 Stone</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_091429622.PORTRAIT.jpg" 
-                             alt="Atlas Fitness York member success story" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Mental Health Win</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_091600724.PORTRAIT.jpg" 
-                             alt="Brotherhood member at Atlas York" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Gained Confidence</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_090918313.PORTRAIT.jpg" 
-                             alt="York fitness transformation for men" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Stronger at 50</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_103825765.PORTRAIT.jpg" 
-                             alt="Atlas York member portrait" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Life Changed</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_104840201.PORTRAIT.jpg" 
-                             alt="York fitness success story" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>New Beginning</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_101331422.PORTRAIT.jpg" 
-                             alt="Atlas York transformation" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Confidence Gained</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_103359757.PORTRAIT.jpg" 
-                             alt="Brotherhood member success" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Stronger Together</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_092956925.PORTRAIT.jpg" 
-                             alt="York men's fitness transformation" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Age is Just a Number</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_093637644.PORTRAIT.jpg" 
-                             alt="Atlas fitness member" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Health Restored</span>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/client-portraits/PXL_20250322_094737127.PORTRAIT.jpg" 
-                             alt="York transformation story" 
-                             loading="lazy">
-                        <div class="gallery-overlay">
-                            <span>Never Too Late</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="gallery-cta">
-                    <p>Every face tells a story of transformation, brotherhood, and renewed confidence.</p>
-                    <a href="#consultation" class="btn btn-secondary">Start Your Story</a>
-                </div>
-            </div>
+            <div id="york-client-gallery"></div>
         </div>
     </section>
 
@@ -925,6 +840,8 @@
     <script src="google-reviews.js?v=2"></script>
     <script src="google-maps.js?v=2"></script>
     <script src="optimize-images.js?v=2"></script>
+    <script src="/js/places-service.js"></script>
+    <script src="/js/client-gallery.js"></script>
     <script>
         // Initialize Google Reviews and Maps
         document.addEventListener('DOMContentLoaded', async function() {
@@ -933,6 +850,14 @@
             
             // Initialize map
             initLocationMap('york');
+            
+            // Initialize client gallery
+            new ClientGallery({
+                container: '#york-client-gallery',
+                location: 'york',
+                maxImages: 12,
+                autoRotate: true
+            });
         });
     </script>
 </body>

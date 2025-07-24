@@ -115,14 +115,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Handle back button click
-    backButton.addEventListener('click', () => {
-        // Show location selection and hide form
-        locationSelection.style.display = 'block';
-        formContainer.classList.add('hidden');
-        
-        // Hide all forms
-        locationForms.forEach(form => form.classList.remove('active'));
-    });
+    if (backButton) {
+        backButton.addEventListener('click', () => {
+            // Show location selection and hide form
+            if (locationSelection) {
+                locationSelection.style.display = 'block';
+            }
+            if (formContainer) {
+                formContainer.classList.add('hidden');
+            }
+            
+            // Hide all forms
+            locationForms.forEach(form => form.classList.remove('active'));
+        });
+    }
 });
 
 // Form handling (keeping for potential future use)
