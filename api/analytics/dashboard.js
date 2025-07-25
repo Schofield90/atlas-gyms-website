@@ -3,7 +3,9 @@ import fs from 'fs/promises';
 import crypto from 'crypto';
 
 const ANALYTICS_DB_PATH = process.env.ANALYTICS_DB_PATH || '/tmp/atlas-analytics.json';
-const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || crypto.createHash('sha256').update('atlas2024').digest('hex');
+// Support both plain password and hash for flexibility
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'atlas2024';
+const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || crypto.createHash('sha256').update(ADMIN_PASSWORD).digest('hex');
 
 export default async function handler(req, res) {
     // Enable CORS for admin
@@ -24,9 +26,12 @@ export default async function handler(req, res) {
     }
 
     const token = authHeader.substring(7);
-    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
     
-    if (tokenHash !== ADMIN_PASSWORD_HASH) {
+    // Check both plain password and hash
+    const isValidPassword = token === ADMIN_PASSWORD || 
+                          crypto.createHash('sha256').update(token).digest('hex') === ADMIN_PASSWORD_HASH;
+    
+    if (!isValidPassword) {
         return res.status(401).json({ error: 'Invalid credentials' });
     }
 
