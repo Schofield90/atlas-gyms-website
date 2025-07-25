@@ -56,7 +56,7 @@ git push origin main
 
 #### Facebook Events Manager Tests:
 1. Go to [Events Manager](https://business.facebook.com/events_manager)
-2. Find pixel: 1513024026124107
+2. Find pixel: 1325695844113066
 3. Click "Test Events"
 4. Open your website in test browser
 5. Verify these events appear:
@@ -134,7 +134,7 @@ The deployment is successful when:
 
 ## Important Notes
 
-1. **Pixel ID**: 1513024026124107 (hardcoded in all pages)
+1. **Pixel ID**: 1325695844113066 (hardcoded in all pages)
 2. **Script URL**: https://connect.facebook.net/en_US/fbevents.js
 3. **Implementation**: Inline in HTML `<head>` (not external file)
 4. **Additional Events**: Loaded via `/js/fb-tracking-events.js`

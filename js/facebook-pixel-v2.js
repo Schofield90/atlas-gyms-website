@@ -90,8 +90,8 @@
         
         try {
             // Initialize with your pixel ID
-            fbq('init', '1513024026124107');
-            console.log('[FB Pixel] Initialized with ID: 1513024026124107');
+            fbq('init', '1325695844113066');
+            console.log('[FB Pixel] Initialized with ID: 1325695844113066');
             
             // Track page view
             fbq('track', 'PageView');

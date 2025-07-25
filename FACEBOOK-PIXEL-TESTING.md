@@ -64,7 +64,7 @@ The implementation includes debug logs:
 ## Facebook Events Manager Testing
 
 1. Go to [Facebook Events Manager](https://business.facebook.com/events_manager)
-2. Select your pixel (ID: 1513024026124107)
+2. Select your pixel (ID: 1325695844113066)
 3. Click "Test Events" tab
 4. Enter your website URL
 5. Click "Open Website"
@@ -75,7 +75,7 @@ The implementation includes debug logs:
 ### Current Setup
 - **File**: `/js/facebook-pixel-immediate.js`
 - **Loading**: Immediate (no consent blocking for testing)
-- **Pixel ID**: 1513024026124107
+- **Pixel ID**: 1325695844113066
 - **Events**: PageView, ViewContent, InitiateCheckout, Lead, CallButtonClicked
 
 ### Files Using Pixel

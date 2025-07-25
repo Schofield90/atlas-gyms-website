@@ -31,7 +31,7 @@ git commit -m "Fix Facebook Pixel 404 error - implement inline pixel code
 - Fix script URL to https://connect.facebook.net/en_US/fbevents.js
 - Add fb-tracking-events.js for additional event tracking
 - Update all pages (index, york, harrogate, landing pages)
-- Pixel ID: 1513024026124107"
+- Pixel ID: 1325695844113066"
 
 echo -e "\n${GREEN}Step 4: Pushing to main branch${NC}"
 git push origin main

@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     }
 
     // Facebook Conversion API configuration
-    const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID || '1513024026124107';
+    const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID || '1325695844113066';
     const FACEBOOK_ACCESS_TOKEN = process.env.FACEBOOK_ACCESS_TOKEN || process.env.FACEBOOK_CONVERSIONS_API_TOKEN;
     
     if (!FACEBOOK_PIXEL_ID || !FACEBOOK_ACCESS_TOKEN) {

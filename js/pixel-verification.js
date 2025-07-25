@@ -3,7 +3,7 @@
 (function() {
     'use strict';
     
-    const PIXEL_ID = '1513024026124107';
+    const PIXEL_ID = '1325695844113066';
     const EXPECTED_EVENTS = [
         'PageView',
         'ViewContent',

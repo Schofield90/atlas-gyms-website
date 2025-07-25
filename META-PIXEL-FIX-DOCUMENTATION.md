@@ -111,7 +111,7 @@ Access these tools for ongoing monitoring:
 3. **Chrome Facebook Pixel Helper**
    - Install extension: Facebook Pixel Helper
    - Should show green checkmark
-   - Verify Pixel ID: 1513024026124107
+   - Verify Pixel ID: 1325695844113066
 
 ### 🎯 Expected Events
 
@@ -189,7 +189,7 @@ If issues persist after fixes:
 1. Check Vercel deployment logs
 2. Test with Facebook Pixel Helper Chrome extension  
 3. Contact Meta Business Support with:
-   - Pixel ID: 1513024026124107
+   - Pixel ID: 1325695844113066
    - Error screenshots
    - This documentation
 

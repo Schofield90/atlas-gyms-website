@@ -1,7 +1,7 @@
 // Facebook Pixel Implementation for Atlas Fitness
 class FacebookPixel {
     constructor() {
-        this.pixelId = '1513024026124107';
+        this.pixelId = '1325695844113066';
         this.initialized = false;
         this.userData = {};
         this.init();

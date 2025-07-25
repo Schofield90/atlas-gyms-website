@@ -15,7 +15,7 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     
     // Initialize with your pixel ID
-    fbq('init', '1513024026124107');
+    fbq('init', '1325695844113066');
     
     // Track page view
     fbq('track', 'PageView');

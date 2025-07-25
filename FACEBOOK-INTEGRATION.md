@@ -8,7 +8,7 @@ This guide covers the complete Facebook Pixel and Conversions API integration fo
 ### Environment Variables
 The following are configured in Vercel:
 ```
-FACEBOOK_PIXEL_ID=1513024026124107
+FACEBOOK_PIXEL_ID=1325695844113066
 FACEBOOK_ACCESS_TOKEN=[Your Dataset API Token]
 FACEBOOK_TEST_EVENT_CODE=[Optional for testing]
 ```

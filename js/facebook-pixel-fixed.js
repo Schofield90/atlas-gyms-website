@@ -4,7 +4,7 @@
     
     console.log('[FB Pixel] Initializing Facebook Pixel script');
     
-    const PIXEL_ID = '1513024026124107';
+    const PIXEL_ID = '1325695844113066';
     let pixelInitialized = false;
     
     // Function to load Facebook Pixel base script
