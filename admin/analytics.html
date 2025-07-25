@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Analytics Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --bg: #0f172a;
+            --bg-light: #1e293b;
+            --bg-lighter: #334155;
+            --text: #f1f5f9;
+            --text-dim: #94a3b8;
+            --border: #334155;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Login Screen */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-box {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dim);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+            background: var(--bg-light);
+            padding: 0 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-tab {
+            padding: 1rem 0;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            color: var(--text-dim);
+        }
+
+        .nav-tab:hover {
+            color: var(--text);
+        }
+
+        .nav-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .stat-card h3 {
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            color: var(--success);
+        }
+
+        .stat-change.negative {
+            color: var(--danger);
+        }
+
+        /* Tables */
+        .data-table {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h3 {
+            font-size: 1.125rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            background: var(--bg);
+            color: var(--text-dim);
+            font-weight: 500;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            height: 400px;
+        }
+
+        /* Realtime */
+        .realtime-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .active-users {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .active-users .count {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .event-stream {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .event-item {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .event-time {
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            min-width: 60px;
+        }
+
+        .event-type {
+            background: var(--bg);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-dim);
+        }
+
+        /* Export */
+        .export-section {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-secondary {
+            background: var(--bg-lighter);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .realtime-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                overflow-x: auto;
+                gap: 1rem;
+            }
+            
+            table {
+                font-size: 0.875rem;
+            }
+            
+            th, td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <h1>Atlas Analytics</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter admin password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <div class="header">
+            <h1>Atlas Analytics Dashboard</h1>
+            <button class="btn-secondary" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="overview">Overview</div>
+            <div class="nav-tab" data-tab="conversions">Conversions</div>
+            <div class="nav-tab" data-tab="traffic">Traffic</div>
+            <div class="nav-tab" data-tab="engagement">Engagement</div>
+            <div class="nav-tab" data-tab="realtime">Real-time</div>
+            <div class="nav-tab" data-tab="export">Export</div>
+        </div>
+
+        <div class="content">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="stats-grid" id="overviewStats">
+                    <div class="loading">Loading...</div>
+                </div>
+                
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3>Top Pages</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Views</th>
+                                <th>Title</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topPagesTable">
+                            <tr><td colspan="3" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3>Recent Conversions</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Value</th>
+                                <th>Quality</th>
+                                <th>Source</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentConversionsTable">
+                            <tr><td colspan="5" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Conversions Tab -->
+            <div id="conversions" class="tab-content">
+                <div class="stats-grid" id="conversionStats">
+                    <div class="loading">Loading...</div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="conversionChart"></canvas>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3>All Conversions</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Value</th>
+                                <th>Quality Score</th>
+                                <th>Campaign</th>
+                                <th>Page</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allConversionsTable">
+                            <tr><td colspan="6" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Traffic Tab -->
+            <div id="traffic" class="tab-content">
+                <div class="stats-grid" id="trafficStats">
+                    <div class="loading">Loading...</div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="trafficChart"></canvas>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3>Traffic Sources</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Source</th>
+                                <th>Sessions</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trafficSourcesTable">
+                            <tr><td colspan="3" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Engagement Tab -->
+            <div id="engagement" class="tab-content">
+                <div class="stats-grid" id="engagementStats">
+                    <div class="loading">Loading...</div>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3>Click Targets</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Element</th>
+                                <th>Clicks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clickTargetsTable">
+                            <tr><td colspan="2" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="data-table">
+                    <div class="table-header">
+                        <h3>Form Analytics</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Count</th>
+                                <th>Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody id="formAnalyticsTable">
+                            <tr><td colspan="3" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Real-time Tab -->
+            <div id="realtime" class="tab-content">
+                <div class="realtime-grid">
+                    <div class="active-users">
+                        <h3>Active Users</h3>
+                        <div class="count" id="activeUsersCount">0</div>
+                        <p>Right now</p>
+                    </div>
+                    
+                    <div class="event-stream" id="eventStream">
+                        <div class="loading">Loading...</div>
+                    </div>
+                </div>
+
+                <div class="data-table" style="margin-top: 2rem;">
+                    <div class="table-header">
+                        <h3>Current Pages</h3>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Active Users</th>
+                            </tr>
+                        </thead>
+                        <tbody id="currentPagesTable">
+                            <tr><td colspan="2" class="loading">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Export Tab -->
+            <div id="export" class="tab-content">
+                <div class="export-section">
+                    <h3>Export Analytics Data</h3>
+                    <p>Download your analytics data for further analysis.</p>
+                    
+                    <div class="export-buttons">
+                        <button class="btn-secondary" onclick="exportData('json')">Export as JSON</button>
+                        <button class="btn-secondary" onclick="exportData('csv')">Export as CSV</button>
+                    </div>
+                </div>
+
+                <div class="export-section" style="margin-top: 2rem;">
+                    <h3>Clear Data</h3>
+                    <p style="color: var(--warning);">Warning: This will permanently delete all analytics data.</p>
+                    
+                    <div class="export-buttons">
+                        <button class="btn" style="background: var(--danger);" onclick="clearData()">Clear All Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // Global variables
+        let authToken = null;
+        let refreshInterval = null;
+        let charts = {};
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            authToken = password;
+            
+            // Test authentication
+            try {
+                const response = await fetch('/api/analytics/dashboard?action=overview', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (response.ok) {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    loadDashboard();
+                    startAutoRefresh();
+                } else {
+                    alert('Invalid password');
+                }
+            } catch (error) {
+                alert('Failed to connect to server');
+            }
+        });
+
+        // Tab navigation
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+                
+                loadTabData(tab.dataset.tab);
+            });
+        });
+
+        // Load dashboard
+        async function loadDashboard() {
+            loadTabData('overview');
+        }
+
+        // Load tab data
+        async function loadTabData(tab) {
+            switch (tab) {
+                case 'overview':
+                    await loadOverview();
+                    break;
+                case 'conversions':
+                    await loadConversions();
+                    break;
+                case 'traffic':
+                    await loadTraffic();
+                    break;
+                case 'engagement':
+                    await loadEngagement();
+                    break;
+                case 'realtime':
+                    await loadRealtime();
+                    break;
+            }
+        }
+
+        // Load overview
+        async function loadOverview() {
+            try {
+                const response = await fetchAPI('overview');
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('overviewStats').innerHTML = `
+                    <div class="stat-card">
+                        <h3>Total Sessions</h3>
+                        <div class="stat-value">${formatNumber(data.summary.total_sessions)}</div>
+                        <div class="stat-change">Today: ${data.today.sessions}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Conversions</h3>
+                        <div class="stat-value">${formatNumber(data.summary.total_conversions)}</div>
+                        <div class="stat-change">Today: ${data.today.conversions}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Conversion Rate</h3>
+                        <div class="stat-value">${data.summary.conversion_rate}%</div>
+                        <div class="stat-change">Avg Session: ${data.summary.avg_session_duration}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Value</h3>
+                        <div class="stat-value">£${formatNumber(data.summary.total_value)}</div>
+                        <div class="stat-change">Today: £${data.today.value}</div>
+                    </div>
+                `;
+                
+                // Update top pages
+                const topPagesHtml = data.top_pages.map(page => `
+                    <tr>
+                        <td>${page.path}</td>
+                        <td>${page.views}</td>
+                        <td>${page.title || '-'}</td>
+                    </tr>
+                `).join('');
+                document.getElementById('topPagesTable').innerHTML = topPagesHtml || '<tr><td colspan="3">No data</td></tr>';
+                
+                // Update recent conversions
+                const conversionsHtml = data.recent_conversions.map(conv => `
+                    <tr>
+                        <td>${formatTime(conv.timestamp)}</td>
+                        <td>${conv.type}</td>
+                        <td>£${conv.value || 0}</td>
+                        <td>${conv.quality_score || '-'}</td>
+                        <td>${conv.attribution?.source || 'direct'}</td>
+                    </tr>
+                `).join('');
+                document.getElementById('recentConversionsTable').innerHTML = conversionsHtml || '<tr><td colspan="5">No conversions yet</td></tr>';
+                
+            } catch (error) {
+                console.error('Failed to load overview:', error);
+            }
+        }
+
+        // Load conversions
+        async function loadConversions() {
+            try {
+                const response = await fetchAPI('conversions');
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('conversionStats').innerHTML = `
+                    <div class="stat-card">
+                        <h3>Total Conversions</h3>
+                        <div class="stat-value">${data.total_conversions}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Value</h3>
+                        <div class="stat-value">£${formatNumber(data.total_value)}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Average Value</h3>
+                        <div class="stat-value">£${Math.round(data.average_value)}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Avg Quality Score</h3>
+                        <div class="stat-value">${Math.round(data.average_quality_score)}/100</div>
+                    </div>
+                `;
+                
+                // Update conversions table
+                const conversionsHtml = data.recent_conversions.map(conv => `
+                    <tr>
+                        <td>${formatTime(conv.timestamp)}</td>
+                        <td>${conv.type}</td>
+                        <td>£${conv.value || 0}</td>
+                        <td>${conv.quality_score || '-'}</td>
+                        <td>${conv.attribution?.campaign || '-'}</td>
+                        <td>${conv.page_url ? new URL(conv.page_url).pathname : '-'}</td>
+                    </tr>
+                `).join('');
+                document.getElementById('allConversionsTable').innerHTML = conversionsHtml || '<tr><td colspan="6">No conversions yet</td></tr>';
+                
+                // Create chart
+                createConversionChart(data);
+                
+            } catch (error) {
+                console.error('Failed to load conversions:', error);
+            }
+        }
+
+        // Load traffic
+        async function loadTraffic() {
+            try {
+                const response = await fetchAPI('traffic');
+                const data = await response.json();
+                
+                // Update traffic sources table
+                const total = data.traffic_sources.reduce((sum, s) => sum + s.count, 0);
+                const sourcesHtml = data.traffic_sources.map(source => `
+                    <tr>
+                        <td>${source.source}</td>
+                        <td>${source.count}</td>
+                        <td>${((source.count / total) * 100).toFixed(1)}%</td>
+                    </tr>
+                `).join('');
+                document.getElementById('trafficSourcesTable').innerHTML = sourcesHtml || '<tr><td colspan="3">No data</td></tr>';
+                
+                // Create chart
+                createTrafficChart(data);
+                
+            } catch (error) {
+                console.error('Failed to load traffic:', error);
+            }
+        }
+
+        // Load engagement
+        async function loadEngagement() {
+            try {
+                const response = await fetchAPI('engagement');
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('engagementStats').innerHTML = `
+                    <div class="stat-card">
+                        <h3>Avg Engagement Score</h3>
+                        <div class="stat-value">${Math.round(data.average_engagement_score)}/100</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Avg Scroll Depth</h3>
+                        <div class="stat-value">${Math.round(data.average_scroll_depth)}%</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Clicks</h3>
+                        <div class="stat-value">${formatNumber(data.total_clicks)}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Form Completion</h3>
+                        <div class="stat-value">${data.form_analytics.completion_rate.toFixed(1)}%</div>
+                    </div>
+                `;
+                
+                // Update click targets
+                const clicksHtml = data.click_targets.slice(0, 10).map(target => `
+                    <tr>
+                        <td>${target.target}</td>
+                        <td>${target.count}</td>
+                    </tr>
+                `).join('');
+                document.getElementById('clickTargetsTable').innerHTML = clicksHtml || '<tr><td colspan="2">No data</td></tr>';
+                
+                // Update form analytics
+                document.getElementById('formAnalyticsTable').innerHTML = `
+                    <tr>
+                        <td>Form Starts</td>
+                        <td>${data.form_analytics.starts}</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Form Submits</td>
+                        <td>${data.form_analytics.submits}</td>
+                        <td>${data.form_analytics.completion_rate.toFixed(1)}%</td>
+                    </tr>
+                    <tr>
+                        <td>Form Abandons</td>
+                        <td>${data.form_analytics.abandons}</td>
+                        <td>-</td>
+                    </tr>
+                `;
+                
+            } catch (error) {
+                console.error('Failed to load engagement:', error);
+            }
+        }
+
+        // Load realtime
+        async function loadRealtime() {
+            try {
+                const response = await fetchAPI('realtime');
+                const data = await response.json();
+                
+                // Update active users
+                document.getElementById('activeUsersCount').textContent = data.active_users;
+                
+                // Update event stream
+                const eventsHtml = data.recent_events.slice(0, 20).map(event => `
+                    <div class="event-item">
+                        <div class="event-time">${formatTime(event.timestamp)}</div>
+                        <div class="event-type">${event.event_name}</div>
+                        <div>${getEventDescription(event)}</div>
+                    </div>
+                `).join('');
+                document.getElementById('eventStream').innerHTML = eventsHtml || '<div class="loading">No recent events</div>';
+                
+                // Update current pages
+                const pagesHtml = data.current_pages.map(page => `
+                    <tr>
+                        <td>${page.page}</td>
+                        <td>${page.count}</td>
+                    </tr>
+                `).join('');
+                document.getElementById('currentPagesTable').innerHTML = pagesHtml || '<tr><td colspan="2">No active pages</td></tr>';
+                
+            } catch (error) {
+                console.error('Failed to load realtime:', error);
+            }
+        }
+
+        // Helper functions
+        async function fetchAPI(action) {
+            return fetch(`/api/analytics/dashboard?action=${action}`, {
+                headers: {
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+        }
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-GB').format(num);
+        }
+
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diff = now - date;
+            
+            if (diff < 60000) return 'Just now';
+            if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+            if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+            
+            return date.toLocaleDateString('en-GB', { 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function getEventDescription(event) {
+            switch (event.event_name) {
+                case 'page_view':
+                    return `Viewed ${event.event_data.path || 'page'}`;
+                case 'click':
+                    return `Clicked ${event.event_data.element || 'element'}`;
+                case 'form_submit':
+                    return `Submitted ${event.event_data.form_id || 'form'}`;
+                case 'conversion':
+                    return `Conversion: ${event.event_data.type} - £${event.event_data.value || 0}`;
+                default:
+                    return event.event_name.replace(/_/g, ' ');
+            }
+        }
+
+        // Charts
+        function createConversionChart(data) {
+            const ctx = document.getElementById('conversionChart').getContext('2d');
+            
+            if (charts.conversion) {
+                charts.conversion.destroy();
+            }
+            
+            const types = Object.entries(data.conversions_by_type);
+            
+            charts.conversion = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: types.map(([type]) => type),
+                    datasets: [{
+                        label: 'Conversions',
+                        data: types.map(([, data]) => data.count),
+                        backgroundColor: '#10b981'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#334155'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createTrafficChart(data) {
+            const ctx = document.getElementById('trafficChart').getContext('2d');
+            
+            if (charts.traffic) {
+                charts.traffic.destroy();
+            }
+            
+            charts.traffic = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.traffic_sources.map(s => s.source),
+                    datasets: [{
+                        data: data.traffic_sources.map(s => s.count),
+                        backgroundColor: [
+                            '#10b981',
+                            '#3b82f6',
+                            '#f59e0b',
+                            '#ef4444',
+                            '#8b5cf6',
+                            '#6b7280'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: '#f1f5f9'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Export functions
+        async function exportData(format) {
+            try {
+                const response = await fetchAPI('export');
+                const data = await response.json();
+                
+                if (format === 'json') {
+                    downloadJSON(data, 'atlas-analytics-export.json');
+                } else if (format === 'csv') {
+                    downloadCSV(data, 'atlas-analytics-export.csv');
+                }
+            } catch (error) {
+                alert('Failed to export data');
+            }
+        }
+
+        function downloadJSON(data, filename) {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+        }
+
+        function downloadCSV(data, filename) {
+            // Convert events to CSV
+            const events = data.events;
+            if (!events || events.length === 0) {
+                alert('No data to export');
+                return;
+            }
+            
+            const headers = ['timestamp', 'event_name', 'session_id', 'visitor_id', 'page_url'];
+            const rows = [headers];
+            
+            events.forEach(event => {
+                rows.push([
+                    new Date(event.timestamp).toISOString(),
+                    event.event_name,
+                    event.session_id,
+                    event.visitor_id,
+                    event.page_url
+                ]);
+            });
+            
+            const csv = rows.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+        }
+
+        async function clearData() {
+            if (!confirm('Are you sure you want to delete all analytics data? This cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/analytics/dashboard', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action: 'clear_data' })
+                });
+                
+                if (response.ok) {
+                    alert('All data has been cleared');
+                    loadDashboard();
+                } else {
+                    alert('Failed to clear data');
+                }
+            } catch (error) {
+                alert('Failed to clear data');
+            }
+        }
+
+        function logout() {
+            authToken = null;
+            stopAutoRefresh();
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('password').value = '';
+        }
+
+        function startAutoRefresh() {
+            refreshInterval = setInterval(() => {
+                const activeTab = document.querySelector('.nav-tab.active').dataset.tab;
+                if (activeTab === 'realtime') {
+                    loadRealtime();
+                }
+            }, 5000);
+        }
+
+        function stopAutoRefresh() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+                refreshInterval = null;
+            }
+        }
+    </script>
+</body>
+</html>
