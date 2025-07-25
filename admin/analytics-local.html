@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Fitness - Local Analytics Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #e85d04;
+            margin-bottom: 10px;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px solid #ffeaa7;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #e85d04;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        button {
+            background: #e85d04;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #c44d03;
+        }
+        .events-table {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .event-details {
+            font-size: 12px;
+            color: #666;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .filter-bar {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        select, input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Local Analytics Viewer</h1>
+        <p>This viewer shows analytics data stored locally in your browser for testing purposes.</p>
+        
+        <div class="warning">
+            <strong>⚠️ Important:</strong> This is a temporary solution for testing. In production, you need a proper database (like Supabase, Firebase, or MongoDB) to persist analytics data across sessions and users.
+        </div>
+
+        <div class="filter-bar">
+            <button onclick="refreshData()">Refresh</button>
+            <button onclick="clearData()">Clear All Data</button>
+            <button onclick="exportData()">Export JSON</button>
+            <select id="eventFilter" onchange="filterEvents()">
+                <option value="">All Events</option>
+                <option value="page_view">Page Views</option>
+                <option value="click">Clicks</option>
+                <option value="form_submit">Form Submits</option>
+                <option value="conversion">Conversions</option>
+            </select>
+            <input type="date" id="dateFilter" onchange="filterEvents()">
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalEvents">0</div>
+                <div class="stat-label">Total Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="uniqueVisitors">0</div>
+                <div class="stat-label">Unique Visitors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="pageViews">0</div>
+                <div class="stat-label">Page Views</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="formSubmits">0</div>
+                <div class="stat-label">Form Submits</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="conversions">0</div>
+                <div class="stat-label">Conversions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgEngagement">0</div>
+                <div class="stat-label">Avg Engagement</div>
+            </div>
+        </div>
+
+        <h2>Recent Events</h2>
+        <div class="events-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Event</th>
+                        <th>Page</th>
+                        <th>Visitor</th>
+                        <th>Source</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="eventsTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px;">
+                            No events recorded yet. Visit your website to generate some events.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Override analytics to store locally
+        if (!window.atlasAnalyticsLocal) {
+            window.atlasAnalyticsLocal = {
+                events: JSON.parse(localStorage.getItem('atlas_analytics_events') || '[]'),
+                
+                track: function(eventName, eventData) {
+                    const event = {
+                        event_id: Math.random().toString(36).substr(2, 9),
+                        event_name: eventName,
+                        timestamp: new Date().toISOString(),
+                        visitor_id: localStorage.getItem('atlas_visitor_id') || 'test-visitor',
+                        page_url: window.location.href,
+                        event_data: eventData,
+                        session: {
+                            utm_source: new URLSearchParams(window.location.search).get('utm_source') || 'direct',
+                            utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign') || ''
+                        }
+                    };
+                    
+                    this.events.push(event);
+                    localStorage.setItem('atlas_analytics_events', JSON.stringify(this.events));
+                    
+                    // Also try to send to server
+                    fetch('/api/analytics/track', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(event)
+                    }).catch(console.error);
+                }
+            };
+            
+            // Intercept atlas analytics calls
+            if (window.atlasAnalytics && window.atlasAnalytics.trackEvent) {
+                const originalTrack = window.atlasAnalytics.trackEvent.bind(window.atlasAnalytics);
+                window.atlasAnalytics.trackEvent = function(eventName, eventData) {
+                    window.atlasAnalyticsLocal.track(eventName, eventData);
+                    return originalTrack(eventName, eventData);
+                };
+            }
+        }
+
+        let allEvents = [];
+        let filteredEvents = [];
+
+        function loadEvents() {
+            allEvents = JSON.parse(localStorage.getItem('atlas_analytics_events') || '[]');
+            filteredEvents = [...allEvents];
+            updateStats();
+            updateTable();
+        }
+
+        function updateStats() {
+            const stats = {
+                totalEvents: filteredEvents.length,
+                uniqueVisitors: new Set(filteredEvents.map(e => e.visitor_id)).size,
+                pageViews: filteredEvents.filter(e => e.event_name === 'page_view').length,
+                formSubmits: filteredEvents.filter(e => e.event_name === 'form_submit').length,
+                conversions: filteredEvents.filter(e => e.event_name === 'conversion').length,
+                avgEngagement: 0
+            };
+            
+            // Calculate average engagement
+            const engagementEvents = filteredEvents.filter(e => e.event_data?.engagement_score);
+            if (engagementEvents.length > 0) {
+                const totalEngagement = engagementEvents.reduce((sum, e) => sum + (e.event_data.engagement_score || 0), 0);
+                stats.avgEngagement = Math.round(totalEngagement / engagementEvents.length);
+            }
+            
+            // Update UI
+            Object.keys(stats).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) element.textContent = stats[key];
+            });
+        }
+
+        function updateTable() {
+            const tbody = document.getElementById('eventsTableBody');
+            
+            if (filteredEvents.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px;">
+                            No events match your filters.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Sort by most recent first
+            const sortedEvents = filteredEvents.sort((a, b) => 
+                new Date(b.timestamp) - new Date(a.timestamp)
+            );
+            
+            // Show last 100 events
+            tbody.innerHTML = sortedEvents.slice(0, 100).map(event => {
+                const time = new Date(event.timestamp).toLocaleString();
+                const page = event.page_url ? new URL(event.page_url).pathname : '-';
+                const source = event.session?.utm_source || 'direct';
+                const details = event.event_data ? 
+                    Object.entries(event.event_data)
+                        .filter(([k, v]) => k !== 'event_data' && v !== null)
+                        .map(([k, v]) => `${k}: ${v}`)
+                        .join(', ')
+                        .substring(0, 100) : '-';
+                
+                return `
+                    <tr>
+                        <td>${time}</td>
+                        <td><strong>${event.event_name}</strong></td>
+                        <td>${page}</td>
+                        <td>${event.visitor_id?.substring(0, 8)}...</td>
+                        <td>${source}</td>
+                        <td class="event-details" title="${details}">${details}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterEvents() {
+            const eventType = document.getElementById('eventFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+            
+            filteredEvents = allEvents.filter(event => {
+                // Filter by event type
+                if (eventType && event.event_name !== eventType) return false;
+                
+                // Filter by date
+                if (dateFilter) {
+                    const eventDate = new Date(event.timestamp).toISOString().split('T')[0];
+                    if (eventDate !== dateFilter) return false;
+                }
+                
+                return true;
+            });
+            
+            updateStats();
+            updateTable();
+        }
+
+        function refreshData() {
+            loadEvents();
+        }
+
+        function clearData() {
+            if (confirm('Are you sure you want to clear all analytics data?')) {
+                localStorage.removeItem('atlas_analytics_events');
+                loadEvents();
+            }
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(allEvents, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `atlas-analytics-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        // Auto-refresh every 5 seconds
+        setInterval(refreshData, 5000);
+        
+        // Initial load
+        loadEvents();
+    </script>
+</body>
+</html>
