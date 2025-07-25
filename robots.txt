@@ -1,0 +1,16 @@
+# Atlas Fitness Robots.txt
+User-agent: *
+Allow: /
+
+# Block admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Block thank you page from indexing
+Disallow: /thank-you.html
+
+# Sitemap location
+Sitemap: https://www.atlas-gyms.co.uk/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1

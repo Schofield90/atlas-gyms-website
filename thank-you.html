@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Atlas Fitness</title>
+    <meta name="description" content="Thank you for booking your free consultation with Atlas Fitness. We'll be in touch within 24 hours.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        .thank-you-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 2rem;
+        }
+        
+        .thank-you-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 3rem;
+        }
+        
+        .thank-you-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+        
+        .thank-you-container .subtitle {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .next-steps {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .next-steps h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+        
+        .next-steps ol {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+        
+        .next-steps li {
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+        }
+        
+        .contact-item a {
+            color: #e85d04;
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #e85d04;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #c44d03;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #1a1a1a;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .btn-secondary:hover {
+            border-color: #e85d04;
+            color: #e85d04;
+        }
+        
+        @media (max-width: 768px) {
+            .thank-you-container {
+                padding: 2rem;
+            }
+            
+            .thank-you-container h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+    
+    <!-- Conversion Tracking -->
+    <script>
+        // Track thank you page view
+        if (window.leadTracker) {
+            window.leadTracker.trackEvent('thank_you_page', {
+                location: new URLSearchParams(window.location.search).get('location') || 'unknown'
+            });
+        }
+        
+        // Google Analytics conversion
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'conversion', {
+                'send_to': 'AW-XXXXXXXXX/XXXXXXXXX', // Replace with your conversion ID
+                'value': 50.0,
+                'currency': 'GBP'
+            });
+        }
+        
+        // Facebook Pixel conversion
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead', {
+                value: 50.00,
+                currency: 'GBP'
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="thank-you-page">
+        <div class="thank-you-container">
+            <div class="success-icon">✓</div>
+            
+            <h1>Thank You!</h1>
+            <p class="subtitle">Your free consultation request has been received.</p>
+            
+            <div class="next-steps">
+                <h2>What Happens Next?</h2>
+                <ol>
+                    <li><strong>We'll call you within 24 hours</strong> to discuss your goals and answer any questions</li>
+                    <li><strong>Schedule your free consultation</strong> at a time that works for you</li>
+                    <li><strong>Meet your coach</strong> and tour our private training facility</li>
+                    <li><strong>Get your personalized plan</strong> to achieve your fitness goals</li>
+                </ol>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    📞 <a href="tel:+447490253471">07490 253471</a>
+                </div>
+                <div class="contact-item">
+                    ✉️ <a href="mailto:sam@atlas-gyms.co.uk">sam@atlas-gyms.co.uk</a>
+                </div>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="/" class="btn btn-secondary">Back to Homepage</a>
+                <a href="tel:+447490253471" class="btn btn-primary">Call Us Now</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lead Tracker -->
+    <script src="/js/lead-tracker.js"></script>
+</body>
+</html>

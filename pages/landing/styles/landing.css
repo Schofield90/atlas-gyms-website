@@ -1,0 +1,355 @@
+/* Landing Page Specific Styles */
+
+/* Mobile-First Approach */
+.landing-page {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: #1a1a1a;
+}
+
+/* Landing Header */
+.landing-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.landing-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.landing-header .logo {
+    height: 40px;
+}
+
+.header-cta {
+    background: #e85d04;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.header-cta:hover {
+    background: #c44d03;
+    transform: translateY(-2px);
+}
+
+/* Hero Section */
+.hero {
+    margin-top: 72px; /* Account for fixed header */
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-headline {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero-subheadline {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.hero-trust-badges {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.trust-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+}
+
+/* Social Proof Bar */
+.social-proof-bar {
+    background: #f8f9fa;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.proof-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    text-align: center;
+}
+
+.proof-item {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.proof-item strong {
+    display: block;
+    font-size: 1.25rem;
+    color: #1a1a1a;
+    margin-bottom: 0.25rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: #e85d04;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #c44d03;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(232, 93, 4, 0.3);
+}
+
+.btn-large {
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Form Section */
+.consultation-form-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+}
+
+.form-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-wrapper h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.form-subheadline {
+    text-align: center;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.landing-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.landing-form input,
+.landing-form select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.landing-form input:focus,
+.landing-form select:focus {
+    outline: none;
+    border-color: #e85d04;
+}
+
+.form-disclaimer {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 1rem;
+}
+
+/* Reviews Section */
+.reviews-section {
+    padding: 4rem 0;
+    background: white;
+}
+
+.reviews-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Location Section */
+.location-section {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.location-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Footer */
+.landing-footer {
+    background: #1a1a1a;
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.landing-footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.landing-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Mobile/Desktop specific */
+.mobile-only {
+    display: inline;
+}
+
+.desktop-only {
+    display: none;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .hero-headline {
+        font-size: 3.5rem;
+    }
+    
+    .hero-subheadline {
+        font-size: 1.5rem;
+    }
+    
+    .form-wrapper {
+        padding: 3rem;
+    }
+    
+    .mobile-only {
+        display: none;
+    }
+    
+    .desktop-only {
+        display: inline;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-headline {
+        font-size: 4rem;
+    }
+    
+    .hero {
+        min-height: 700px;
+    }
+}
+
+/* Loading States */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+/* Error States */
+.error {
+    text-align: center;
+    padding: 2rem;
+    color: #d32f2f;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content {
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* A/B Testing Variant Styles */
+.variant-b .btn-primary {
+    background: #2e7d32;
+}
+
+.variant-b .btn-primary:hover {
+    background: #1b5e20;
+}
+
+.variant-b .header-cta {
+    background: #2e7d32;
+}
+
+.variant-b .header-cta:hover {
+    background: #1b5e20;
+}
