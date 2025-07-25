@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Debug View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #e85d04;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        button {
+            background: #e85d04;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #c44d03;
+        }
+        .json-output {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e85d04;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analytics Debug View</h1>
+        <p>This page helps debug the analytics data and API responses.</p>
+        
+        <div class="section">
+            <h2>Authentication</h2>
+            <input type="password" id="password" placeholder="Enter password" value="atlas2024">
+            <button onclick="testAuth()">Test Authentication</button>
+            <div id="authResult"></div>
+        </div>
+        
+        <div class="section">
+            <h2>API Endpoints</h2>
+            <button onclick="fetchData('overview')">Get Overview</button>
+            <button onclick="fetchData('export')">Get Raw Data</button>
+            <button onclick="fetchData('traffic')">Get Traffic</button>
+            <button onclick="fetchData('conversions')">Get Conversions</button>
+            <button onclick="fetchData('realtime')">Get Realtime</button>
+        </div>
+        
+        <div class="section">
+            <h2>Data Summary</h2>
+            <div class="stats" id="stats"></div>
+        </div>
+        
+        <div class="section">
+            <h2>Recent Events</h2>
+            <div id="eventsTable"></div>
+        </div>
+        
+        <div class="section">
+            <h2>Raw API Response</h2>
+            <div class="json-output" id="output">Click a button above to fetch data...</div>
+        </div>
+    </div>
+
+    <script>
+        let authToken = 'atlas2024';
+        
+        async function testAuth() {
+            const password = document.getElementById('password').value;
+            const result = document.getElementById('authResult');
+            
+            try {
+                const response = await fetch('/api/analytics/dashboard', {
+                    headers: {
+                        'Authorization': `Bearer ${password}`
+                    }
+                });
+                
+                if (response.ok) {
+                    authToken = password;
+                    result.className = 'success';
+                    result.innerHTML = '✓ Authentication successful!';
+                } else {
+                    result.className = 'error';
+                    result.innerHTML = '✗ Authentication failed: ' + response.statusText;
+                }
+            } catch (error) {
+                result.className = 'error';
+                result.innerHTML = '✗ Error: ' + error.message;
+            }
+        }
+        
+        async function fetchData(action) {
+            const output = document.getElementById('output');
+            const stats = document.getElementById('stats');
+            const eventsTable = document.getElementById('eventsTable');
+            
+            output.textContent = 'Loading...';
+            
+            try {
+                const url = action ? `/api/analytics/dashboard?action=${action}` : '/api/analytics/dashboard';
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                output.textContent = JSON.stringify(data, null, 2);
+                
+                // Update stats if we have raw data
+                if (data.events || action === 'export') {
+                    updateStats(data);
+                    updateEventsTable(data.events || []);
+                }
+                
+            } catch (error) {
+                output.textContent = 'Error: ' + error.message;
+                output.style.color = 'red';
+            }
+        }
+        
+        function updateStats(data) {
+            const stats = document.getElementById('stats');
+            const events = data.events || [];
+            const conversions = data.conversions || [];
+            
+            // Calculate stats
+            const pageViews = events.filter(e => e.event === 'page_view').length;
+            const clicks = events.filter(e => e.event === 'click').length;
+            const formSubmits = events.filter(e => e.event === 'form_submit').length;
+            const uniqueVisitors = new Set(events.map(e => e.visitor_id || e.session_id)).size;
+            
+            stats.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${events.length}</div>
+                    <div class="stat-label">Total Events</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${pageViews}</div>
+                    <div class="stat-label">Page Views</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${clicks}</div>
+                    <div class="stat-label">Clicks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${formSubmits}</div>
+                    <div class="stat-label">Form Submits</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${uniqueVisitors}</div>
+                    <div class="stat-label">Unique Visitors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${conversions.length}</div>
+                    <div class="stat-label">Conversions</div>
+                </div>
+            `;
+        }
+        
+        function updateEventsTable(events) {
+            const eventsTable = document.getElementById('eventsTable');
+            
+            if (events.length === 0) {
+                eventsTable.innerHTML = '<p>No events recorded yet.</p>';
+                return;
+            }
+            
+            // Get last 10 events
+            const recentEvents = events.slice(-10).reverse();
+            
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Event</th>
+                            <th>Page</th>
+                            <th>Source</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            recentEvents.forEach(event => {
+                const time = new Date(event.timestamp).toLocaleString();
+                const page = event.page || event.path || '-';
+                const source = event.session?.utm_source || 'Direct';
+                const details = event.data ? JSON.stringify(event.data).substring(0, 50) + '...' : '-';
+                
+                html += `
+                    <tr>
+                        <td>${time}</td>
+                        <td>${event.event || event.event_name || '-'}</td>
+                        <td>${page}</td>
+                        <td>${source}</td>
+                        <td>${details}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            eventsTable.innerHTML = html;
+        }
+        
+        // Test auth on load
+        window.addEventListener('load', () => {
+            testAuth();
+        });
+    </script>
+</body>
+</html>

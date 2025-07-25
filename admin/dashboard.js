@@ -85,6 +85,24 @@ class AtlasDashboard {
             }
             
             const data = await response.json();
+            console.log('API Response:', data);
+            
+            // If the API returns an overview object, extract the raw data
+            if (data.totalVisitors !== undefined || data.metrics !== undefined) {
+                // This is an overview response, we need raw data
+                // Fetch raw data with export action
+                const exportResponse = await fetch('/api/analytics/dashboard?action=export', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (exportResponse.ok) {
+                    const rawData = await exportResponse.json();
+                    console.log('Raw Data:', rawData);
+                    return this.transformApiData(rawData, dateRange, location, campaign);
+                }
+            }
             
             // Transform the API data to match our dashboard format
             return this.transformApiData(data, dateRange, location, campaign);
@@ -378,6 +396,8 @@ class AtlasDashboard {
     }
 
     transformApiData(apiData, dateRange, location, campaign) {
+        console.log('Transforming data:', apiData);
+        
         // Transform the raw API data into the format expected by the dashboard
         const events = apiData.events || [];
         const conversions = apiData.conversions || [];
