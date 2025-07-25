@@ -192,11 +192,24 @@
     </style>
 </head>
 <body>
+    <!-- Login Modal -->
+    <div id="loginModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); min-width: 300px;">
+            <h2 style="margin-top: 0;">Dashboard Login</h2>
+            <form id="loginForm">
+                <input type="password" id="passwordInput" placeholder="Enter password" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;" required>
+                <button type="submit" style="width: 100%; padding: 0.5rem; background: #e85d04; color: white; border: none; border-radius: 5px; cursor: pointer;">Login</button>
+                <p id="loginError" style="color: red; margin-top: 1rem; display: none;">Invalid password. Please try again.</p>
+            </form>
+        </div>
+    </div>
+
     <header class="dashboard-header">
         <h1>Atlas Fitness - Marketing Dashboard</h1>
+        <button id="logoutBtn" style="position: absolute; right: 2rem; top: 1rem; background: #e85d04; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; display: none;">Logout</button>
     </header>
     
-    <div class="dashboard-container">
+    <div class="dashboard-container" style="display: none;">
         <!-- Date Filter -->
         <div class="filter-bar">
             <select id="dateRange">
@@ -338,5 +351,67 @@
     </div>
     
     <script src="/admin/dashboard.js"></script>
+    <script>
+        // Authentication check on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const authToken = localStorage.getItem('atlas_dashboard_token');
+            const loginModal = document.getElementById('loginModal');
+            const dashboardContainer = document.querySelector('.dashboard-container');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            if (!authToken) {
+                // Show login modal
+                loginModal.style.display = 'block';
+            } else {
+                // Verify token is still valid
+                fetch('/api/analytics/dashboard', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                }).then(response => {
+                    if (response.status === 401) {
+                        localStorage.removeItem('atlas_dashboard_token');
+                        loginModal.style.display = 'block';
+                    } else {
+                        dashboardContainer.style.display = 'block';
+                        logoutBtn.style.display = 'block';
+                    }
+                });
+            }
+            
+            // Handle login form
+            document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const password = document.getElementById('passwordInput').value;
+                
+                try {
+                    const response = await fetch('/api/analytics/dashboard', {
+                        headers: {
+                            'Authorization': `Bearer ${password}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        localStorage.setItem('atlas_dashboard_token', password);
+                        loginModal.style.display = 'none';
+                        dashboardContainer.style.display = 'block';
+                        logoutBtn.style.display = 'block';
+                        // Reload to initialize dashboard
+                        window.location.reload();
+                    } else {
+                        document.getElementById('loginError').style.display = 'block';
+                    }
+                } catch (error) {
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            });
+            
+            // Handle logout
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('atlas_dashboard_token');
+                window.location.reload();
+            });
+        });
+    </script>
 </body>
 </html>

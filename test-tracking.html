@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Fitness - Tracking Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #e85d04;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        button {
+            background: #e85d04;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #c44d03;
+        }
+        .log {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Atlas Fitness - Analytics Tracking Test Page</h1>
+        
+        <div class="status info">
+            <strong>Test Page URL:</strong> Load this page with different UTM parameters to test tracking:<br>
+            Example: <code>?utm_source=facebook&utm_campaign=test&utm_medium=cpc</code>
+        </div>
+
+        <div class="test-section">
+            <h2>1. Page View Tracking</h2>
+            <p>This page should automatically track a page view when loaded.</p>
+            <div id="pageViewStatus" class="status info">Checking page view tracking...</div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. Click Tracking</h2>
+            <p>Click these buttons to test click tracking:</p>
+            <button onclick="testClick('header')">Header Button</button>
+            <button onclick="testClick('cta')">CTA Button</button>
+            <button onclick="testClick('footer')">Footer Button</button>
+            <div id="clickLog" class="log">Click events will appear here...</div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. Form Submission Tracking</h2>
+            <form id="testForm">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <input type="tel" name="phone" placeholder="Phone Number">
+                <select name="location">
+                    <option value="york">York</option>
+                    <option value="harrogate">Harrogate</option>
+                </select>
+                <select name="goal">
+                    <option value="weight-loss">Weight Loss</option>
+                    <option value="muscle-gain">Muscle Gain</option>
+                    <option value="general-fitness">General Fitness</option>
+                </select>
+                <button type="submit">Submit Test Form</button>
+            </form>
+            <div id="formStatus" class="status info">Submit the form to test form tracking...</div>
+        </div>
+
+        <div class="test-section">
+            <h2>4. Conversion Tracking</h2>
+            <button onclick="testConversion()">Trigger Test Conversion</button>
+            <div id="conversionStatus" class="status info">Click button to test conversion tracking...</div>
+        </div>
+
+        <div class="test-section">
+            <h2>5. Analytics Dashboard</h2>
+            <p>After generating some test events, check the dashboard to see if they appear:</p>
+            <a href="/admin/dashboard.html" target="_blank">
+                <button type="button">Open Analytics Dashboard</button>
+            </a>
+        </div>
+
+        <div class="test-section">
+            <h2>Tracking Log</h2>
+            <div id="trackingLog" class="log">All tracking events will be logged here...</div>
+        </div>
+    </div>
+
+    <!-- Include your tracking scripts -->
+    <script src="/js/atlas-analytics.js"></script>
+    <script src="/js/atlas-init.js"></script>
+    
+    <script>
+        // Override track function to log events
+        const originalTrack = window.atlasAnalytics ? window.atlasAnalytics.track : null;
+        if (window.atlasAnalytics) {
+            window.atlasAnalytics.track = function(event, data) {
+                // Log the event
+                logEvent('Track Event', { event, data });
+                
+                // Call original function
+                if (originalTrack) {
+                    return originalTrack.call(window.atlasAnalytics, event, data);
+                }
+            };
+        }
+
+        function logEvent(type, data) {
+            const log = document.getElementById('trackingLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = `[${timestamp}] ${type}: ${JSON.stringify(data)}\n`;
+            log.textContent = entry + log.textContent;
+        }
+
+        function updateStatus(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `status ${type}`;
+        }
+
+        // Check page view tracking
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                updateStatus('pageViewStatus', 'Page view should be tracked. Check the tracking log below.', 'success');
+                
+                // Log current session info
+                if (window.atlasAnalytics && window.atlasAnalytics.getSession) {
+                    const session = window.atlasAnalytics.getSession();
+                    logEvent('Session Info', session);
+                }
+            }, 1000);
+        });
+
+        // Test click tracking
+        function testClick(buttonType) {
+            const clickLog = document.getElementById('clickLog');
+            const timestamp = new Date().toLocaleTimeString();
+            clickLog.textContent = `[${timestamp}] Clicked: ${buttonType} button\n` + clickLog.textContent;
+            
+            // Manually trigger click tracking if needed
+            if (window.atlasAnalytics && window.atlasAnalytics.track) {
+                window.atlasAnalytics.track('click', {
+                    target: buttonType,
+                    element: 'button',
+                    text: `${buttonType} Button`
+                });
+            }
+        }
+
+        // Test form submission
+        document.getElementById('testForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            updateStatus('formStatus', 'Submitting form...', 'info');
+            
+            // Trigger form tracking
+            if (window.atlasAnalytics && window.atlasAnalytics.track) {
+                window.atlasAnalytics.track('form_submit', {
+                    form_id: 'test-form',
+                    ...data
+                });
+            }
+            
+            // Also test the leads API
+            try {
+                const response = await fetch('/api/leads', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    updateStatus('formStatus', 'Form submitted successfully! Check dashboard for the lead.', 'success');
+                } else {
+                    updateStatus('formStatus', 'Form submission failed. Check console for errors.', 'error');
+                }
+            } catch (error) {
+                updateStatus('formStatus', `Error: ${error.message}`, 'error');
+            }
+        });
+
+        // Test conversion tracking
+        async function testConversion() {
+            updateStatus('conversionStatus', 'Triggering conversion...', 'info');
+            
+            try {
+                const response = await fetch('/api/conversions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        type: 'facebook',
+                        event_name: 'Lead',
+                        email: 'test@example.com',
+                        phone: '1234567890',
+                        custom_data: {
+                            value: 100,
+                            currency: 'GBP'
+                        }
+                    })
+                });
+                
+                if (response.ok) {
+                    updateStatus('conversionStatus', 'Conversion tracked successfully!', 'success');
+                } else {
+                    updateStatus('conversionStatus', 'Conversion tracking failed', 'error');
+                }
+            } catch (error) {
+                updateStatus('conversionStatus', `Error: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
