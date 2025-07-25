@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Conversion Upload - Atlas Fitness Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f3f4f6;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .upload-form {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .conversion-row {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .conversion-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .btn {
+            background: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #059669;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .results {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .error {
+            background: #fef2f2;
+            border-color: #fca5a5;
+        }
+
+        .instructions {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .instructions h3 {
+            margin-bottom: 0.5rem;
+            color: #1e40af;
+        }
+
+        .instructions ul {
+            margin-left: 1.5rem;
+        }
+
+        .instructions code {
+            background: #e0e7ff;
+            padding: 0.125rem 0.25rem;
+            border-radius: 2px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Atlas Fitness - Offline Conversion Upload</h1>
+            <p>Track in-gym sign-ups back to Facebook ads for better optimization</p>
+        </div>
+
+        <div class="instructions">
+            <h3>Instructions</h3>
+            <ul>
+                <li>Use this tool to upload conversions that happened offline (in-gym sign-ups)</li>
+                <li>Match conversions using email or phone number from the original lead</li>
+                <li>Include the <code>fbclid</code> or <code>fbp</code> if available from the lead form</li>
+                <li>Conversion time should be when the customer signed up, not when you're uploading</li>
+                <li>Values should reflect actual revenue (e.g., £297 for 6-week challenge)</li>
+            </ul>
+        </div>
+
+        <div class="upload-form">
+            <h2>Add Offline Conversions</h2>
+            
+            <div class="form-group">
+                <label>API Token</label>
+                <input type="password" id="apiToken" placeholder="Enter your API token">
+            </div>
+
+            <div id="conversions">
+                <div class="conversion-row" data-index="0">
+                    <div class="row-header">
+                        <h3>Conversion #1</h3>
+                        <button class="btn btn-danger btn-sm" onclick="removeConversion(this)">Remove</button>
+                    </div>
+                    <div class="conversion-fields">
+                        <div class="form-group">
+                            <label>Email or Phone*</label>
+                            <input type="text" name="email_or_phone" placeholder="john@example.com or 07123456789" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Conversion Value (£)*</label>
+                            <input type="number" name="conversion_value" placeholder="297" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Conversion Time*</label>
+                            <input type="datetime-local" name="conversion_time" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Product/Membership</label>
+                            <select name="product_name">
+                                <option value="6 Week Challenge">6 Week Challenge (£297)</option>
+                                <option value="Personal Training">Personal Training</option>
+                                <option value="Monthly Membership">Monthly Membership</option>
+                                <option value="3 Month Membership">3 Month Membership</option>
+                                <option value="Annual Membership">Annual Membership</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" name="first_name" placeholder="John">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" name="last_name" placeholder="Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <select name="signup_location">
+                                <option value="harrogate">Harrogate</option>
+                                <option value="york">York</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Lead ID (if known)</label>
+                            <input type="text" name="lead_id" placeholder="lead_123">
+                        </div>
+                        <div class="form-group">
+                            <label>Facebook Click ID (if available)</label>
+                            <input type="text" name="fbclid" placeholder="IwAR...">
+                        </div>
+                        <div class="form-group">
+                            <label>Facebook Browser ID (if available)</label>
+                            <input type="text" name="fbp" placeholder="_fbp.1.123...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="addConversion()">+ Add Another Conversion</button>
+                <button class="btn" onclick="uploadConversions()" style="margin-left: 1rem;">Upload Conversions</button>
+            </div>
+
+            <div id="results" class="results"></div>
+        </div>
+    </div>
+
+    <script>
+        let conversionCount = 1;
+
+        function addConversion() {
+            conversionCount++;
+            const template = document.querySelector('.conversion-row').cloneNode(true);
+            template.dataset.index = conversionCount;
+            template.querySelector('h3').textContent = `Conversion #${conversionCount}`;
+            
+            // Clear all inputs
+            template.querySelectorAll('input').forEach(input => {
+                input.value = '';
+            });
+            
+            document.getElementById('conversions').appendChild(template);
+        }
+
+        function removeConversion(btn) {
+            if (document.querySelectorAll('.conversion-row').length > 1) {
+                btn.closest('.conversion-row').remove();
+                updateConversionNumbers();
+            }
+        }
+
+        function updateConversionNumbers() {
+            document.querySelectorAll('.conversion-row').forEach((row, index) => {
+                row.querySelector('h3').textContent = `Conversion #${index + 1}`;
+            });
+        }
+
+        async function uploadConversions() {
+            const apiToken = document.getElementById('apiToken').value;
+            if (!apiToken) {
+                alert('Please enter your API token');
+                return;
+            }
+
+            const conversions = [];
+            const rows = document.querySelectorAll('.conversion-row');
+
+            for (const row of rows) {
+                const conversion = {};
+                const inputs = row.querySelectorAll('input, select');
+                
+                for (const input of inputs) {
+                    if (input.name && input.value) {
+                        conversion[input.name] = input.value;
+                    }
+                }
+
+                // Validate required fields
+                if (!conversion.email_or_phone || !conversion.conversion_value || !conversion.conversion_time) {
+                    alert(`Conversion #${Array.from(rows).indexOf(row) + 1} is missing required fields`);
+                    return;
+                }
+
+                conversions.push(conversion);
+            }
+
+            try {
+                const response = await fetch('/api/offline-conversions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiToken}`
+                    },
+                    body: JSON.stringify({ conversions })
+                });
+
+                const result = await response.json();
+                
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.style.display = 'block';
+                
+                if (response.ok && result.success) {
+                    resultsDiv.className = 'results';
+                    resultsDiv.innerHTML = `
+                        <h3>Success!</h3>
+                        <p>Processed ${result.processed} conversions successfully.</p>
+                        ${result.errors > 0 ? `<p>Errors: ${result.errors}</p>` : ''}
+                        <pre>${JSON.stringify(result.facebook_result, null, 2)}</pre>
+                    `;
+                } else {
+                    resultsDiv.className = 'results error';
+                    resultsDiv.innerHTML = `
+                        <h3>Error</h3>
+                        <p>${result.error || 'Failed to upload conversions'}</p>
+                    `;
+                }
+            } catch (error) {
+                const resultsDiv = document.getElementById('results');
+                resultsDiv.style.display = 'block';
+                resultsDiv.className = 'results error';
+                resultsDiv.innerHTML = `
+                    <h3>Error</h3>
+                    <p>Failed to connect to server: ${error.message}</p>
+                `;
+            }
+        }
+
+        // Set default conversion time to now
+        document.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.querySelector('input[name="conversion_time"]').value = now.toISOString().slice(0, 16);
+        });
+    </script>
+</body>
+</html>
