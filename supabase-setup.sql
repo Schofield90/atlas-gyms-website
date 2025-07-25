@@ -1,8 +1,8 @@
 -- Supabase Analytics Schema for Atlas Fitness
 -- Run this in the Supabase SQL editor
 
--- Create events table
-CREATE TABLE IF NOT EXISTS analytics_events (
+-- Create events table with atlas_ prefix to avoid conflicts
+CREATE TABLE IF NOT EXISTS atlas_analytics_events (
     id BIGSERIAL PRIMARY KEY,
     event_id VARCHAR(50) UNIQUE NOT NULL,
     event_name VARCHAR(100) NOT NULL,
@@ -92,7 +92,7 @@ SELECT
     COUNT(CASE WHEN event_name = 'form_submit' THEN 1 END) as form_submits,
     COUNT(CASE WHEN event_name = 'click' THEN 1 END) as clicks,
     DATE_TRUNC('day', timestamp) as date
-FROM analytics_events
+FROM atlas_analytics_events
 GROUP BY DATE_TRUNC('day', timestamp)
 ORDER BY date DESC;
 
@@ -154,7 +154,7 @@ BEGIN
         MAX(referrer) as referrer,
         MIN(page_path) as landing_page,
         MAX(event_data->>'device_type') as device_type
-    FROM analytics_events
+    FROM atlas_analytics_events
     WHERE session_id = p_session_id
     GROUP BY session_id, visitor_id
     ON CONFLICT (session_id) 
