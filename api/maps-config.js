@@ -1,4 +1,4 @@
-// Google Maps configuration endpoint
+// Combined Google Maps configuration and API key endpoint
 export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -16,8 +16,15 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Google Maps API key not configured' });
     }
 
-    // Return the API key for client-side map initialization
-    // This is safe as the key should be restricted by referrer in Google Cloud Console
+    // Support both /api/maps-config and /api/maps-key endpoints
+    const isKeyOnly = req.url?.includes('maps-key');
+    
+    if (isKeyOnly) {
+        // Simple key response for backwards compatibility
+        return res.status(200).json({ apiKey: MAPS_API_KEY });
+    }
+
+    // Full configuration response
     res.status(200).json({
         apiKey: MAPS_API_KEY,
         libraries: ['places', 'geometry'],

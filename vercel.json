@@ -7,6 +7,28 @@
       "maxDuration": 10
     }
   },
+  "rewrites": [
+    {
+      "source": "/api/maps-key",
+      "destination": "/api/maps-config"
+    },
+    {
+      "source": "/api/track",
+      "destination": "/api/analytics/track"
+    },
+    {
+      "source": "/api/facebook-conversions",
+      "destination": "/api/conversions"
+    },
+    {
+      "source": "/api/enhanced-conversions",
+      "destination": "/api/conversions"
+    },
+    {
+      "source": "/api/offline-conversions",
+      "destination": "/api/conversions"
+    }
+  ],
   "redirects": [
     {
       "source": "/lp/:test/:location",
