@@ -1,8 +1,6 @@
 // Analytics Dashboard API - Provides data for the admin dashboard
-import fs from 'fs/promises';
 import crypto from 'crypto';
-
-const ANALYTICS_DB_PATH = process.env.ANALYTICS_DB_PATH || '/tmp/atlas-analytics.json';
+import { getAnalyticsData, getDashboardSummary } from '../../lib/supabase.js';
 // Support both plain password and hash for flexibility
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'atlas2024';
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH || crypto.createHash('sha256').update(ADMIN_PASSWORD).digest('hex');
@@ -50,13 +48,11 @@ async function handleGet(req, res) {
     const action = params.get('action');
 
     try {
-        let data = { events: [], conversions: [], sessions: {} };
+        // Get data from Supabase
+        const data = await getAnalyticsData({ limit: 5000 });
         
-        try {
-            const fileContent = await fs.readFile(ANALYTICS_DB_PATH, 'utf8');
-            data = JSON.parse(fileContent);
-        } catch (error) {
-            // File doesn't exist yet
+        if (!data) {
+            return res.status(200).json({ events: [], conversions: [], sessions: [] });
         }
 
         switch (action) {
@@ -93,8 +89,13 @@ async function handlePost(req, res) {
     try {
         switch (action) {
             case 'clear_data':
-                await fs.writeFile(ANALYTICS_DB_PATH, JSON.stringify({ events: [], conversions: [], sessions: {} }, null, 2));
-                return res.status(200).json({ success: true });
+                // Note: Clearing data in Supabase requires direct database access
+                // For now, return success but log a warning
+                console.warn('Clear data requested - this needs to be done in Supabase dashboard');
+                return res.status(200).json({ 
+                    success: true, 
+                    message: 'Please clear data directly in Supabase dashboard' 
+                });
             
             default:
                 return res.status(400).json({ error: 'Unknown action' });
