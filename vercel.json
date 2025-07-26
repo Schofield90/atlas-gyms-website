@@ -39,12 +39,113 @@
     {
       "source": "/york-booking",
       "destination": "/york-booking.html"
+    },
+    {
+      "source": "/harrogate",
+      "destination": "/harrogate.html"
+    },
+    {
+      "source": "/york",
+      "destination": "/york.html"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy-policy.html"
+    },
+    {
+      "source": "/thank-you",
+      "destination": "/thank-you.html"
+    },
+    {
+      "source": "/admin/dashboard",
+      "destination": "/admin/dashboard.html"
+    },
+    {
+      "source": "/admin/analytics",
+      "destination": "/admin/analytics.html"
+    },
+    {
+      "source": "/admin/analytics-simple",
+      "destination": "/admin/analytics-simple.html"
+    },
+    {
+      "source": "/admin/analytics-debug",
+      "destination": "/admin/analytics-debug.html"
+    },
+    {
+      "source": "/admin/analytics-local",
+      "destination": "/admin/analytics-local.html"
+    },
+    {
+      "source": "/admin/offline-conversions",
+      "destination": "/admin/offline-conversions.html"
+    },
+    {
+      "source": "/test-tracking",
+      "destination": "/test-tracking.html"
+    },
+    {
+      "source": "/test-supabase-tracking",
+      "destination": "/test-supabase-tracking.html"
+    },
+    {
+      "source": "/test-integration",
+      "destination": "/test-integration.html"
+    },
+    {
+      "source": "/test-live",
+      "destination": "/test-live.html"
+    },
+    {
+      "source": "/pixel-test",
+      "destination": "/pixel-test.html"
+    },
+    {
+      "source": "/form-config",
+      "destination": "/form-config.html"
+    },
+    {
+      "source": "/get-place-ids",
+      "destination": "/get-place-ids.html"
+    },
+    {
+      "source": "/fb-pixel-inline",
+      "destination": "/fb-pixel-inline.html"
+    },
+    {
+      "source": "/debug-images",
+      "destination": "/debug-images.html"
+    },
+    {
+      "source": "/diagnose-images",
+      "destination": "/diagnose-images.html"
+    },
+    {
+      "source": "/image-debug",
+      "destination": "/image-debug.html"
+    },
+    {
+      "source": "/image-test",
+      "destination": "/image-test.html"
+    },
+    {
+      "source": "/test-images",
+      "destination": "/test-images.html"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/:path*.html"
     }
   ],
   "redirects": [
     {
       "source": "/lp/:test/:location",
       "destination": "/api/ab-test?test=:test&location=:location"
+    },
+    {
+      "source": "/:path*.html",
+      "destination": "/:path*",
+      "statusCode": 301
     }
   ],
   "headers": [
