@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard API</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            max-width: 1200px; 
+            margin: 0 auto;
+        }
+        button { 
+            padding: 10px 20px; 
+            margin: 5px; 
+            cursor: pointer;
+            background: #0052CC;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #003D82;
+        }
+        .result { 
+            margin-top: 20px; 
+            padding: 20px; 
+            background: #f5f5f5; 
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .error { 
+            background: #fee; 
+            color: #c00; 
+        }
+        .success { 
+            background: #efe; 
+            color: #060; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Dashboard API Test</h1>
+    
+    <div>
+        <h2>Test API Endpoints</h2>
+        <button onclick="testAPI('overview')">Test Overview</button>
+        <button onclick="testAPI('export')">Test Export (Raw Data)</button>
+        <button onclick="testAPI('conversions')">Test Conversions</button>
+        <button onclick="testAPI('traffic')">Test Traffic</button>
+        <button onclick="testAPI('engagement')">Test Engagement</button>
+        <button onclick="testAPI('realtime')">Test Realtime</button>
+    </div>
+    
+    <div>
+        <h2>Direct Supabase Test</h2>
+        <button onclick="testSupabase()">Query Supabase Directly</button>
+    </div>
+    
+    <div id="result" class="result"></div>
+    
+    <script>
+        const authToken = localStorage.getItem('atlas_dashboard_token') || 'atlas2024';
+        
+        async function testAPI(action) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `Testing ${action} endpoint...`;
+            
+            try {
+                const url = action ? `/api/analytics/dashboard?action=${action}` : '/api/analytics/dashboard';
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Display the response
+                resultDiv.className = 'result success';
+                resultDiv.textContent = `SUCCESS - ${action} endpoint:\n\n${JSON.stringify(data, null, 2)}`;
+                
+                // Log data structure
+                console.log(`${action} response:`, data);
+                
+                // Check for specific data
+                if (action === 'export' || action === 'overview') {
+                    if (data.events && data.events.length > 0) {
+                        resultDiv.textContent += `\n\nFound ${data.events.length} events`;
+                    }
+                    if (data.conversions && data.conversions.length > 0) {
+                        resultDiv.textContent += `\nFound ${data.conversions.length} conversions`;
+                    }
+                    if (data.sessions && Object.keys(data.sessions).length > 0) {
+                        resultDiv.textContent += `\nFound ${Object.keys(data.sessions).length} sessions`;
+                    }
+                }
+                
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `ERROR: ${error.message}`;
+                
+                if (error.message.includes('401')) {
+                    resultDiv.textContent += '\n\nAuthentication failed. Try refreshing and entering password.';
+                }
+            }
+        }
+        
+        async function testSupabase() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Testing direct Supabase connection...';
+            
+            try {
+                // This endpoint queries Supabase directly
+                const response = await fetch('/api/test-supabase', {
+                    headers: {
+                        'Authorization': 'Bearer atlas2024'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                resultDiv.className = 'result success';
+                resultDiv.textContent = `Supabase Test Results:\n\n${JSON.stringify(data, null, 2)}`;
+                
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `ERROR: ${error.message}`;
+            }
+        }
+        
+        // Test on load
+        window.addEventListener('load', () => {
+            console.log('Auth token:', authToken);
+            testAPI('overview');
+        });
+    </script>
+</body>
+</html>
