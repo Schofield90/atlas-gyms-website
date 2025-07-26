@@ -27,6 +27,10 @@
     {
       "source": "/api/offline-conversions",
       "destination": "/api/conversions"
+    },
+    {
+      "source": "/pages/landing/:page",
+      "destination": "/pages/landing/:page.html"
     }
   ],
   "redirects": [
