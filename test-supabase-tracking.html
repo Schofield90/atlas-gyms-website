@@ -112,6 +112,8 @@
             <p>Verify if data is being stored in Supabase:</p>
             <button onclick="checkSupabaseStatus()">Check Supabase Status</button>
             <button onclick="fetchRecentEvents()">Fetch Recent Events</button>
+            <button onclick="checkEnvironment()">Check Environment Variables</button>
+            <button onclick="testSupabaseConnection()">Test Database Connection</button>
         </div>
 
         <h2>📊 Test Log</h2>
@@ -366,6 +368,58 @@
                 }
             } catch (error) {
                 log('Error fetching events: ' + error.message, 'error');
+            }
+        }
+
+        async function checkEnvironment() {
+            log('Checking environment variables...', 'info');
+            
+            try {
+                const response = await fetch('/api/check-env', {
+                    headers: {
+                        'Authorization': 'Bearer atlas2024'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('Environment check: <pre>' + JSON.stringify(data, null, 2) + '</pre>', 
+                        data.supabase_ready ? 'success' : 'error');
+                } else {
+                    log('Failed to check environment: ' + response.status, 'error');
+                }
+            } catch (error) {
+                log('Error checking environment: ' + error.message, 'error');
+            }
+        }
+
+        async function testSupabaseConnection() {
+            log('Testing Supabase database connection...', 'info');
+            
+            try {
+                const response = await fetch('/api/test-supabase', {
+                    headers: {
+                        'Authorization': 'Bearer atlas2024'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.summary?.ready_for_analytics) {
+                        log('✅ Supabase is ready! Tables exist and data can be inserted.', 'success');
+                    } else if (!data.supabase_client) {
+                        log('❌ Supabase client not initialized. Check environment variables.', 'error');
+                    } else if (!data.summary?.all_tables_exist) {
+                        log('❌ Database tables do not exist. Run the SQL setup script in Supabase.', 'error');
+                    } else {
+                        log('⚠️ Supabase connection issues: <pre>' + JSON.stringify(data, null, 2) + '</pre>', 'error');
+                    }
+                } else {
+                    log('Failed to test Supabase: ' + response.status, 'error');
+                }
+            } catch (error) {
+                log('Error testing Supabase: ' + error.message, 'error');
             }
         }
 
