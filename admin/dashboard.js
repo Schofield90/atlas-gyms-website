@@ -1,4 +1,4 @@
-// Admin Dashboard JavaScript
+// Admin Dashboard JavaScript - Updated
 class AtlasDashboard {
     constructor() {
         this.charts = {};
@@ -203,6 +203,7 @@ class AtlasDashboard {
                 }
             ]
         };
+        }
     }
 
     generateMockLeads(count) {
