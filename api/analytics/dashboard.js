@@ -52,30 +52,54 @@ async function handleGet(req, res) {
         const data = await getAnalyticsData({ limit: 5000 });
         
         if (!data) {
-            return res.status(200).json({ events: [], conversions: [], sessions: [] });
+            return res.status(200).json({ events: [], conversions: [], sessions: {} });
         }
+
+        // Transform event data to match dashboard expectations
+        const transformedData = {
+            ...data,
+            events: (data.events || []).map(event => ({
+                ...event,
+                event: event.event_name || event.event,
+                data: event.event_data || {},
+                session: {
+                    id: event.session_id,
+                    utm_source: event.utm_source,
+                    utm_medium: event.utm_medium,
+                    utm_campaign: event.utm_campaign,
+                    utm_content: event.utm_content,
+                    utm_term: event.utm_term
+                },
+                user: {
+                    id: event.visitor_id,
+                    name: event.event_data?.name,
+                    email: event.event_data?.email,
+                    phone: event.event_data?.phone
+                }
+            }))
+        };
 
         switch (action) {
             case 'overview':
-                return res.status(200).json(getOverview(data));
+                return res.status(200).json(getOverview(transformedData));
             
             case 'conversions':
-                return res.status(200).json(getConversions(data));
+                return res.status(200).json(getConversions(transformedData));
             
             case 'traffic':
-                return res.status(200).json(getTrafficAnalytics(data));
+                return res.status(200).json(getTrafficAnalytics(transformedData));
             
             case 'engagement':
-                return res.status(200).json(getEngagementAnalytics(data));
+                return res.status(200).json(getEngagementAnalytics(transformedData));
             
             case 'realtime':
-                return res.status(200).json(getRealtimeData(data));
+                return res.status(200).json(getRealtimeData(transformedData));
             
             case 'export':
-                return res.status(200).json(data);
+                return res.status(200).json(transformedData);
             
             default:
-                return res.status(200).json(getOverview(data));
+                return res.status(200).json(getOverview(transformedData));
         }
     } catch (error) {
         console.error('Dashboard error:', error);
@@ -116,10 +140,10 @@ function getOverview(data) {
     const totalSessions = Object.keys(data.sessions).length;
     const totalConversions = data.conversions.length;
     
-    // Today's metrics
-    const todayEvents = data.events.filter(e => e.timestamp > oneDayAgo);
-    const todaySessions = Object.values(data.sessions).filter(s => s.start_time > oneDayAgo);
-    const todayConversions = data.conversions.filter(c => c.timestamp > oneDayAgo);
+    // Today's metrics - parse timestamps properly
+    const todayEvents = data.events.filter(e => new Date(e.timestamp).getTime() > oneDayAgo);
+    const todaySessions = Object.values(data.sessions).filter(s => new Date(s.start_time).getTime() > oneDayAgo);
+    const todayConversions = data.conversions.filter(c => new Date(c.timestamp).getTime() > oneDayAgo);
     
     // Calculate conversion rate
     const conversionRate = totalSessions > 0 ? (totalConversions / totalSessions) * 100 : 0;
@@ -281,11 +305,11 @@ function getRealtimeData(data) {
     
     // Active sessions
     const activeSessions = Object.values(data.sessions)
-        .filter(s => s.last_activity > fiveMinutesAgo);
+        .filter(s => new Date(s.last_activity || s.last_event_time).getTime() > fiveMinutesAgo);
     
     // Recent events
     const recentEvents = data.events
-        .filter(e => e.timestamp > fiveMinutesAgo)
+        .filter(e => new Date(e.timestamp).getTime() > fiveMinutesAgo)
         .slice(-100);
     
     // Current page views
