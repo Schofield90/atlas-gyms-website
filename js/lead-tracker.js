@@ -372,8 +372,17 @@ class LeadTracker {
     }
 }
 
-// Initialize tracker
-const leadTracker = new LeadTracker();
-
-// Export for use in other scripts
-window.leadTracker = leadTracker;
+// Initialize tracker with delay to prioritize page rendering
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const leadTracker = new LeadTracker();
+            window.leadTracker = leadTracker;
+        }, 100);
+    });
+} else {
+    setTimeout(() => {
+        const leadTracker = new LeadTracker();
+        window.leadTracker = leadTracker;
+    }, 100);
+}

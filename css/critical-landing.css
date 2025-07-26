@@ -1,0 +1,121 @@
+/* Critical CSS for above-the-fold content */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: #fff;
+}
+
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Hero Section - Critical */
+.hero {
+    background: linear-gradient(rgba(26, 26, 26, 0.8), rgba(45, 45, 45, 0.8)), 
+                url('/images/gym-photos/harrogate-mens-hero.jpg') center center;
+    background-size: cover;
+    background-position: center 35%;
+    color: white;
+    padding: 100px 0 80px;
+    text-align: center;
+    position: relative;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-headline {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-subheadline {
+    font-size: 18px;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* CTA Button - Critical */
+.cta-button {
+    display: inline-block;
+    background: #0052CC;
+    color: white;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 82, 204, 0.3);
+    min-height: 56px;
+    line-height: 20px;
+}
+
+.cta-button:hover {
+    background: #003D82;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0, 82, 204, 0.4);
+}
+
+/* Trust Badges - Critical */
+.trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.trust-badge {
+    background: rgba(255,255,255,0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Animation for critical content */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Mobile-First Critical Styles */
+@media (min-width: 768px) {
+    .hero-headline {
+        font-size: 48px;
+    }
+    
+    .hero-subheadline {
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-headline {
+        font-size: 56px;
+    }
+}

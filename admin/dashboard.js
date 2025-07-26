@@ -475,10 +475,10 @@ class AtlasDashboard {
                 previousPeriodLeads: Math.floor(formSubmits * 0.8),
                 conversionRate: parseFloat(conversionRate),
                 previousConversionRate: parseFloat(conversionRate) * 0.85,
-                costPerLead: 15.50,
-                previousCostPerLead: 18.75,
-                roi: 285,
-                previousRoi: 220
+                costPerLead: 0,
+                previousCostPerLead: 0,
+                roi: 0,
+                previousRoi: 0
             },
             sources,
             funnel,

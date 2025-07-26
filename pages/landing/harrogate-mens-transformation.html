@@ -13,33 +13,44 @@
     <meta property="og:image" content="/images/harrogate-client-portraits/PXL_20250713_095104433.jpg">
     <meta property="og:type" content="website">
     
-    <!-- Preconnect -->
+    <!-- Preconnect for faster loading -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+    <link rel="dns-prefetch" href="https://link.leaddec.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://connect.facebook.net">
+    <link rel="preconnect" href="https://link.leaddec.com">
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts - Optimized loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
     
-    <!-- Facebook Pixel Code -->
+    <!-- Facebook Pixel Code - Optimized loading -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    
-    fbq('init', '1325695844113066');
-    fbq('track', 'PageView');
-    fbq('track', 'ViewContent', {
-        content_name: 'Harrogate Mens Transformation Landing Page',
-        content_category: 'Landing Page',
-        content_type: 'product',
-        value: 0,
-        currency: 'GBP'
+    // Delay Facebook Pixel initialization to improve initial load
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            
+            fbq('init', '1325695844113066');
+            fbq('track', 'PageView');
+            fbq('track', 'ViewContent', {
+                content_name: 'Harrogate Mens Transformation Landing Page',
+                content_category: 'Landing Page',
+                content_type: 'product',
+                value: 0,
+                currency: 'GBP'
+            });
+        }, 1000);
     });
     </script>
     <noscript>
@@ -602,12 +613,12 @@
             </h3>
             
             <div class="transformation-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto;">
-                <img src="/result-1.png" alt="13 lbs lost in 6 weeks transformation" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
-                <img src="/result-2.png" alt="13 lbs lost in 6 weeks transformation" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
-                <img src="/result-4.png" alt="14 lbs lost in 6 weeks transformation" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
-                <img src="/result-5.png" alt="Men's body transformation results" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
-                <img src="/result-6.png" alt="Men's fitness transformation" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
-                <img src="/result-7.png" alt="Men over 30 fitness results" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy">
+                <img src="/result-1_sm.png" alt="13 lbs lost in 6 weeks transformation" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy" decoding="async">
+                <img src="/result-2_sm.png" alt="13 lbs lost in 6 weeks transformation" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy" decoding="async">
+                <img src="/result-4.png" alt="14 lbs lost in 6 weeks transformation" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy" decoding="async">
+                <img src="/result-5.png" alt="Men's body transformation results" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy" decoding="async">
+                <img src="/result-6.png" alt="Men's fitness transformation" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy" decoding="async">
+                <img src="/result-7.png" alt="Men over 30 fitness results" style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" loading="lazy" decoding="async">
             </div>
             
             <p style="text-align: center; margin-top: 30px; color: #666; font-style: italic;">
@@ -714,24 +725,40 @@
                 </p>
                 
                 <!-- GoHighLevel Form Embed -->
-                <iframe
-                    src="https://link.leaddec.com/widget/form/KkYE0opNxr591fvjB2TZ"
-                    style="width:100%;height:450px;border:none;border-radius:4px"
-                    id="inline-KkYE0opNxr591fvjB2TZ" 
-                    data-layout="{'id':'INLINE'}"
-                    data-trigger-type="alwaysShow"
-                    data-trigger-value=""
-                    data-activation-type="alwaysActivated"
-                    data-activation-value=""
-                    data-deactivation-type="neverDeactivate"
-                    data-deactivation-value=""
-                    data-form-name="Harrogate lead form"
-                    data-height="450"
-                    data-layout-iframe-id="inline-KkYE0opNxr591fvjB2TZ"
-                    data-form-id="KkYE0opNxr591fvjB2TZ"
-                    title="Harrogate lead form"
-                    onload="handleFormLoad()">
-                </iframe>
+                <div id="form-placeholder" style="width:100%;height:450px;background:#f8f9fa;display:flex;align-items:center;justify-content:center;border-radius:4px;">
+                    <p style="color:#666;">Loading form...</p>
+                </div>
+                <script>
+                // Lazy load the form iframe when user scrolls near it
+                const formObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const placeholder = document.getElementById('form-placeholder');
+                            const iframe = document.createElement('iframe');
+                            iframe.src = 'https://link.leaddec.com/widget/form/KkYE0opNxr591fvjB2TZ';
+                            iframe.style = 'width:100%;height:450px;border:none;border-radius:4px';
+                            iframe.id = 'inline-KkYE0opNxr591fvjB2TZ';
+                            iframe.setAttribute('data-layout', "{'id':'INLINE'}");
+                            iframe.setAttribute('data-trigger-type', 'alwaysShow');
+                            iframe.setAttribute('data-trigger-value', '');
+                            iframe.setAttribute('data-activation-type', 'alwaysActivated');
+                            iframe.setAttribute('data-activation-value', '');
+                            iframe.setAttribute('data-deactivation-type', 'neverDeactivate');
+                            iframe.setAttribute('data-deactivation-value', '');
+                            iframe.setAttribute('data-form-name', 'Harrogate lead form');
+                            iframe.setAttribute('data-height', '450');
+                            iframe.setAttribute('data-layout-iframe-id', 'inline-KkYE0opNxr591fvjB2TZ');
+                            iframe.setAttribute('data-form-id', 'KkYE0opNxr591fvjB2TZ');
+                            iframe.title = 'Harrogate lead form';
+                            iframe.onload = function() { if(typeof handleFormLoad !== 'undefined') handleFormLoad(); };
+                            placeholder.parentNode.replaceChild(iframe, placeholder);
+                            formObserver.disconnect();
+                        }
+                    });
+                }, { rootMargin: '200px' });
+                
+                formObserver.observe(document.getElementById('form-placeholder'));
+                </script>
                 
                 <p style="font-size: 14px; color: #999; text-align: center; margin-top: 20px;">
                     By submitting this form, you agree to our 
@@ -755,10 +782,13 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="/js/lead-tracker.js"></script>
-    <script src="/js/form-submission-handler.js"></script>
-    <script src="/js/form-spinner-fix.js"></script>
+    <!-- Scripts - deferred for better performance -->
+    <script src="/js/optimize-images.js" defer></script>
+    <script src="/js/lead-tracker.js" defer></script>
+    <script src="/js/form-submission-handler.js" defer></script>
+    <script src="/js/form-spinner-fix.js" defer></script>
+    <!-- Performance monitoring (remove in production) -->
+    <script src="/js/performance-monitor.js" defer></script>
     
     <script>
         // Sticky header on scroll
@@ -867,7 +897,15 @@
         });
     </script>
     
-    <!-- GoHighLevel Form Embed Script -->
-    <script src="https://link.leaddec.com/js/form_embed.js"></script>
+    <!-- GoHighLevel Form Embed Script - Deferred loading -->
+    <script>
+    // Load GoHighLevel form script after page load
+    window.addEventListener('load', function() {
+        const script = document.createElement('script');
+        script.src = 'https://link.leaddec.com/js/form_embed.js';
+        script.async = true;
+        document.body.appendChild(script);
+    });
+    </script>
 </body>
 </html>

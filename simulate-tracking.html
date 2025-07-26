@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulate Real Tracking Events</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            max-width: 800px; 
+            margin: 0 auto;
+        }
+        button { 
+            padding: 10px 20px; 
+            margin: 5px; 
+            cursor: pointer;
+            background: #e85d04;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #d54e00;
+        }
+        .result { 
+            margin-top: 20px; 
+            padding: 20px; 
+            background: #f5f5f5; 
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success { 
+            background: #efe; 
+            color: #060; 
+        }
+        .error { 
+            background: #fee; 
+            color: #c00; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulate Real Tracking Events</h1>
+    
+    <div>
+        <h2>Simulate Events</h2>
+        <button onclick="simulatePageView()">Simulate Page View</button>
+        <button onclick="simulateFormStart()">Simulate Form Start</button>
+        <button onclick="simulateFormSubmit()">Simulate Form Submit</button>
+        <button onclick="simulateFullUserJourney()">Simulate Full User Journey</button>
+    </div>
+    
+    <div id="result" class="result"></div>
+    
+    <script>
+        const API_URL = '/api/analytics/track';
+        const sessionId = 'session_' + Date.now();
+        const visitorId = 'visitor_' + Math.random().toString(36).substr(2, 9);
+        
+        async function trackEvent(eventData) {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ...eventData,
+                        session_id: sessionId,
+                        visitor_id: visitorId,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = `Event tracked successfully:\n${JSON.stringify(data, null, 2)}`;
+                } else {
+                    throw new Error(data.error || 'Failed to track event');
+                }
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+        
+        function simulatePageView() {
+            trackEvent({
+                event_name: 'page_view',
+                page_url: 'https://www.atlas-gyms.co.uk/pages/landing/harrogate-mens-transformation',
+                page_path: '/pages/landing/harrogate-mens-transformation',
+                event_data: {
+                    title: 'Harrogate Men\'s Transformation - Atlas Gyms',
+                    referrer: 'https://www.facebook.com/',
+                    path: '/pages/landing/harrogate-mens-transformation'
+                },
+                utm_source: 'facebook',
+                utm_medium: 'cpc',
+                utm_campaign: '6-week-challenge',
+                utm_content: 'ad-variant-a'
+            });
+        }
+        
+        function simulateFormStart() {
+            trackEvent({
+                event_name: 'form_start',
+                page_url: 'https://www.atlas-gyms.co.uk/pages/landing/harrogate-mens-transformation',
+                event_data: {
+                    form_id: 'lead-form',
+                    form_type: 'lead_capture'
+                }
+            });
+        }
+        
+        function simulateFormSubmit() {
+            trackEvent({
+                event_name: 'form_submit',
+                page_url: 'https://www.atlas-gyms.co.uk/pages/landing/harrogate-mens-transformation',
+                event_data: {
+                    form_id: 'lead-form',
+                    form_type: 'lead_capture',
+                    name: 'John Test',
+                    email: 'john.test@example.com',
+                    phone: '07700900123',
+                    location: 'harrogate',
+                    goal: 'weight-loss'
+                }
+            });
+        }
+        
+        async function simulateFullUserJourney() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result';
+            resultDiv.textContent = 'Simulating full user journey...';
+            
+            // Page view
+            await simulatePageView();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Form start after 3 seconds
+            await simulateFormStart();
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Form submit after 5 more seconds
+            await simulateFormSubmit();
+            
+            resultDiv.className = 'result success';
+            resultDiv.textContent += '\n\nFull user journey simulated! Check the dashboard to see the data.';
+        }
+    </script>
+</body>
+</html>
