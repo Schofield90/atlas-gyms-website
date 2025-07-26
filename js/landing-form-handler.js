@@ -125,7 +125,7 @@ class LandingFormHandler {
 
             if (response.ok) {
                 // Success
-                this.showSuccess(form);
+                this.showSuccess(form, formData.get('location'));
                 
                 // Send to GoHighLevel if configured
                 await this.sendToGoHighLevel(formData);
@@ -240,20 +240,26 @@ class LandingFormHandler {
         return btoa(value.toLowerCase().trim());
     }
 
-    showSuccess(form) {
+    showSuccess(form, location) {
+        // Show brief success message
         form.innerHTML = `
             <div class="form-success">
                 <h3>Thank You! 🎉</h3>
-                <p>We've received your consultation request.</p>
-                <p>We'll contact you within 24 hours to schedule your free consultation.</p>
-                <p><strong>What happens next:</strong></p>
-                <ul>
-                    <li>We'll call you to understand your goals</li>
-                    <li>Schedule your free consultation</li>
-                    <li>Create your personalized transformation plan</li>
-                </ul>
+                <p>Redirecting you to book your call...</p>
             </div>
         `;
+        
+        // Use the location passed from form submission
+        location = location || 'harrogate';
+        
+        // Redirect to appropriate booking page after 1.5 seconds
+        setTimeout(() => {
+            if (location.toLowerCase() === 'york') {
+                window.location.href = '/york-booking.html';
+            } else {
+                window.location.href = '/harrogate-booking.html';
+            }
+        }, 1500);
     }
 
     showError(form, message) {
