@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Dashboard Data</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            max-width: 1200px; 
+            margin: 0 auto;
+        }
+        .result { 
+            margin-top: 20px; 
+            padding: 20px; 
+            background: #f5f5f5; 
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #e85d04;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #d54e00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Debug Dashboard Data Flow</h1>
+    
+    <button onclick="checkApiData()">Check API Raw Data</button>
+    <button onclick="checkTransformedData()">Check Transformed Data</button>
+    <button onclick="simulateFullDashboard()">Simulate Full Dashboard Load</button>
+    
+    <div id="result" class="result"></div>
+    
+    <script>
+        const authToken = 'atlas2024';
+        
+        async function checkApiData() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Fetching raw API data...';
+            
+            try {
+                const response = await fetch('/api/analytics/dashboard?action=export', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                // Count events
+                const formSubmits = data.events.filter(e => e.event_name === 'form_submit').length;
+                const pageViews = data.events.filter(e => e.event_name === 'page_view').length;
+                
+                resultDiv.textContent = `Raw API Data Summary:
+- Total Events: ${data.events.length}
+- Form Submits: ${formSubmits}
+- Page Views: ${pageViews}
+- Sessions: ${Object.keys(data.sessions).length}
+
+Form Submit Events:
+${JSON.stringify(data.events.filter(e => e.event_name === 'form_submit'), null, 2)}`;
+                
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+        
+        async function checkTransformedData() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Loading dashboard.js and checking transformation...';
+            
+            // Import the dashboard class
+            const script = document.createElement('script');
+            script.src = '/admin/dashboard.js';
+            
+            script.onload = async function() {
+                // Create a test instance
+                const dashboard = new AtlasDashboard();
+                
+                // Fetch and transform data
+                const data = await dashboard.fetchDashboardData('last7days', '', '');
+                
+                resultDiv.textContent = `Transformed Dashboard Data:
+                
+Metrics:
+${JSON.stringify(data.metrics, null, 2)}
+
+Sources:
+${JSON.stringify(data.sources, null, 2)}
+
+Funnel:
+${JSON.stringify(data.funnel, null, 2)}
+
+Leads:
+${JSON.stringify(data.leads, null, 2)}
+
+Campaigns:
+${JSON.stringify(data.campaigns, null, 2)}`;
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        async function simulateFullDashboard() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Simulating full dashboard load process...';
+            
+            try {
+                // Step 1: Fetch raw data
+                const response = await fetch('/api/analytics/dashboard?action=export', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const apiData = await response.json();
+                
+                // Step 2: Apply the same transformations as dashboard
+                const events = apiData.events || [];
+                const now = new Date();
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(now.getDate() - 7);
+                
+                // Filter events by date
+                const filteredEvents = events.filter(event => new Date(event.timestamp) >= sevenDaysAgo);
+                
+                // Count metrics
+                const formSubmits = filteredEvents.filter(e => e.event === 'form_submit').length;
+                const pageViews = filteredEvents.filter(e => e.event === 'page_view').length;
+                
+                resultDiv.textContent = `Dashboard Load Simulation:
+
+1. Raw Events: ${events.length}
+2. After Date Filter (last 7 days): ${filteredEvents.length}
+3. Form Submits (checking e.event): ${formSubmits}
+4. Form Submits (checking e.event_name): ${filteredEvents.filter(e => e.event_name === 'form_submit').length}
+
+Event Structure Sample:
+${JSON.stringify(filteredEvents[0], null, 2)}
+
+All Event Names:
+${JSON.stringify(filteredEvents.map(e => ({event: e.event, event_name: e.event_name})), null, 2)}`;
+                
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
