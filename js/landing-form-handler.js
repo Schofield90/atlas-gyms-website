@@ -255,9 +255,9 @@ class LandingFormHandler {
         // Redirect to appropriate booking page after 1.5 seconds
         setTimeout(() => {
             if (location.toLowerCase() === 'york') {
-                window.location.href = '/york-booking.html';
+                window.location.href = '/york-booking';
             } else {
-                window.location.href = '/harrogate-booking.html';
+                window.location.href = '/harrogate-booking';
             }
         }, 1500);
     }

@@ -31,6 +31,14 @@
     {
       "source": "/pages/landing/:page",
       "destination": "/pages/landing/:page.html"
+    },
+    {
+      "source": "/harrogate-booking",
+      "destination": "/harrogate-booking.html"
+    },
+    {
+      "source": "/york-booking",
+      "destination": "/york-booking.html"
     }
   ],
   "redirects": [
