@@ -490,21 +490,21 @@ class AtlasDashboard {
     
     filterByDateRange(events, dateRange) {
         const now = new Date();
-        let startDate;
+        let startDate = new Date();
         
         switch(dateRange) {
             case 'today':
-                startDate = new Date(now.setHours(0,0,0,0));
+                startDate.setHours(0,0,0,0);
                 break;
             case 'yesterday':
-                startDate = new Date(now.setDate(now.getDate() - 1));
+                startDate.setDate(now.getDate() - 1);
                 startDate.setHours(0,0,0,0);
                 break;
             case 'last7days':
-                startDate = new Date(now.setDate(now.getDate() - 7));
+                startDate.setDate(now.getDate() - 7);
                 break;
             case 'last30days':
-                startDate = new Date(now.setDate(now.getDate() - 30));
+                startDate.setDate(now.getDate() - 30);
                 break;
             case 'thisMonth':
                 startDate = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -513,7 +513,7 @@ class AtlasDashboard {
                 startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
                 break;
             default:
-                startDate = new Date(now.setDate(now.getDate() - 7));
+                startDate.setDate(now.getDate() - 7);
         }
         
         return events.filter(event => new Date(event.timestamp) >= startDate);
