@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Analytics Test</title>
+</head>
+<body>
+    <h1>Simple Analytics Test</h1>
+    <button id="testBtn">Send Test Event</button>
+    
+    <div id="output" style="margin-top: 20px; padding: 20px; background: #f0f0f0; font-family: monospace;">
+        <h3>Debug Output:</h3>
+        <pre id="debug"></pre>
+    </div>
+    
+    <script>
+        const debug = document.getElementById('debug');
+        
+        function log(msg) {
+            debug.textContent += msg + '\n';
+            console.log(msg);
+        }
+        
+        // Test direct API call
+        document.getElementById('testBtn').addEventListener('click', async () => {
+            log('Sending test event...');
+            
+            const testEvent = {
+                type: 'pageview',
+                visitorId: 'test-visitor-' + Date.now(),
+                sessionId: 'test-session-' + Date.now(),
+                path: '/test',
+                referrer: '',
+                device: 'Desktop',
+                browser: 'Chrome',
+                os: 'MacOS',
+                screenResolution: '1920x1080',
+                viewport: '1920x947',
+                metadata: {
+                    test: true
+                }
+            };
+            
+            try {
+                const response = await fetch('/api/analytics?action=track', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ events: [testEvent] })
+                });
+                
+                const result = await response.json();
+                log('Response status: ' + response.status);
+                log('Response data: ' + JSON.stringify(result, null, 2));
+                
+                if (response.ok) {
+                    log('✅ Success! Check your dashboard for the test event.');
+                } else {
+                    log('❌ Error: ' + result.error);
+                }
+            } catch (error) {
+                log('❌ Network error: ' + error.message);
+            }
+        });
+        
+        // Check if analytics loaded
+        setTimeout(() => {
+            log('Checking for analytics...');
+            log('window.analytics exists: ' + !!window.analytics);
+            log('localStorage visitor ID: ' + localStorage.getItem('_analytics_vid'));
+            
+            // Try to load the analytics script directly
+            const script = document.createElement('script');
+            script.src = '/lib/analytics/client.js';
+            script.onload = () => log('Analytics script loaded');
+            script.onerror = () => log('Analytics script failed to load');
+            document.head.appendChild(script);
+        }, 1000);
+    </script>
+</body>
+</html>
