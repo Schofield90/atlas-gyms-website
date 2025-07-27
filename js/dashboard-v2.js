@@ -499,13 +499,37 @@ class AnalyticsDashboard {
     updateLandingPages() {
         if (!this.data || !this.data.traffic) return;
 
-        // Filter for landing pages
-        const landingPages = this.data.traffic.topPages.filter(page => 
-            page.path.includes('/landing/') || 
-            page.path.includes('6-week') || 
-            page.path.includes('challenge') ||
-            page.path.includes('transformation')
-        );
+        console.log('All pages:', this.data.traffic.topPages); // Debug log
+
+        // Filter for landing pages - more inclusive filter
+        const landingPages = this.data.traffic.topPages.filter(page => {
+            const path = page.path.toLowerCase();
+            return path.includes('/landing/') || 
+                   path.includes('6-week') || 
+                   path.includes('challenge') ||
+                   path.includes('transformation') ||
+                   path.includes('harrogate') ||
+                   path.includes('york') ||
+                   path.includes('men-over-40') ||
+                   path.includes('summer');
+        });
+
+        console.log('Landing pages found:', landingPages); // Debug log
+
+        // If no landing pages found, show a message
+        if (landingPages.length === 0) {
+            const landingPagesTable = document.getElementById('landingPagesTable');
+            if (landingPagesTable) {
+                landingPagesTable.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                            No landing page data available yet. Landing pages will appear here once they receive traffic.
+                        </td>
+                    </tr>
+                `;
+            }
+            return;
+        }
 
         // Calculate landing page metrics
         const landingPageData = this.calculateLandingPageMetrics(landingPages);
@@ -540,13 +564,31 @@ class AnalyticsDashboard {
     }
 
     calculateLandingPageMetrics(pages) {
-        // This is a simplified calculation - in reality, you'd calculate from raw events
-        return pages.map(page => ({
-            ...page,
-            uniqueVisitors: Math.floor(page.views * 0.7), // Estimate
-            formSubmits: Math.floor(page.views * 0.08), // Estimate 8% conversion
-            conversionRate: 8 + Math.random() * 5, // Random between 8-13%
-        }));
+        // Calculate metrics based on available data
+        return pages.map(page => {
+            // Get unique visitors from data if available
+            const uniqueVisitors = page.uniqueVisitors || Math.floor(page.views * 0.8);
+            
+            // Calculate form submits from events if available
+            const formSubmits = this.getFormSubmitsForPage(page.path);
+            
+            // Calculate actual conversion rate
+            const conversionRate = uniqueVisitors > 0 ? (formSubmits / uniqueVisitors) * 100 : 0;
+            
+            return {
+                ...page,
+                uniqueVisitors,
+                formSubmits,
+                conversionRate
+            };
+        });
+    }
+
+    getFormSubmitsForPage(pagePath) {
+        // Look for form submission events for this page
+        // This would need to be calculated from the raw events data
+        // For now, return 0 until we have form submit events
+        return 0;
     }
 
     formatPageName(path) {
