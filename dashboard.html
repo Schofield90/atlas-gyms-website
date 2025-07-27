@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Gyms - Analytics Dashboard</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .metric-card {
+            transition: transform 0.2s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #e85d04;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <h2 class="text-2xl font-bold mb-6">Dashboard Login</h2>
+            <form id="loginForm">
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    placeholder="Enter password" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    required
+                >
+                <button 
+                    type="submit" 
+                    class="w-full mt-4 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition-colors"
+                >
+                    Login
+                </button>
+                <p id="loginError" class="text-red-500 mt-4 text-sm hidden">
+                    Invalid password. Please try again.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="hidden">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <h1 class="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
+                    <div class="flex items-center space-x-4">
+                        <select id="dateRange" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500">
+                            <option value="24h">Last 24 hours</option>
+                            <option value="7d" selected>Last 7 days</option>
+                            <option value="30d">Last 30 days</option>
+                            <option value="90d">Last 90 days</option>
+                        </select>
+                        <button id="refreshBtn" class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                        </button>
+                        <button id="exportBtn" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                            Export CSV
+                        </button>
+                        <button id="logoutBtn" class="px-4 py-2 text-gray-600 hover:text-gray-900">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Real-time Alert -->
+            <div id="realtimeAlert" class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-green-700">
+                            <strong id="activeUsers">0</strong> active users on your site right now
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overview Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+                <div class="metric-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-gray-500">Page Views</h3>
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <p class="mt-2 text-3xl font-semibold text-gray-900" id="totalPageViews">0</p>
+                    <p class="mt-2 text-sm" id="pageViewsChange">
+                        <span class="text-green-600">↑ 0%</span> vs last period
+                    </p>
+                </div>
+
+                <div class="metric-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-gray-500">Unique Visitors</h3>
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="mt-2 text-3xl font-semibold text-gray-900" id="uniqueVisitors">0</p>
+                    <p class="mt-2 text-sm" id="visitorsChange">
+                        <span class="text-green-600">↑ 0%</span> vs last period
+                    </p>
+                </div>
+
+                <div class="metric-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-gray-500">Total Clicks</h3>
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+                        </svg>
+                    </div>
+                    <p class="mt-2 text-3xl font-semibold text-gray-900" id="totalClicks">0</p>
+                    <p class="mt-2 text-sm" id="clicksChange">
+                        <span class="text-green-600">↑ 0%</span> vs last period
+                    </p>
+                </div>
+
+                <div class="metric-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-gray-500">Avg Session</h3>
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="mt-2 text-3xl font-semibold text-gray-900" id="avgSessionDuration">0:00</p>
+                </div>
+
+                <div class="metric-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-gray-500">Bounce Rate</h3>
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
+                        </svg>
+                    </div>
+                    <p class="mt-2 text-3xl font-semibold text-gray-900" id="bounceRate">0%</p>
+                    <p class="mt-2 text-sm" id="bounceChange">
+                        <span class="text-red-600">↑ 0%</span> vs last period
+                    </p>
+                </div>
+
+                <div class="metric-card bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-gray-500">Conversion Rate</h3>
+                        <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="mt-2 text-3xl font-semibold text-gray-900" id="conversionRate">0%</p>
+                    <p class="mt-2 text-sm" id="conversionChange">
+                        <span class="text-green-600">↑ 0%</span> vs last period
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex">
+                        <button class="tab-button py-2 px-4 border-b-2 border-orange-500 font-medium text-sm text-orange-600" data-tab="overview">
+                            Overview
+                        </button>
+                        <button class="tab-button py-2 px-4 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700" data-tab="traffic">
+                            Traffic Sources
+                        </button>
+                        <button class="tab-button py-2 px-4 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700" data-tab="engagement">
+                            Engagement
+                        </button>
+                        <button class="tab-button py-2 px-4 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700" data-tab="realtime">
+                            Real-time
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="p-6">
+                    <!-- Overview Tab -->
+                    <div id="overview-tab" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Traffic Trends Chart -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Traffic Trends</h3>
+                                <div class="chart-container">
+                                    <canvas id="trafficTrendsChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Hourly Traffic Chart -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Hourly Traffic Pattern</h3>
+                                <div class="chart-container">
+                                    <canvas id="hourlyTrafficChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Top Pages -->
+                        <div class="mt-8">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Top Pages</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Page</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Views</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Time</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trend</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="topPagesTable" class="bg-white divide-y divide-gray-200">
+                                        <!-- Pages will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Traffic Sources Tab -->
+                    <div id="traffic-tab" class="tab-content hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Device Breakdown -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Device Breakdown</h3>
+                                <div class="chart-container">
+                                    <canvas id="deviceChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Top Referrers -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Top Referrers</h3>
+                                <div class="space-y-4" id="topReferrers">
+                                    <!-- Referrers will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Browser Distribution -->
+                        <div class="mt-8">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Browser Distribution</h3>
+                            <div class="chart-container">
+                                <canvas id="browserChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Engagement Tab -->
+                    <div id="engagement-tab" class="tab-content hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Click Heatmap -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Top Click Targets</h3>
+                                <div class="space-y-3" id="clickTargets">
+                                    <!-- Click targets will be inserted here -->
+                                </div>
+                            </div>
+
+                            <!-- Scroll Depth -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Scroll Depth Analysis</h3>
+                                <div class="space-y-4" id="scrollDepth">
+                                    <!-- Scroll depth will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Real-time Tab -->
+                    <div id="realtime-tab" class="tab-content hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Active Pages -->
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Active Pages</h3>
+                                <div class="space-y-3" id="activePages">
+                                    <!-- Active pages will be inserted here -->
+                                </div>
+                            </div>
+
+                            <!-- Recent Events -->
+                            <div class="lg:col-span-2">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Live Event Stream</h3>
+                                <div class="space-y-2 max-h-96 overflow-y-auto" id="eventStream">
+                                    <!-- Events will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script src="/js/dashboard-v2.js"></script>
+</body>
+</html>

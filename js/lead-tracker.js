@@ -338,7 +338,7 @@ class LeadTracker {
 
     async sendToServer(event) {
         try {
-            await fetch('/api/track', {
+            await fetch('/api/analytics/track', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

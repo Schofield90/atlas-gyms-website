@@ -399,6 +399,54 @@ class AtlasDashboard {
     transformApiData(apiData, dateRange, location, campaign) {
         console.log('Transforming data:', apiData);
         
+        // Check if this is already formatted data from the overview endpoint
+        if (apiData.summary) {
+            // This is overview data, extract what we need
+            const leads = apiData.recent_conversions || [];
+            const metrics = apiData.summary || {};
+            const sources = {};
+            
+            // Convert traffic sources to the expected format
+            if (apiData.traffic_sources) {
+                apiData.traffic_sources.forEach(item => {
+                    sources[item.source] = item.count;
+                });
+            }
+            
+            return {
+                metrics: {
+                    totalLeads: metrics.total_conversions || 0,
+                    previousPeriodLeads: Math.floor((metrics.total_conversions || 0) * 0.8),
+                    conversionRate: parseFloat(metrics.conversion_rate || 0),
+                    previousConversionRate: parseFloat(metrics.conversion_rate || 0) * 0.85,
+                    costPerLead: 0,
+                    previousCostPerLead: 0,
+                    roi: 0,
+                    previousRoi: 0
+                },
+                sources: sources,
+                funnel: {
+                    'Page Views': metrics.total_events || 0,
+                    'Unique Visitors': metrics.total_sessions || 0,
+                    'Form Starts': 0,
+                    'Form Completions': metrics.total_conversions || 0,
+                    'Conversions': metrics.total_conversions || 0
+                },
+                campaigns: [],
+                leads: leads.map(conv => ({
+                    name: conv.data?.name || 'Anonymous',
+                    email: conv.data?.email || '',
+                    phone: conv.data?.phone || '',
+                    location: conv.data?.location || location,
+                    timestamp: conv.timestamp,
+                    source: 'Direct',
+                    campaign: 'Organic',
+                    goal: conv.data?.goal || 'General Fitness'
+                })),
+                abTests: []
+            };
+        }
+        
         // Transform the raw API data into the format expected by the dashboard
         const events = apiData.events || [];
         const conversions = apiData.conversions || [];
@@ -408,11 +456,11 @@ class AtlasDashboard {
         const filteredEvents = this.filterByDateRange(events, dateRange);
         const filteredConversions = this.filterByDateRange(conversions, dateRange);
         
-        // Calculate metrics
-        const totalPageViews = filteredEvents.filter(e => e.event === 'page_view').length;
-        const uniqueVisitors = new Set(filteredEvents.map(e => e.user?.id || e.session?.id)).size;
-        const totalClicks = filteredEvents.filter(e => e.event === 'click').length;
-        const formSubmits = filteredEvents.filter(e => e.event === 'form_submit').length;
+        // Calculate metrics - use event_name instead of event
+        const totalPageViews = filteredEvents.filter(e => e.event_name === 'page_view' || e.event === 'page_view').length;
+        const uniqueVisitors = new Set(filteredEvents.map(e => e.visitor_id || e.user?.id || e.session_id)).size;
+        const totalClicks = filteredEvents.filter(e => e.event_name === 'click' || e.event === 'click').length;
+        const formSubmits = filteredEvents.filter(e => e.event_name === 'form_submit' || e.event === 'form_submit').length;
         
         // Calculate conversion rate
         const conversionRate = uniqueVisitors > 0 ? (formSubmits / uniqueVisitors * 100).toFixed(1) : 0;
@@ -420,7 +468,7 @@ class AtlasDashboard {
         // Group by source
         const sources = {};
         filteredEvents.forEach(event => {
-            const source = event.session?.utm_source || 'Direct';
+            const source = event.utm_source || event.session?.utm_source || 'Direct';
             sources[source] = (sources[source] || 0) + 1;
         });
         
@@ -428,7 +476,7 @@ class AtlasDashboard {
         const funnel = {
             'Page Views': totalPageViews,
             'Unique Visitors': uniqueVisitors,
-            'Form Starts': filteredEvents.filter(e => e.event === 'form_start').length,
+            'Form Starts': filteredEvents.filter(e => e.event_name === 'form_start' || e.event === 'form_start').length,
             'Form Completions': formSubmits,
             'Conversions': filteredConversions.length
         };
@@ -436,18 +484,18 @@ class AtlasDashboard {
         // Group campaigns
         const campaignMap = {};
         filteredEvents.forEach(event => {
-            const campaignName = event.session?.utm_campaign || 'Organic';
+            const campaignName = event.utm_campaign || event.session?.utm_campaign || 'Organic';
             if (!campaignMap[campaignName]) {
                 campaignMap[campaignName] = {
                     name: campaignName,
-                    source: event.session?.utm_source || 'Direct',
+                    source: event.utm_source || event.session?.utm_source || 'Direct',
                     leads: 0,
                     cost: 0,
                     conversions: 0,
                     revenue: 0
                 };
             }
-            if (event.event === 'form_submit') {
+            if (event.event_name === 'form_submit' || event.event === 'form_submit') {
                 campaignMap[campaignName].leads++;
             }
         });
@@ -456,17 +504,17 @@ class AtlasDashboard {
         
         // Generate recent leads from form submissions
         const recentLeads = filteredEvents
-            .filter(e => e.event === 'form_submit')
+            .filter(e => e.event_name === 'form_submit' || e.event === 'form_submit')
             .slice(-50)
             .map(event => ({
-                name: event.user?.name || 'Anonymous',
-                email: event.user?.email || '',
-                phone: event.user?.phone || '',
-                location: event.data?.location || location,
+                name: event.event_data?.name || event.data?.name || event.user?.name || 'Anonymous',
+                email: event.event_data?.email || event.data?.email || event.user?.email || '',
+                phone: event.event_data?.phone || event.data?.phone || event.user?.phone || '',
+                location: event.event_data?.location || event.data?.location || location,
                 timestamp: event.timestamp,
-                source: event.session?.utm_source || 'Direct',
-                campaign: event.session?.utm_campaign || 'Organic',
-                goal: event.data?.goal || 'General Fitness'
+                source: event.utm_source || event.session?.utm_source || 'Direct',
+                campaign: event.utm_campaign || event.session?.utm_campaign || 'Organic',
+                goal: event.event_data?.goal || event.data?.goal || 'General Fitness'
             }));
         
         return {

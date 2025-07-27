@@ -29,3 +29,4 @@ config.local.js
 # Files containing API keys
 *-with-keys.js
 *-api-key*
+node_modules/
