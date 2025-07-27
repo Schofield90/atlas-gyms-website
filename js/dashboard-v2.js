@@ -33,7 +33,7 @@ class AnalyticsDashboard {
         if (!token) return false;
 
         try {
-            const response = await fetch('/api/analytics/dashboard-v2?range=24h', {
+            const response = await fetch('/api/analytics?action=dashboard&range=24h', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -61,7 +61,7 @@ class AnalyticsDashboard {
             const password = document.getElementById('passwordInput').value;
             
             try {
-                const response = await fetch('/api/analytics/dashboard-v2?range=24h', {
+                const response = await fetch('/api/analytics?action=dashboard&range=24h', {
                     headers: {
                         'Authorization': `Bearer ${password}`
                     }
@@ -134,7 +134,7 @@ class AnalyticsDashboard {
         const token = localStorage.getItem('atlas_dashboard_token');
 
         try {
-            const response = await fetch(`/api/analytics/dashboard-v2?range=${range}`, {
+            const response = await fetch(`/api/analytics?action=dashboard&range=${range}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -461,7 +461,7 @@ class AnalyticsDashboard {
         const token = localStorage.getItem('atlas_dashboard_token');
 
         try {
-            const response = await fetch('/api/analytics/realtime', {
+            const response = await fetch('/api/analytics?action=realtime', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
