@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Analytics Tracking</title>
+    <script src="/lib/analytics/client.js"></script>
+</head>
+<body>
+    <h1>Analytics Test Page</h1>
+    <p>Open the browser console to see analytics events being tracked.</p>
+    
+    <button data-track="test-button-1">Test Button 1</button>
+    <button data-track="test-button-2">Test Button 2</button>
+    
+    <form id="test-form">
+        <input type="email" placeholder="Email" name="email">
+        <button type="submit" data-track="form-submit">Submit Form</button>
+    </form>
+    
+    <div style="height: 2000px; background: linear-gradient(to bottom, #f0f0f0, #333);">
+        <p>Scroll down to test scroll tracking</p>
+    </div>
+    
+    <script>
+        // Log when analytics is ready
+        setTimeout(() => {
+            if (window.analytics) {
+                console.log('✅ Analytics loaded successfully!');
+                console.log('Visitor ID:', localStorage.getItem('_analytics_vid'));
+                
+                // Test custom event
+                analytics.trackCustomEvent('test-page-loaded', {
+                    test: true,
+                    timestamp: new Date().toISOString()
+                });
+                
+                console.log('📊 Custom event sent: test-page-loaded');
+            } else {
+                console.error('❌ Analytics not loaded!');
+            }
+        }, 1000);
+        
+        // Monitor network requests
+        const originalFetch = window.fetch;
+        window.fetch = function(...args) {
+            if (args[0].includes('/api/analytics')) {
+                console.log('📤 Analytics request:', args[0]);
+                return originalFetch.apply(this, args).then(response => {
+                    console.log('📥 Analytics response:', response.status);
+                    return response;
+                });
+            }
+            return originalFetch.apply(this, args);
+        };
+        
+        // Form handler
+        document.getElementById('test-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('📝 Form submitted - tracking should fire');
+        });
+    </script>
+</body>
+</html>
