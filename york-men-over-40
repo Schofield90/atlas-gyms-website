@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Gyms York - Small Group Fitness for Men Over 40</title>
+    <meta name="description" content="Atlas Gyms York: Professional fitness coaching for men over 40. Small group training, supportive community, and lasting results in YO30.">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="google-reviews.css">
+    <link rel="stylesheet" href="york-enhancements.css">
+    <link rel="stylesheet" href="maps-responsive.css">
+    
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    fbq('init', '1325695844113066');
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1325695844113066&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+    
+    <!-- Core Scripts -->
+    <script src="/js/fix-errors.js"></script>
+    <script src="/js/atlas-init.js"></script>
+    <script src="/js/form-submission-handler.js"></script>
+    <script src="/js/form-spinner-fix.js"></script>
+    
+    <!-- Schema Markup for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HealthClub",
+      "name": "Atlas Gyms York - Fitness for Men Over 40",
+      "description": "Professional fitness coaching for men over 40 in York. Small group training, supportive community, and proven 6-week transformations.",
+      "url": "https://www.atlas-gyms.co.uk/york-men-over-40",
+      "telephone": "+44-7490-253471",
+      "email": "sam@atlas-gyms.co.uk",
+      "image": [
+        "https://www.atlas-gyms.co.uk/images/client-portraits/PXL_20250322_100157025.jpg",
+        "https://www.atlas-gyms.co.uk/PXL_20250713_095132976.MP.jpg"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "4 Auster Road",
+        "addressLocality": "York",
+        "addressRegion": "North Yorkshire",
+        "postalCode": "YO30 4XD",
+        "addressCountry": "GB"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 53.9897,
+        "longitude": -1.0863
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "06:00",
+          "closes": "20:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "07:00",
+          "closes": "13:00"
+        }
+      ],
+      "priceRange": "£££",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "89",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "review": {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Michael Roberts"
+        },
+        "reviewBody": "Atlas York completely changed my life. The supportive community and expert coaching helped me lose 2 stone and feel confident again at 45."
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Fitness Programs",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "6-Week Kickstart Programme",
+              "description": "Transform body and mind with small group PT sessions for men over 40",
+              "provider": {
+                "@type": "Organization",
+                "name": "Atlas Gyms York"
+              }
+            }
+          }
+        ]
+      },
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Men Over 40 Only"
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Small Group Training"
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Supportive Community"
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Free Parking"
+        }
+      ],
+      "areaServed": {
+        "@type": "City",
+        "name": "York",
+        "sameAs": "https://en.wikipedia.org/wiki/York"
+      }
+    }
+    </script>
+    
+    <!-- Image Schema for Client Testimonials -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageGallery",
+      "name": "Atlas York Client Transformations",
+      "description": "Real member transformations at Atlas Fitness York - men over 40",
+      "url": "https://www.atlas-gyms.co.uk/york-men-over-40#gallery",
+      "image": [
+        {
+          "@type": "ImageObject",
+          "contentUrl": "https://www.atlas-gyms.co.uk/images/client-portraits/PXL_20250322_090556688.PORTRAIT.jpg",
+          "description": "York member 6-week transformation"
+        },
+        {
+          "@type": "ImageObject",
+          "contentUrl": "https://www.atlas-gyms.co.uk/images/client-portraits/PXL_20250322_100157025.jpg",
+          "description": "York training community - men over 40"
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="logo-01.png" alt="Atlas Fitness Logo" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#program" class="nav-link">Programme</a></li>
+                <li><a href="#results" class="nav-link">Results</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="/" class="nav-link">Locations</a></li>
+                <li><a href="#consultation" class="nav-link cta-button">Start Today</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="position: relative; background-image: url('images/client-portraits/PXL_20250322_100157025.jpg'); background-size: cover; background-position: center;">
+        <div class="hero-background" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.7); z-index: 1;">
+            <div class="hero-logo-container">
+                <img src="logo-01.png" alt="Atlas Fitness" class="hero-logo">
+            </div>
+        </div>
+        
+        <div class="hero-content" style="position: relative; z-index: 2;">
+            <div class="container">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        York's Premier Fitness Studio for <span class="highlight">Men Over 40</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Join 150+ local men who've discovered a sustainable approach to fitness
+                    </p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">150+</span>
+                            <span class="stat-label">York Members</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">4.9★</span>
+                            <span class="stat-label">Google Reviews</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">40+</span>
+                            <span class="stat-label">Average Member Age</span>
+                        </div>
+                    </div>
+                    
+                    <div class="inline-google-rating">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span class="rating-text">4.9 based on 89 Google Reviews</span>
+                    </div>
+                    
+                    <div class="hero-cta">
+                        <a href="#consultation" class="btn btn-primary btn-large">
+                            Start Your Transformation
+                            <span class="btn-arrow">→</span>
+                        </a>
+                        <p class="cta-subtext">Free consultation • No commitment required</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span>Scroll to discover more</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Trust Signals -->
+    <section class="trust-signals">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon certified">
+                        🏆
+                    </div>
+                    <span>Certified Professional Trainers</span>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon proven">
+                        ✓
+                    </div>
+                    <span>Proven Results Since 2018</span>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon safe">
+                        👤
+                    </div>
+                    <span>Safe, Supportive Environment</span>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon results">
+                        ⚡
+                    </div>
+                    <span>See Results in 6 Weeks</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Atlas Gyms is Different</h2>
+                <p class="section-subtitle">We understand that traditional gyms can be intimidating. That's why we created a better way.</p>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>For Men Over 40 Who Don't Like the Gym</h3>
+                        <p>If you've ever felt lost, intimidated, or overwhelmed in a traditional gym, you're not alone. At Atlas Gyms York, we've created a welcoming environment specifically for men over 40 where everyone feels supported.</p>
+                        
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <span class="feature-icon">👥</span>
+                                <div>
+                                    <h4>Small Group Training</h4>
+                                    <p>Small group sessions ensure personal attention and proper form</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <div>
+                                    <h4>Age-Appropriate Training</h4>
+                                    <p>Every workout is designed for men over 40 and scalable to your fitness level</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤝</span>
+                                <div>
+                                    <h4>Brotherhood Community</h4>
+                                    <p>Train alongside like-minded men on the same journey</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="PXL_20250713_095132976.MP.jpg" alt="Atlas Fitness team training session" loading="lazy">
+                    <div class="image-badge">
+                        <span>5-Star Rated Experience</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Coaches Section -->
+    <section class="coaches-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meet Your Atlas Fitness Coaches</h2>
+                <p class="section-subtitle">Our experienced team is here to guide you every step of the way</p>
+            </div>
+            
+            <div class="coaches-grid">
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="staff-1.jpg" alt="Atlas Fitness Coach" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="staff-2.jpg" alt="Atlas Fitness Coach" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="staff-3.jpg" alt="Atlas Fitness Coach" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="staff-4.jpg" alt="Atlas Fitness Coach" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="staff-5.jpg" alt="Atlas Fitness Coach" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="staff-6.jpg" alt="Atlas Fitness Coach" loading="lazy">
+                    </div>
+                </div>
+                
+                <div class="coach-card">
+                    <div class="coach-image">
+                        <img src="staff-7.jpg" alt="Atlas Fitness Coach" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programme Section -->
+    <section id="program" class="programme-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">The 6-Week Kickstart Programme</h2>
+                <p class="section-subtitle">Everything you need to transform your health and build lasting habits</p>
+            </div>
+            
+            <div class="programme-grid">
+                <div class="programme-pillar">
+                    <div class="pillar-icon">
+                        <div class="icon-circle nutrition">
+                            🥗
+                        </div>
+                    </div>
+                    <h3>Smart Nutrition</h3>
+                    <p>No restrictive diets or complicated meal plans. Learn sustainable eating habits that fit your lifestyle and preferences.</p>
+                    <ul class="pillar-features">
+                        <li>Personalized macro guidance</li>
+                        <li>Flexible meal planning</li>
+                        <li>Weekly nutrition check-ins</li>
+                        <li>Recipe suggestions & tips</li>
+                    </ul>
+                </div>
+                
+                <div class="programme-pillar">
+                    <div class="pillar-icon">
+                        <div class="icon-circle training">
+                            💪
+                        </div>
+                    </div>
+                    <h3>Effective Training</h3>
+                    <p>Small group personal training sessions designed to build strength, confidence, and proper movement patterns for men over 40.</p>
+                    <ul class="pillar-features">
+                        <li>3 sessions per week (18 total sessions)</li>
+                        <li>Small group classes</li>
+                        <li>Age-appropriate exercises</li>
+                        <li>Form correction & guidance</li>
+                    </ul>
+                </div>
+                
+                <div class="programme-pillar">
+                    <div class="pillar-icon">
+                        <div class="icon-circle accountability">
+                            📊
+                        </div>
+                    </div>
+                    <h3>Daily Accountability</h3>
+                    <p>Your dedicated coach will keep you on track with regular check-ins, progress monitoring, and motivation when you need it most.</p>
+                    <ul class="pillar-features">
+                        <li>Weekly progress reviews</li>
+                        <li>WhatsApp support group</li>
+                        <li>Habit tracking system</li>
+                        <li>Motivation & mindset coaching</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="programme-cta">
+                <a href="#consultation" class="btn btn-secondary btn-large">
+                    Learn More About Our Programme
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Success Gallery -->
+    <section class="client-gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Real Atlas York Members</h2>
+                <p class="section-subtitle">Meet some of the 150+ men over 40 who've transformed their lives with us</p>
+            </div>
+            
+            <div class="client-gallery">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_090556688.PORTRAIT.jpg" 
+                             alt="Atlas York member - transformed after 6 weeks" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>6-Week Transformation</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_090819099.PORTRAIT.jpg" 
+                             alt="York fitness transformation" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Lost 2 Stone</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_090918313.PORTRAIT.jpg" 
+                             alt="Atlas Fitness York member success story" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Confidence Gained</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_091151354.jpg" 
+                             alt="York member transformation" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Stronger at 45</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_091228618.PORTRAIT.jpg" 
+                             alt="Atlas York fitness success" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Life Changed</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_091337396.PORTRAIT.jpg" 
+                             alt="York member portrait" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>New Beginning</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_095317279.jpg" 
+                             alt="Atlas York transformation" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Health Restored</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_100735625.PORTRAIT.jpg" 
+                             alt="York fitness journey" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Never Too Late</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_090556688.PORTRAIT.jpg" 
+                             alt="Atlas member success" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Consistency Wins</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_090819099.PORTRAIT.jpg" 
+                             alt="York transformation story" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Age is Just a Number</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_100157025.jpg" 
+                             alt="Atlas fitness member" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Stronger Together</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/client-portraits/PXL_20250322_091151354.jpg" 
+                             alt="York success story" 
+                             loading="lazy">
+                        <div class="gallery-overlay">
+                            <span>Mental Health Win</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-cta">
+                    <p>Every face tells a story of transformation and renewed confidence.</p>
+                    <a href="#consultation" class="btn btn-secondary">Start Your Story</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Reviews Section -->
+    <section class="trust-reviews">
+        <div class="container">
+            <h2 class="section-title">What Our Members Say</h2>
+            <p class="section-subtitle">Real reviews from Google</p>
+            <div id="google-reviews-york"></div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Real People, Real Results</h2>
+                <p class="section-subtitle">See authentic transformations and testimonials from our Atlas Fitness family</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-image">
+                    <img src="result-1.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+                <div class="testimonial-image">
+                    <img src="result-2.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+                <div class="testimonial-image">
+                    <img src="result-3.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+                <div class="testimonial-image">
+                    <img src="result-4.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+                <div class="testimonial-image">
+                    <img src="result-5.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+                <div class="testimonial-image">
+                    <img src="result-6.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+                <div class="testimonial-image">
+                    <img src="result-7.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+                <div class="testimonial-image">
+                    <img src="result-8.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+                <div class="testimonial-image">
+                    <img src="result-9.png" alt="Atlas Fitness client transformation testimonial" loading="lazy">
+                </div>
+            </div>
+            
+            <div class="results-guarantee">
+                <div class="guarantee-badge">
+                    <span class="guarantee-icon">✓</span>
+                    <div>
+                        <h4>Results Guaranteed</h4>
+                        <p>Follow our programme and see results in 6 weeks, or get your money back</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Building Banner -->
+    <section class="trust-banner">
+        <div class="container">
+            <div class="trust-banner-content">
+                <div class="client-faces-mosaic">
+                    <div class="face-grid">
+                        <img src="images/client-portraits/PXL_20250322_090819099.PORTRAIT.jpg" 
+                             alt="Atlas York member" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_090918313.PORTRAIT.jpg" 
+                             alt="York fitness member" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_091151354.jpg" 
+                             alt="Transformation success" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_091228618.PORTRAIT.jpg" 
+                             alt="Atlas transformation" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_091337396.PORTRAIT.jpg" 
+                             alt="York member success" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_095317279.jpg" 
+                             alt="Fitness transformation" 
+                             class="face-small"
+                             loading="lazy">
+                        <img src="images/client-portraits/PXL_20250322_100735625.PORTRAIT.jpg" 
+                             alt="Member success story" 
+                             class="face-small"
+                             loading="lazy">
+                    </div>
+                    <div class="trust-text-overlay">
+                        <h3>Join 150+ York Men Over 40 Who've Transformed Their Lives</h3>
+                        <p>Real faces. Real results. Real community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation CTA Section -->
+    <section id="consultation" class="consultation-cta">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h2>Ready to Start Your Transformation?</h2>
+                    <p>Book your free consultation today. No pressure, no commitment - just an honest conversation about your goals and how we can help you achieve them.</p>
+                    
+                    <div class="cta-benefits">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span>Free fitness & nutrition assessment</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span>Personalised programme recommendation</span>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span>Tour our facility & meet the team</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-form">
+                    <div id="form-container" class="form-container">
+                        <div class="form-header">
+                            <h3 id="form-title">Book Your Free Consultation - York Men Over 40</h3>
+                        </div>
+                        
+                        <div id="york-form" class="location-form active">
+                            <iframe
+                                src="https://link.leaddec.com/widget/form/pOstBoRnEy5EkPjKVbqG"
+                                style="width:100%;height:450px;border:none;border-radius:4px"
+                                id="inline-pOstBoRnEy5EkPjKVbqG" 
+                                data-layout="{'id':'INLINE'}"
+                                data-trigger-type="alwaysShow"
+                                data-trigger-value=""
+                                data-activation-type="alwaysActivated"
+                                data-activation-value=""
+                                data-deactivation-type="neverDeactivate"
+                                data-deactivation-value=""
+                                data-form-name="York Men Over 40 lead form"
+                                data-height="450"
+                                data-layout-iframe-id="inline-pOstBoRnEy5EkPjKVbqG"
+                                data-form-id="pOstBoRnEy5EkPjKVbqG"
+                                title="York Men Over 40 lead form"
+                                sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+                            </iframe>
+                        </div>
+                        
+                        <p class="form-disclaimer">
+                            By submitting this form, you agree to our <a href="/privacy-policy.html" style="color: #4F46E5; text-decoration: underline;">Privacy Policy</a>. We respect your privacy and will only contact you about your consultation. No spam, ever.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What if I'm a complete beginner over 40?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Perfect! Our programme is specifically designed for men over 40, including complete beginners. Every exercise can be modified to your current fitness level, and our coaches will ensure you learn proper form from day one.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How many people are in each session?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>We keep our sessions small to ensure you get plenty of personal attention while still enjoying the motivation of training with others.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>What's included in the 6-week programme?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Your program includes 18 small group training sessions, personalized nutrition guidance, weekly progress check-ins, WhatsApp support group access, and ongoing accountability coaching.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Do I need to follow a strict diet?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No restrictive diets required! We focus on sustainable nutrition habits that fit your lifestyle. You'll learn how to make better choices without giving up the foods you love.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Get In Touch</h2>
+                    <p>Ready to start your transformation? Have questions about our program? We'd love to hear from you.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <div>
+                                <h4>York Location</h4>
+                                <p>4 Auster Road<br>York, YO30 4XD<br><strong>Men over 40 only</strong><br>Easy parking available</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <div>
+                                <h4>Harrogate Location</h4>
+                                <p>Unit 7 Claro Court Business Center<br>Harrogate, HG1 4BA<br><strong>Men & Women over 30</strong><br>Easy parking available</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <span class="contact-icon">📞</span>
+                            <div>
+                                <h4>Phone</h4>
+                                <p><a href="tel:+447490253471" style="color: inherit;">+44 7490 253471</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <span class="contact-icon">✉️</span>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:sam@atlas-gyms.co.uk" style="color: inherit;">sam@atlas-gyms.co.uk</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+                
+                <div class="contact-map">
+                    <div id="map-york" style="width: 100%; height: 400px; border-radius: 8px; overflow: hidden;"></div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="logo-01.png" alt="Atlas Fitness Logo" class="footer-logo">
+                    <p>Transforming lives through professional fitness coaching and supportive community.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <ul>
+                            <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Schofield Fitness Ltd trading as Atlas Fitness. All rights reserved. | Professional fitness coaching in the UK</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        ↑
+    </button>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Enhanced form handling to control redirects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure we start at the top of the page
+            window.scrollTo(0, 0);
+            
+            // If there's a hash in the URL, handle it after a delay
+            if (window.location.hash === '#consultation') {
+                setTimeout(function() {
+                    const consultationSection = document.getElementById('consultation');
+                    if (consultationSection) {
+                        consultationSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 1000);
+            }
+            
+            // Monitor form iframe for submission
+            const formIframe = document.querySelector('#inline-pOstBoRnEy5EkPjKVbqG');
+            let formSubmitted = false;
+            
+            if (formIframe) {
+                // Listen for messages from the iframe
+                window.addEventListener('message', function(event) {
+                    // Check if this is a form submission event
+                    if (event.data && (event.data.type === 'hsFormCallback' || event.data.type === 'form-submitted')) {
+                        formSubmitted = true;
+                        // Redirect to booking page after a short delay
+                        setTimeout(function() {
+                            window.location.href = '/york-booking.html';
+                        }, 500);
+                    }
+                });
+                
+                // Monitor iframe navigation attempts
+                formIframe.addEventListener('load', function() {
+                    // If the form was submitted, redirect to booking page
+                    if (formSubmitted) {
+                        window.location.href = '/york-booking.html';
+                    }
+                    // Keep focus on main page
+                    window.focus();
+                });
+                
+                // Prevent iframe from changing parent location
+                const originalLocation = window.location.href;
+                setInterval(function() {
+                    if (window.location.href !== originalLocation && !window.location.href.includes('york-booking.html')) {
+                        window.location.href = '/york-booking.html';
+                    }
+                }, 100);
+            }
+        });
+        
+        // Override window.top navigation attempts
+        try {
+            const descriptor = Object.getOwnPropertyDescriptor(window, 'top');
+            if (!descriptor || descriptor.configurable) {
+                Object.defineProperty(window, 'top', {
+                    get: function() {
+                        return window;
+                    },
+                    set: function() {
+                        return window;
+                    },
+                    configurable: true
+                });
+            }
+        } catch (error) {
+            console.log('Could not override window.top:', error);
+        }
+    </script>
+    <script src="https://link.leaddec.com/js/form_embed.js"></script>
+    <script src="config.js?v=2"></script>
+    <script src="google-reviews.js?v=2"></script>
+    <script src="google-maps.js?v=2"></script>
+    <script src="optimize-images.js?v=2"></script>
+    <script>
+        // Initialize Google Reviews and Maps
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Initialize reviews
+            await initGoogleReviews('google-reviews-york', 'york');
+            
+            // Initialize map
+            initLocationMap('york');
+        });
+    </script>
+
+    <!-- Analytics & Tracking -->
+    <script src="/js/atlas-analytics.js"></script>
+    <!-- New Analytics System -->
+    <script src="/js/analytics-init.js"></script>    <script src="/js/cookie-consent.js"></script>
+    <script src="/js/lead-tracker.js"></script>
+    <script src="/js/facebook-pixel.js"></script>
+    <script src="/js/facebook-enhanced-tracking.js"></script>
+</body>
+</html>
